@@ -5,8 +5,7 @@ ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -28,9 +27,22 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+gem 'hoe', '~> 3.12'
+gem 'hoe-bundler', '~> 1.0'
+gem 'hoe-deveiate', '~> 0.9'
+gem 'hoe-highline', '~> 0.2'
+gem 'hoe-mercurial', '~> 1.4'
+gem 'rake-compiler', '~> 1.0'
+gem 'rake-compiler-dock', '~> 1.0'
+gem 'rdoc', '~> 5.1'
+gem 'rspec', '~> 3.5'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3', '~> 1.4'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'spring',      '1.1.3'
 end
 
 group :development do
@@ -47,6 +59,11 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+end
+
+group :production do
+  gem 'pg', '~> 1.2', '>= 1.2.3'
+  #gem 'rails_12factor', '0.0.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
