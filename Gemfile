@@ -40,6 +40,9 @@ gem 'rspec', '~> 3.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # Use sqlite3 as the database for Active Record
+  gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+  gem 'guard' # NOTE: this is necessary in newer versions
+  gem 'guard-minitest'
   gem 'sqlite3', '~> 1.4'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'spring',      '1.1.3'
@@ -57,6 +60,8 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
+  gem 'minitest-reporters', '>= 1.4.3'
+  gem 'mini_backtrace', '~> 0.1.3'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
