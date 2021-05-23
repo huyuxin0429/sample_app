@@ -27,6 +27,9 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+gem 'bootstrap-sass', '~> 3.4.1'
+
+#support for pg
 gem 'hoe', '~> 3.12'
 gem 'hoe-bundler', '~> 1.0'
 gem 'hoe-deveiate', '~> 0.9'
@@ -40,6 +43,10 @@ gem 'rspec', '~> 3.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # Use sqlite3 as the database for Active Record
+
+  gem 'rails-controller-testing'
+  gem 'win32console'
+
   gem 'wdm', '>= 0.1.0' if Gem.win_platform?
   gem 'guard' # NOTE: this is necessary in newer versions
   gem 'guard-minitest'
