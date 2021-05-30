@@ -21,6 +21,9 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
  gem 'bcrypt', '~> 3.1.7'
 
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -39,6 +42,9 @@ gem 'rake-compiler', '~> 1.0'
 gem 'rake-compiler-dock', '~> 1.0'
 gem 'rdoc', '~> 5.1'
 gem 'rspec', '~> 3.5'
+
+# Create fake users
+gem "faker"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
