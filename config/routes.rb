@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get 'contact' => 'static_pages#contact'
   #get 'static_pages/contact'
   get 'signup' => 'users#new'
+
+  get 'merchant_signup' => 'merchants#new'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'static_pages#home'
 
@@ -20,5 +22,6 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
 
   resources :users
+  resources :merchants
   resources :account_activations, only: [:edit]
 end
