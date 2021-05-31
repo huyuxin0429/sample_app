@@ -16,6 +16,9 @@ class User < ApplicationRecord
     
     has_secure_password
 
+    enum role: [:user, :merchant, :logistics, :admin]
+    after_initialize :set_default_role, :if => :new_record?
+
     def User.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ?
         BCrypt::Engine::MIN_COST :
@@ -45,4 +48,8 @@ class User < ApplicationRecord
     def forget
         update_attribute(:remember_digest, nil)
     end
+
+    def set_default_role
+        self.role ||= :user
+      end
 end

@@ -13,7 +13,7 @@ User.create!(name: "Example User",
     password_confirmation: "foobar",
     address: 'Singapore',
     contact_no: 12341234,
-    admin: true )
+    role: User.roles[:admin] )
 # Generate a bunch of additional users.
 99.times do |n|
     name = Faker::Name.name

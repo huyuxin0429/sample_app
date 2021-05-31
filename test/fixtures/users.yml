@@ -5,7 +5,8 @@ michael:
   password_digest: <%= User.digest('password') %>
   address: "Chai Chee Road"
   contact_no: "12341234"
-  admin: true
+  #admin: true
+  role: <%= User.role[:admin] %>
 
 archer:
   name: Sterling Archer
