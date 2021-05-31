@@ -7,6 +7,8 @@ class MerchantSessionsController < ApplicationController
       if merchant && merchant.authenticate(params[:session][:password])
       # Log the merchant in and redirect to the merchant's show page.
       merchant_log_in merchant
+      params[:session][:remember_me] == '1' ? merchant_remember(merchant) : merchant_forget(merchant)
+      # merchant_remember merchant
       redirect_to merchant
       else
       # Create an error message.
@@ -16,7 +18,7 @@ class MerchantSessionsController < ApplicationController
   end
 
   def destroy
-    merchant_log_out
+    merchant_log_out if merchant_logged_in?
     redirect_to root_url
   end
 

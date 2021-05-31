@@ -28,6 +28,10 @@ class ActiveSupport::TestCase
   def log_in_as(user)
     session[:user_id] = user.id
   end
+
+  def log_in_as_merchant(merchant)
+    session[:merchant_id] = merchant.id
+  end
 end
 
 class ActionDispatch::IntegrationTest
@@ -35,6 +39,12 @@ class ActionDispatch::IntegrationTest
   # Log in as a particular user
   def log_in_as(user, password: "password", remember_me: "1")
     post login_path, params: { session: { email: user.email,
+                                          password: password,
+                                          remember_me: remember_me } }
+  end
+
+  def log_in_as_merchant(merchant, password: "password", remember_me: "1")
+    post merchant_login_path, params: { session: { email: merchant.email,
                                           password: password,
                                           remember_me: remember_me } }
   end
