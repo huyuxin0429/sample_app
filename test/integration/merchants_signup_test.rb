@@ -30,6 +30,6 @@ class MerchantsSignupTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_template "merchants/show"
     assert_not flash.empty?
-    assert is_logged_in?
+    assert mis_logged_in?
   end
 end

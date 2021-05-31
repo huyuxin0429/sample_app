@@ -1,13 +1,36 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+michaelinc:
+  company_name: michaelinc
+  email: michaelinc@example.com
+  password_digest: <%= Merchant.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
 
-one:
-  company_name: MyString
-  email: MyString
-  address: MyText
-  contact_no: 1
+archerinc:
+  company_name: archerinc
+  email: archerinc@example.gov
+  password_digest: <%= Merchant.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
+  
+lanainc:
+  company_name: lanainc
+  email: lanainc@example.gov
+  password_digest: <%= Merchant.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
 
-two:
-  company_name: MyString
-  email: MyString
-  address: MyText
-  contact_no: 1
+maloryinc:
+  company_name: maloryinc
+  email: maloryinc@example.gov
+  password_digest: <%= Merchant.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
+
+<% 30.times do |n| %>
+merchant_<%= n %>:
+  company_name: <%= "Merchant #{n}" %>
+  email: <%= "merchant-#{n}@example.com" %>
+  password_digest: <%= Merchant.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
+  <% end %>

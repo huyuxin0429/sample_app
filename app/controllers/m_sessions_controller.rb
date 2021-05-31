@@ -1,14 +1,14 @@
 class MSessionsController < ApplicationController
+  include MSessionsHelper
   def new
-    # debugger
   end
 
-  def create
+  def create 
     merchant = Merchant.find_by(email: params[:m_session][:email].downcase)
     if merchant && merchant.authenticate(params[:m_session][:password])
       mlog_in merchant
       params[:m_session][:remember_me] == "1" ? remember(merchant) : forget(merchant)
-      mredirect_back_or merchant
+      redirect_back_or merchant
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new'
@@ -16,8 +16,8 @@ class MSessionsController < ApplicationController
   end
 
   def destroy
-      #merchant = m_sessions[:merchant_id]
-      mlog_out if mlogged_in? #current_merchant
-      redirect_to root_url
-  end
+    #user = sessions[:user_id]
+    mlog_out if mlogged_in? #current_user
+    redirect_to root_url
+end
 end

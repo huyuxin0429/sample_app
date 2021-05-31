@@ -1,65 +1,66 @@
 module MSessionsHelper
-    def log_in(user)
-        session[:user_id] = user.id
+    #Logs in given merchant
+    def mlog_in(merchant)
+        session[:merchant_id] = merchant.id
     end 
 
-    # Returns the current Logged-in user (if any)
-    def current_user
-        #@current_user ||= User.find_by(id: session[:user_id])
-        if (user_id = session[:user_id])
-            @current_user ||= User.find_by(id: user_id)
-        elsif (user_id = cookies.encrypted[:user_id])
+    # Returns the current Logged-in merchant (if any)
+    def current_merchant
+        #@current_merchant ||= Merchant.find_by(id: session[:merchant_id])
+        if (merchant_id = session[:merchant_id])
+            @current_merchant ||= Merchant.find_by(id: merchant_id)
+        elsif (merchant_id = cookies.encrypted[:merchant_id])
             # raise
-            user = User.find_by(id: user_id)
-            if (user && user.authenticated?(cookies[:remember_token]))
-                log_in user
-                @current_user = user
+            merchant = Merchant.find_by(id: merchant_id)
+            if (merchant && merchant.authenticated?(cookies[:remember_token]))
+                log_in merchant
+                @current_merchant = merchant
             end
         end
     end
 
-    # Returns true if the user is logged in, false otherwise.
-    def logged_in?
-        !current_user.nil?
+    # Returns true if the merchant is logged in, false otherwise.
+    def mlogged_in?
+        !current_merchant.nil?
     end
 
-    def log_out
-        forget(current_user)
-        session.delete(:user_id)
-        @current_user = nil
+    def mlog_out
+        mforget(current_merchant)
+        session.delete(:merchant_id)
+        @current_merchant = nil
     end
 
-    def remember(user)
-        user.remember
-        cookies.permanent.encrypted[:user_id] = user.id
-        cookies.permanent[:remember_token] = user.remember_token
+    def mremember(merchant)
+        merchant.remember
+        cookies.permanent.encrypted[:merchant_id] = merchant.id
+        cookies.permanent[:mremember_token] = merchant.remember_token
     end
 
-    def forget(user)
-        user.forget
-        # puts(cookies[:user_id])
+    def mforget(merchant)
+        merchant.forget
+        # puts(cookies[:merchant_id])
         # puts(cookies[:remember_token])
-        # cookies[:user_id] = nil
+        # cookies[:merchant_id] = nil
         # cookies[:remember_token] = nil
-        cookies.delete(:user_id)
-        cookies.delete(:remember_token)
-        # puts(cookies[:user_id])
+        cookies.delete(:merchant_id)
+        cookies.delete(:mremember_token)
+        # puts(cookies[:merchant_id])
         # puts(cookies[:remember_token])
     end
 
-    # Returns true if the given user is the current user
-    def current_user?(user)
-        user && user == current_user
+    # Returns true if the given merchant is the current merchant
+    def mcurrent_merchant?(merchant)
+        merchant && merchant == current_merchant
     end
 
     # Redirects to stored location (or to the default)
     def redirect_back_or(default)
-        redirect_to(session[:forwarding_url] || default)
-        session.delete(:forwarding_url)
+        redirect_to(session[:mforwarding_url] || default)
+        session.delete(:mforwarding_url)
     end
 
     # Stores the URL trying to be accessed.
     def store_location
-        session[:forwarding_url] = request.original_url if request.get?
+        session[:mforwarding_url] = request.original_url if request.get?
     end
 end

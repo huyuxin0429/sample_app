@@ -29,7 +29,20 @@
                         </ul>
                     </li>
                 <% elsif mlogged_in? %>
-
+                    <li><%= link_to "Merchants", merchants_path %>
+                    <li class = "dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Account <b class = "caret"></b>
+                        </a>
+                        <ul class = "dropdown-menu">
+                            <li><%= link_to "Profile", current_merchant %></li>
+                            <li><%= link_to "Settings", edit_merchant_path(current_merchant) %></li>
+                            <li class = "divider"></li>
+                            <li>
+                                <%= link_to "Log out", mlogout_path, method: :delete %>
+                            </li>
+                        </ul>
+                    </li>
                 <% else %>
                     <li><%= link_to "User Log in", login_path %></li>
                     <li><%= link_to "Merchant Log in", mlogin_path %></li>
