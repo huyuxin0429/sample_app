@@ -4,8 +4,19 @@
     <h2>
         This is the home page for DrDelivery
     </h2>
+</div>
+
+<div class = "center jumbotron">
+    <h1>New Customer?</h1>
+
 
     <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+</div>
+
+<div class = "center jumbotron">
+    <h1>New Merchant?</h1>
+
+    <%= link_to "Join us now!", msignup_path, class: "btn btn-lg btn-primary" %>
 </div>
 
 <%= link_to image_tag("rails.png", alt: "Rails logo"),

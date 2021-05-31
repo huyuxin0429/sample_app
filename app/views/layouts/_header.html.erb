@@ -28,8 +28,11 @@
                             </li>
                         </ul>
                     </li>
+                <% elsif mlogged_in? %>
+
                 <% else %>
-                    <li><%= link_to "Log in", login_path %></li>
+                    <li><%= link_to "User Log in", login_path %></li>
+                    <li><%= link_to "Merchant Log in", mlogin_path %></li>
                 <% end %>
             </ul>
         </nav>
