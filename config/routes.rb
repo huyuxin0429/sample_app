@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'merchants/new'
   get 'sessions/new'
   get 'sesssions/new'
   get 'users/new'
