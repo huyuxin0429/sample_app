@@ -1,0 +1,10 @@
+<% @merchants.each do |merchant| %>
+    <li>
+        <%= merchant_gravatar_for merchant, size: 50 %>
+        <%= link_to merchant.company_name, merchant %>
+        <% # if current_user.admin? && !current_user?(user) %>
+            |   <%= link_to 'delete', merchant, method: :delete,
+                    data: {confirm: "You Sure?"} %>
+        <% #end %>
+    </li>
+<% end %>

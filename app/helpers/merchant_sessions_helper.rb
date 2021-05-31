@@ -47,4 +47,20 @@ module MerchantSessionsHelper
         session.delete(:merchant_id)
         @current_merchant = nil
     end
+
+    # Returns true if the given merchant is the current merchant.
+    def current_merchant?(merchant)
+        merchant && merchant == current_merchant
+    end
+
+    # Redirects to stored location (or to the default).
+    def redirect_back_or(default)
+        redirect_to(session[:forwarding_url] || default)
+        session.delete(:forwarding_url)
+    end
+    # Stores the URL trying to be accessed.
+    def store_location
+        session[:forwarding_url] = request.original_url if
+        request.get?
+    end
 end

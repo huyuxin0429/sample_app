@@ -70,15 +70,15 @@ class MerchantsLoginTest < ActionDispatch::IntegrationTest
     end
 
     test "login with remembering" do
-      log_in_as_merchant(@merchant, remember_me: '1')
+      merchant_log_in_as(@merchant, remember_me: '1')
       assert_not_nil cookies['merchant_remember_token']
     end
 
     test "login without remembering" do
       # Log in to set the cookie.
-      log_in_as_merchant(@merchant, remember_me: '1')
+      merchant_log_in_as(@merchant, remember_me: '1')
       # Log in again and verify that the cookie is deleted.
-      log_in_as_merchant(@merchant, remember_me: '0')
+      merchant_log_in_as(@merchant, remember_me: '0')
       assert cookies['merchant_remember_token'], nil || ""
     end
 end

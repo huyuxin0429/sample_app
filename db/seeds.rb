@@ -26,5 +26,28 @@ User.create!(name: "Example User",
         password: password,
         password_confirmation: password,
         address: Faker::Address,
+        contact_no: contact_no,
+        admin: true)
+end
+
+
+Merchant.create!(company_name: "Example Merchant",
+    email: "example@railstutorial.org",
+    password: "foobar",
+    password_confirmation: "foobar",
+    address: 'Singapore',
+    contact_no: 12341234 )
+# Generate a bunch of additional users.
+99.times do |n|
+    company_name = Faker::Name.name
+    email = "company-#{n+1}@railstutorial.org"
+    password = "password"
+    address = "Singapore"
+    contact_no = 12341234
+    Merchant.create!(company_name: company_name,
+        email: email,
+        password: password,
+        password_confirmation: password,
+        address: Faker::Address,
         contact_no: contact_no)
 end

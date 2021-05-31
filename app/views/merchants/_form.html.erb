@@ -19,5 +19,5 @@
     <%= f.label :contact_no %>
     <%= f.text_field :contact_no, class: 'form-control' %>
 
-    <%= f.submit "Create my account", class: "btn btnprimary"%>
+    <%= f.submit yield(:button_text), class: "btn btn-primary"%>
 <% end %>

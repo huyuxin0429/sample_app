@@ -2,3 +2,35 @@ michaelinc:
   company_name: Michael inc
   email: michaelinc@example.com
   password_digest: <%= User.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
+
+archerinc:
+  company_name: Sterling inc
+  email: duchess@example.gov
+  password_digest: <%= User.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
+  
+lanainc:
+  company_name: Lana inc
+  email: hands@example.gov
+  password_digest: <%= User.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
+
+maloryinc:
+  company_name: Malory inc
+  email: boss@example.gov
+  password_digest: <%= User.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
+
+<% 30.times do |n| %>
+merchant_<%= n %>:
+  company_name: <%= "Merchant #{n}" %>
+  email: <%= "merchant-#{n}@example.com" %>
+  password_digest: <%= User.digest('password') %>
+  address: "Chai Chee Road"
+  contact_no: "12341234"
+  <% end %>

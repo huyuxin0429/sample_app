@@ -9,12 +9,16 @@ class MerchantSessionsController < ApplicationController
       merchant_log_in merchant
       params[:session][:remember_me] == '1' ? merchant_remember(merchant) : merchant_forget(merchant)
       # merchant_remember merchant
-      redirect_to merchant
+      redirect_back_or merchant
       else
       # Create an error message.
         flash.now[:danger] = 'Invalid email/password combination'
         render 'new'
       end
+  end
+
+  def edit
+    @merchant = Merchant.find(params[:id])
   end
 
   def destroy
