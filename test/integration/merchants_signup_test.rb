@@ -28,5 +28,6 @@ class MerchantsSignupTest < ActionDispatch::IntegrationTest
       end
         follow_redirect!
         assert_template 'merchants/show'
+        assert merchant_is_logged_in?
       end
 end

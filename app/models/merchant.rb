@@ -11,4 +11,11 @@ class Merchant < ApplicationRecord
     validates :contact_no, presence: true, 
         format: { with: ALL_NUMBER_REGEX }, length: { is: 8}
     has_secure_password
+
+    def Merchant.digest(string)
+        cost = ActiveModel::SecurePassword.min_cost ?
+        BCrypt::Engine::MIN_COST :
+        BCrypt::Engine.cost
+        BCrypt::Password.create(string, cost: cost)
+    end
 end

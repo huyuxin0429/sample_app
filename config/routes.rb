@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'merchant_sessions/new'
   get 'merchants/new'
   get 'sessions/new'
   get 'sesssions/new'
@@ -20,6 +21,10 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
+
+  get 'merchant_login' => 'merchant_sessions#new'
+  post 'merchant_login' => 'merchant_sessions#create'
+  delete 'merchant_logout' => 'merchant_sessions#destroy'
 
   resources :users
   resources :merchants

@@ -10,6 +10,7 @@ class MerchantsController < ApplicationController
   def create
     @merchant = Merchant.new(merchant_params)
     if @merchant.save
+      merchant_log_in @merchant
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @merchant   
     else
