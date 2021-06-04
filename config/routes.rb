@@ -28,5 +28,5 @@ Rails.application.routes.draw do
 
   resources :users
   resources :merchants
-  resources :account_activations, only: [:edit]
+  resources :account_activation, only: [:edit]
 end

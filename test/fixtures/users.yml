@@ -6,6 +6,8 @@ michael:
   address: "Chai Chee Road"
   contact_no: "12341234"
   admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 archer:
   name: Sterling Archer
@@ -13,6 +15,8 @@ archer:
   password_digest: <%= User.digest('password') %>
   address: "Chai Chee Road"
   contact_no: "12341234"
+  activated: true
+  activated_at: <%= Time.zone.now %>
   
 lana:
   name: Lana Kane
@@ -20,6 +24,8 @@ lana:
   password_digest: <%= User.digest('password') %>
   address: "Chai Chee Road"
   contact_no: "12341234"
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 malory:
   name: Malory Archer
@@ -27,6 +33,8 @@ malory:
   password_digest: <%= User.digest('password') %>
   address: "Chai Chee Road"
   contact_no: "12341234"
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 <% 30.times do |n| %>
 user_<%= n %>:
@@ -35,4 +43,6 @@ user_<%= n %>:
   password_digest: <%= User.digest('password') %>
   address: "Chai Chee Road"
   contact_no: "12341234"
+  activated: true
+  activated_at: <%= Time.zone.now %>
   <% end %>
