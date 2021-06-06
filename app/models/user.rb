@@ -10,7 +10,7 @@ class User < ApplicationRecord
         format: { with: VALID_EMAIL_REGEX }, 
         uniqueness: true
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-    validates :address, presence: true
+    # validates :address, presence: true
     ALL_NUMBER_REGEX =  /\A[0-9]*$\z/
     validates :contact_no, presence: true, 
         format: { with: ALL_NUMBER_REGEX }, length: { is: 8}
