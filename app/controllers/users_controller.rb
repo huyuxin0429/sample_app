@@ -42,9 +42,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where(activated: true).paginate(page: params[:page])
-    # @users = User.all
-    # render json: @users, formats: [:json]
+    # @users = User.where(activated: true).paginate(page: params[:page])
+    @users = User.all
+    render json: @users, formats: [:json]
   end
 
   def destroy
