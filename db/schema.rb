@@ -10,19 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_06_062316) do
-
-  create_table "merchants", force: :cascade do |t|
-    t.string "company_name"
-    t.string "email"
-    t.text "address"
-    t.integer "contact_no"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "password_digest"
-    t.string "merchant_remember_digest"
-    t.index ["email"], name: "index_merchants_on_email", unique: true
-  end
+ActiveRecord::Schema.define(version: 2021_06_07_074006) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -34,11 +22,11 @@ ActiveRecord::Schema.define(version: 2021_06_06_062316) do
     t.string "password_digest"
     t.string "remember_digest"
     t.boolean "admin", default: false
-    t.string "activation_digest"
-    t.boolean "activated", default: false
-    t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "activation_digest"
+    t.boolean "activated"
+    t.datetime "activated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
