@@ -3,6 +3,11 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy]
 
+  def api
+    @users = User.all
+    render json: @users, formats: [:json]
+  end
+
   def show
     @user = User.find_by(id: params[:id])
     redirect_to root_url and return unless @user and @user.activated?
@@ -43,9 +48,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    #@users = User.where(activated: true).paginate(page: params[:page])
-    @users = User.all
-    render json: @users, formats: [:json]
+    @users = User.where(activated: true).paginate(page: params[:page])
+    # @users = User.all
+    # render json: @users, formats: [:json]
   end
 
   def destroy
