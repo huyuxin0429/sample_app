@@ -44,14 +44,14 @@ gem 'rdoc', '~> 5.1'
 gem 'rspec', '~> 3.5'
 
 #additional validation for active storage
-gem 'active_storage_validations', '0.8.2'
+gem 'active_storage_validations'
 
 # Create fake users
 gem "faker"
 
 # Image processing
-gem 'image_processing', '1.9.3'
-gem 'mini_magick', '4.9.5'
+gem 'image_processing'
+gem 'mini_magick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
