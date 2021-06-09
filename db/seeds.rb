@@ -27,7 +27,7 @@ User.create!(name: "Example User",
         email: email,
         password: password,
         password_confirmation: password,
-        address: Faker::Address,
+        address: Faker::Address.full_address,
         contact_no: contact_no,
         activated: true,
         activated_at: Time.zone.now )

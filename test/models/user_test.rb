@@ -124,4 +124,23 @@ class UserTest < ActiveSupport::TestCase
     michael.unfollow(archer)
     assert_not michael.following?(archer)
   end
+
+  test "feed should have right post" do
+    michael = users(:michael)
+    archer = users(:archer)
+    lana = users(:lana)
+    # Post from followed user
+    lana.microposts.each do |post_following|
+      assert michael.feed.include?(post_following)
+    end
+    # Post from self
+    michael.microposts.each do |post_self|
+      assert michael.feed.include?(post_self)
+    end
+
+    # Post from unfollowed user
+    archer.microposts.each do |post_unfollowed|
+      assert_not michael.feed.include?(post_unfollowed)
+    end
+  end
 end
