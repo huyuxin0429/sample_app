@@ -56,6 +56,9 @@ gem 'mini_magick', '4.9.5'
 # Access control origin
 gem 'rack-cors'
 
+# Attempting migration to postgres for development
+gem 'pg', '~> 1.2', '>= 1.2.3'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # Use sqlite3 as the database for Active Record
@@ -66,7 +69,11 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0' if Gem.win_platform?
   gem 'guard' # NOTE: this is necessary in newer versions
   gem 'guard-minitest'
-  gem 'sqlite3', '~> 1.4'
+
+  # Attempting migration to postgres for development
+  # gem 'sqlite3', '~> 1.4'
+
+  
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'spring',      '1.1.3'
 end
