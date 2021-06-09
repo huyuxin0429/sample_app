@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def api
     @users = User.all
-    render json: @users, formats: [:json]
+    render json: @users, formats: [:json], only: [:name, :address, :email, :contact_no]
   end
 
   def show
