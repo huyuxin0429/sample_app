@@ -20,7 +20,11 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
 
-  get 'users/api' => 'users#api'
+  namespace :api do
+    namespace :v1 do
+      resources :users
+    end
+  end
 
   resources :users do
     member do
