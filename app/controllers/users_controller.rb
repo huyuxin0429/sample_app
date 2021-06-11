@@ -4,10 +4,6 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy]
 
-  def api
-    @users = User.all
-    render json: @users, formats: [:json], only: [:name, :address, :email, :contact_no]
-  end
 
   def show
     @user = User.find_by(id: params[:id])

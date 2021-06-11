@@ -6,13 +6,13 @@ class Api::V1::UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id])
-        render json: @user, , only: [:name, :address, :email, :contact_no]
+        render json: @user, only: [:name, :address, :email, :contact_no]
     end
 
     def create
         @user = User.new(user_params)
         if @user.save
-            render json: @user, , only: [:name, :address, :email, :contact_no]
+            render json: @user, only: [:name, :address, :email, :contact_no]
         else
             render error: { error: @user.errors.full_messages }, status: 400
         end
