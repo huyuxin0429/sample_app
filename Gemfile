@@ -54,7 +54,7 @@ gem 'image_processing', '1.9.3'
 gem 'mini_magick', '4.9.5'
 
 # Access control origin
-gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
 
 # Attempting migration to postgres for development
 gem 'pg', '~> 1.2', '>= 1.2.3'
