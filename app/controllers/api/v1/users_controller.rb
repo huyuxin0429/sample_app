@@ -16,7 +16,7 @@ class Api::V1::UsersController < ApplicationController
         if @user.save
             render json: @user, only: [:name, :address, :email, :contact_no]
         else
-            render error: { error: @user.errors.full_messages }, status: 400
+            render error: { error: @user.errors.full_messages.join("/n") }, status: 400
         end
 
     end
@@ -27,7 +27,7 @@ class Api::V1::UsersController < ApplicationController
             @user.update(user_params)
             render json: { message: "User successfully updated" }, status: 200
         else
-            render error: { error: @user.errors.full_messages }, status: 400
+            render error: { error: @user.errors.full_messages.join("/n") }, status: 400
         end
     end
 
@@ -43,7 +43,7 @@ class Api::V1::UsersController < ApplicationController
 
     private
         def user_params
-            params.require(:user).permit(:name, :address, :email, :contact_no)
+            params.require(:user).permit(:name, :address, :email, :contact_no, :password, :password_confirmation)
         end
 
     
