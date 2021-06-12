@@ -1,5 +1,5 @@
-class Api::V1::UsersController < ApplicationController
-    skip_before_action :verify_authenticity_token
+class Api::V1::UsersController < Api::V1::BaseController
+    # skip_before_action :verify_authenticity_token
     
 
     # POST /users/:id
@@ -18,6 +18,7 @@ class Api::V1::UsersController < ApplicationController
     def show
         @user = User.find(params[:id])
         render json: @user, only: [:name, :address, :email, :contact_no]
+        # render jsonapi: user, serializer: Api::V1::UserSerializer
     end
 
     # POST /users

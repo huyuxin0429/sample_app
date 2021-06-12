@@ -22,11 +22,20 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users
-      get 'login'
-      
+      resources :sessions, only: [:create, :show]
+      resources :users, only: [:index, :create, :show, :update, :destroy] do
+        post :activate, on: :collection
+        resources :followers, only: [:index, :destroy]
+        resources :followings, only: [:index, :destroy] do
+          post :create, on: :member
+        end
+        resource :feed, only: [:show]
+      end
+      resources :microposts, only: [:index, :create, :show, :update, :destroy]
     end
   end
+      
+    
 
   resources :users do
     member do
