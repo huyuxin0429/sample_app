@@ -23,10 +23,10 @@ class Api::V1::UsersController < ApplicationController
     # POST /users
     def create
         @user = User.new(user_params)
-        puts @user.errors.full_messages
-        puts 'test'
+        # puts @user.errors.full_messages
+        # puts 'test'
         if @user.save
-            @user.send_activation_email
+            # @user.send_activation_email
             render json: @user, only: [:name, :address, :email, :contact_no]
         else
             render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
@@ -53,7 +53,7 @@ class Api::V1::UsersController < ApplicationController
 
     # DELETE /users/:id
     def destroy
-        @user = User.find(params[:id])
+        @user = User.find_by(params[:email])
         if @user
             @user.destroy
             render json: { message: "User successfully deleted." }, status: 200
