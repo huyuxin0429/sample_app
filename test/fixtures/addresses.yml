@@ -25,3 +25,25 @@ address2:
   unit_number: "#23-233"
   name: <%= Faker::Address.community %>
   user: michael
+
+address3: 
+  street_address: <%= Faker::Address.street_address() %>
+  city: <%= Faker::Address.city() %>
+  country: <%= Faker::Address.country() %>
+  postcode: <%= Faker::Address.postcode() %>
+  building_no: <%= Faker::Number.between(from: 1, to: 10)  %>
+  unit_number: "#23-233"
+  name: <%= Faker::Address.community %>
+  user: lana
+
+# column: value
+#
+address4: 
+  street_address: <%= Faker::Address.street_address() %>
+  city: <%= Faker::Address.city() %>
+  country: <%= Faker::Address.country() %>
+  postcode: <%= Faker::Address.postcode() %>
+  building_no: <%= Faker::Number.between(from: 1, to: 10)  %>
+  unit_number: "#23-233"
+  name: <%= Faker::Address.community %>
+  user: archer
