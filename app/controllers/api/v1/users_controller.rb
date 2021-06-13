@@ -11,7 +11,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     # GET /users
     def index
         @users = User.all
-        render json: @users, only: [:name, :address, :email, :contact_no]
+        render json: @users, only: [:id, :name, :address, :email, :contact_no]
     end
 
     # GET /users/:id
@@ -73,5 +73,5 @@ class Api::V1::UsersController < Api::V1::BaseController
         end
 
 
-    
+    Ihatehackers1!Ihatehackers1!
 end
