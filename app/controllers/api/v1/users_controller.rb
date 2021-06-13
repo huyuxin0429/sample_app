@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
-    # skip_before_action :verify_authenticity_token
+    skip_before_action :verify_authenticity_token
     
 
     # POST /users/:id
@@ -28,7 +28,7 @@ class Api::V1::UsersController < Api::V1::BaseController
         # puts 'test'
         if @user.save
             # @user.send_activation_email
-            render json: @user, only: [:name, :address, :email, :contact_no]
+            render json: @user, only: [:name, :address, :email, :contact_no], status: 201
         else
             render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
         end
@@ -38,14 +38,18 @@ class Api::V1::UsersController < Api::V1::BaseController
     # user = User.find_by(email: params[:session][:email].downcase)
     # if user && user.authenticate(params[:session][:password])
 
-    # PUT /users
+    # PUT /users/:id
     def update
         @user = User.find(params[:id])
-        if @user && @user.authenticate(params[:password])
-            if @user.update(user_params)
-                render json: { message: "User successfully updated" }, status: 200
+        if @user 
+            if @user.authenticate(params[:password])
+                if @user.update(user_params)
+                    render json: { message: "User successfully updated" }, status: 200
+                else
+                    render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
+                end
             else
-                render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
+                render json: { error: "User not authenticated" }, status: 400
             end
         else
             render json: { error: "User not found" }, status: 400
@@ -57,7 +61,7 @@ class Api::V1::UsersController < Api::V1::BaseController
         @user = User.find_by(params[:email])
         if @user
             @user.destroy
-            render json: { message: "User successfully deleted." }, status: 200
+            render json: { message: "User successfully deleted." }, status: 204
         else
             render json: { error: "Unable to delete user." }, status: 400
         end

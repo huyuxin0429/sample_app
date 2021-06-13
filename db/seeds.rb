@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Create a main sample user.
-User.create!(name: "Example User",
+user = User.create!(name: "Example User",
     email: "example@railstutorial.org",
     password: "foobar",
     password_confirmation: "foobar",
@@ -16,6 +16,7 @@ User.create!(name: "Example User",
     admin: true,
     activated: true,
     activated_at: Time.zone.now )
+user.address
 # Generate a bunch of additional users.
 99.times do |n|
     name = Faker::Name.name
@@ -38,6 +39,26 @@ users = User.order(:created_at).take(6)
 50.times do
     content = Faker::Lorem.sentence(word_count: 5)
     users.each{ |user| user.microposts.create!(content: content) }
+end
+
+3.times do
+    street_address = Faker::Address.street_address() 
+    city = Faker::Address.city() 
+    country =  Faker::Address.country() 
+    postcode =  Faker::Address.postcode() 
+    building_no =  Faker::Number.between(from: 1, to: 10)  
+    unit_number = "#23-233"
+    name =  Faker::Address.community 
+
+    users.each{|user| user.addresses.create!(
+        street_address: street_address,
+        city: city,
+        country: country,
+        postcode: postcode,
+        building_no: building_no,
+        unit_number: unit_number,
+        name: name
+    )}
 end
 
 # Create following relationships.

@@ -43,6 +43,9 @@ gem 'rake-compiler-dock', '~> 1.0'
 gem 'rdoc', '~> 5.1'
 gem 'rspec', '~> 3.5'
 
+# API gem
+gem 'active_model_serializers'
+
 #additional validation for active storage
 gem 'active_storage_validations', '0.8.2'
 
@@ -96,6 +99,10 @@ group :test do
   gem 'webdrivers'
 
   gem 'database_cleaner-active_record'
+
+  gem "rspec-rails"
+  gem "factory_girl_rails"
+  gem 'ffaker'
 end
 
 group :production do
