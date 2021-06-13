@@ -27,7 +27,7 @@ class Api::V1::UsersController < Api::V1::BaseController
         # puts @user.errors.full_messages
         # puts 'test'
         if @user.save
-            # @user.send_activation_email
+            @user.send_activation_email
             render json: @user, only: [:name, :address, :email, :contact_no], status: 201
         else
             render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
