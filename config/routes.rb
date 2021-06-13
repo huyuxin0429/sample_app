@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :sessions, only: [:create, :show]
       resources :users, only: [:index, :create, :show, :update, :destroy] do
         post :activate, on: :collection
+        resources :addresses, only: [:index, :create, :show, :update, :destroy]
         resources :followers, only: [:index, :destroy]
         resources :followings, only: [:index, :destroy] do
           post :create, on: :member
