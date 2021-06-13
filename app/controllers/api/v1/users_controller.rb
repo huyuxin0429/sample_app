@@ -73,5 +73,4 @@ class Api::V1::UsersController < Api::V1::BaseController
         end
 
 
-    Ihatehackers1!Ihatehackers1!
 end
