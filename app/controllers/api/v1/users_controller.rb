@@ -52,7 +52,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     # DELETE /users/:id
     def destroy
-        @user = User.find(params[:id)
+        @user = User.find(params[:id])
         if @user
             @user.destroy
             render json: { message: "User successfully deleted." }, status: 204
