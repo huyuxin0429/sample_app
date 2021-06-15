@@ -1,6 +1,8 @@
 class Api::V1::UsersController < Api::V1::BaseController
     # skip_before_action :verify_authenticity_token
-    
+    before_action :logged_in_user_filter, only: [:index, :show, :update, :destroy]
+    before_action :correct_user, only: [:show, :update, :destroy]
+    # before_action :admin_users, only: [:index]
 
     # GET /users
     def index
@@ -11,7 +13,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     # GET /users/:id
     def show
         @user = User.find(params[:id])
-        render json: @user, only: [:name, :email, :contact_no]
+        render json: @user, only: [:id, :name, :email, :contact_no]
         # render json: @user
     end
 
@@ -24,7 +26,9 @@ class Api::V1::UsersController < Api::V1::BaseController
         # puts 'test'
         if @user.save
             @user.send_activation_email
-            render json: @user, only: [:name, :email, :contact_no], status: 201
+            token = encode_token({user_id: @user.id})
+            render json: { status: "saved", user: @user, token: token }
+            # render json: @user, only: [:id, :name, :email, :contact_no], status: 201
         else
             render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
         end
@@ -65,8 +69,32 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     private
         def user_params
-            params.require(:user).permit(:name, :email, :contact_no, :password, :password_confirmation)
+            params.require(:user).permit(
+                :name, 
+                :email, 
+                :contact_no, 
+                :password, 
+                :password_confirmation)
         end
 
+        # Before filters
+        def correct_user
+            # byebug
+            @user = User.find(params[:id])
+            
+            render json: { message: 'Unauthorised user' },
+                status: :unauthorized unless current_user.admin? || current_user?(@user)
+        end
 
+        def admin_user
+            @user = User.find(params[:id])
+            render json: { message: 'Unauthorised user' }, 
+                status: :unauthorized unless current_user.admin?
+        end
+
+        # def logged_in_user
+        #     render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
+        # end
+        # end
+    # end
 end

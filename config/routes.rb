@@ -22,7 +22,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      resources :account_activations,     only: [:edit]
       post 'login' => 'sessions#create'
+      get 'auto_login' => 'sessions#auto_login'
       delete 'logout' => 'sessions#destroy'
       # resources :sessions, only: [:create, :]
       resources :users, only: [:index, :create, :show, :update, :destroy] do
