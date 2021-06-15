@@ -11,8 +11,8 @@ class Api::V1::UsersController < Api::V1::BaseController
     # GET /users/:id
     def show
         @user = User.find(params[:id])
-        # render json: @user, only: [:name, :email, :contact_no]
-        render json: @user
+        render json: @user, only: [:name, :email, :contact_no]
+        # render json: @user
     end
 
     # POST /users

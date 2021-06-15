@@ -43,8 +43,7 @@ gem 'rake-compiler-dock', '~> 1.0'
 gem 'rdoc', '~> 5.1'
 gem 'rspec', '~> 3.5'
 
-# API gem
-gem 'active_model_serializers'
+
 
 #additional validation for active storage
 gem 'active_storage_validations', '0.8.2'
@@ -75,6 +74,9 @@ group :development, :test do
 
   # Attempting migration to postgres for development
   # gem 'sqlite3', '~> 1.4'
+
+  # For API authentication
+  gem "jwt"
 
   
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
