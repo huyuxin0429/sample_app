@@ -1,5 +1,5 @@
 class Api::V1::SessionsController < Api::V1::BaseController
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token
 
     def new
         # debugger
@@ -14,7 +14,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
                     log_in user
                     params[:remember_me] == "1" ? remember(user) : forget(user)
                     # redirect_back_or user
-                    render json: { status: "ok", message: "Login successful" }, status: 200
+                    render json: { status: "ok", message: "Login successful", user_id: user.id }, status: 200
                 else
                     # message = "Account not activated. "
                     # message += "Check your email for the activation link"
@@ -35,7 +35,8 @@ class Api::V1::SessionsController < Api::V1::BaseController
     def destroy
         #user = sessions[:user_id]
         log_out if logged_in? #current_user
-        redirect_to root_url
+        # redirect_to root_url
+        render json: { status: "ok", message: "Logged out" }, status: 205
     end
 
     def log_in(user)

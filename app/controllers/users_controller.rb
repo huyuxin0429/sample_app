@@ -16,10 +16,11 @@ class UsersController < ApplicationController
   end
 
   def create
+    byebug
     @user = User.new(user_params)
     #debugger
     if @user.save
-      # log_in @user
+      log_in @user
       # flash[:success] = "Welcome to DrDelivery!"
       # redirect_to @user
       @user.send_activation_email
@@ -74,7 +75,7 @@ class UsersController < ApplicationController
   private
     def user_params
       params.require(:user).permit(:name, :email, :password, 
-        :password_confirmation, :contact_no, :address)
+        :password_confirmation, :contact_no)
       #debugger
     end
 

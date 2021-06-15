@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token
     
 
     # GET /users
@@ -11,12 +11,14 @@ class Api::V1::UsersController < Api::V1::BaseController
     # GET /users/:id
     def show
         @user = User.find(params[:id])
-        render json: @user, only: [:name, :email, :contact_no]
-        # render jsonapi: user, serializer: Api::V1::UserSerializer
+        # render json: @user, only: [:name, :email, :contact_no]
+        render json: @user
     end
 
     # POST /users
     def create
+        # byebug
+
         @user = User.new(user_params)
         # puts @user.errors.full_messages
         # puts 'test'
