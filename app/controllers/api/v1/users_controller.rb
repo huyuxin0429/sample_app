@@ -88,7 +88,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
         def admin_user
             render json: { message: 'Unauthorised user' }, 
-                status: :unauthorized unless current_user.admin?
+                status: :unauthorized unless current_user && current_user.admin?
         end
 
         # def logged_in_user
