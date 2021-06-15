@@ -1,8 +1,8 @@
 class Api::V1::UsersController < Api::V1::BaseController
     # skip_before_action :verify_authenticity_token
-    before_action :logged_in_user_filter, only: [:index, :show, :update, :destroy]
+    before_action :logged_in_user_filter, only: [:show]
     before_action :correct_user, only: [:show, :update, :destroy]
-    # before_action :admin_users, only: [:index]
+    before_action :admin_user, only: [:index, :show, :update, :destroy ]
 
     # GET /users
     def index
@@ -83,11 +83,10 @@ class Api::V1::UsersController < Api::V1::BaseController
             @user = User.find(params[:id])
             
             render json: { message: 'Unauthorised user' },
-                status: :unauthorized unless current_user.admin? || current_user?(@user)
+                status: :unauthorized unless current_user?(@user) || current_user.admin?
         end
 
         def admin_user
-            @user = User.find(params[:id])
             render json: { message: 'Unauthorised user' }, 
                 status: :unauthorized unless current_user.admin?
         end

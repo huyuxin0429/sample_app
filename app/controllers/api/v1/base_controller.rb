@@ -51,7 +51,6 @@ class Api::V1::BaseController <  ActionController::API
         if decoded_token
             user_id = decoded_token[0]['data']['user_id']
             @user = User.find_by(id: user_id)
-            @current_user = @user
         end
                 
     end

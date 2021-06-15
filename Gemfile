@@ -32,15 +32,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'bootstrap-sass', '~> 3.4.1'
 
-#support for pg
-gem 'hoe', '~> 3.12'
-gem 'hoe-bundler', '~> 1.0'
-gem 'hoe-deveiate', '~> 0.9'
-gem 'hoe-highline', '~> 0.2'
-gem 'hoe-mercurial', '~> 1.4'
-gem 'rake-compiler', '~> 1.0'
-gem 'rake-compiler-dock', '~> 1.0'
-gem 'rdoc', '~> 5.1'
 gem 'rspec', '~> 3.5'
 
 
