@@ -7,13 +7,13 @@ class Api::V1::UsersController < Api::V1::BaseController
     # GET /users
     def index
         @users = User.all
-        render json: @users, only: [:id, :name, :email, :contact_no]
+        render json: @users #, only: [:id, :name, :email, :contact_no]
     end
 
     # GET /users/:id
     def show
         @user = User.find(params[:id])
-        render json: @user, only: [:id, :name, :email, :contact_no]
+        render json: @user #, only: [:id, :name, :email, :contact_no]
         # render json: @user
     end
 
