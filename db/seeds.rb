@@ -15,8 +15,9 @@ user = User.create!(
     contact_no: 12341234,
     admin: true,
     activated: true,
-    activated_at: Time.zone.now )
-# Generate a bunch of additional users.
+    activated_at: Time.zone.now,
+    role: 'not_set')
+# Generate a bunch of additional customers.
 99.times do |n|
     name = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
@@ -28,7 +29,23 @@ user = User.create!(
         password_confirmation: password,
         contact_no: contact_no,
         activated: true,
-        activated_at: Time.zone.now )
+        activated_at: Time.zone.now,
+        role: "customer")
+end
+# Generate a bunch of additional merchants.
+99.times do |n|
+    name = Faker::Company.name
+    email = "merchant-#{n+1}@railstutorial.org"
+    password = "password"
+    contact_no = 12341234
+    User.create!(name: name,
+        email: email,
+        password: password,
+        password_confirmation: password,
+        contact_no: contact_no,
+        activated: true,
+        activated_at: Time.zone.now,
+        role: "merchant")
 end
 
 # Generate micropost for a subset of users.activated

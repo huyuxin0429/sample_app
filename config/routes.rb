@@ -27,7 +27,11 @@ Rails.application.routes.draw do
       get 'auto_login' => 'sessions#auto_login'
       delete 'logout' => 'sessions#destroy'
       # resources :sessions, only: [:create, :]
-      resources :users, only: [:index, :create, :show, :update, :destroy] do
+      get 'customers' => 'users#indexCustomer'
+      # get 'customers/:id' => 'users#showCustomer'
+      get 'merchants' => 'users#indexMerchant'
+      # get 'merchants/:id' => 'users#showMerchants'
+      resources :users, only: [ :index, :create, :show, :update, :destroy] do
         post :activate, on: :collection
         resources :addresses, only: [:index, :create, :show, :update, :destroy]
         resources :followers, only: [:index, :destroy]

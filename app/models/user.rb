@@ -28,7 +28,10 @@ class User < ApplicationRecord
 
 
 
-    enum role: { customer: 'customer', merchant: 'merchant' }
+    enum role: { 
+        customer: 'customer', 
+        merchant: 'merchant', 
+        not_set: 'not_set' }
 
     validates :role, presence: true
     

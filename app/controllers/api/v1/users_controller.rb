@@ -4,24 +4,37 @@ class Api::V1::UsersController < Api::V1::BaseController
     before_action :correct_user_filter, only: [:show, :update, :destroy]
     before_action :admin_user_filter, only: [:index ]
 
-    # GET /users
+    # GET /api/v1/users
     def index
         @users = User.all
         render json: @users #, only: [:id, :name, :email, :contact_no]
     end
 
-    # GET /users/:id
+    # GET /api/v1/customers
+    def indexCustomer
+        @users = User.where(role: "customer")
+        render json: @users
+    end
+    # GET /api/v1/merchants
+    def indexMerchant
+        @users = User.where(role: "merchant")
+        render json: @users
+    end
+
+
+
+    # GET /api/v1/users/:id
     def show
         @user = User.find(params[:id])
         render json: @user #, only: [:id, :name, :email, :contact_no]
         # render json: @user
     end
 
-    # POST /users
+    # POST /api/v1/users
     def create
         # byebug
 
-        @user = User.new(user_params)
+        @user = User.new(create_user_params)
         # puts @user.errors.full_messages
         # puts 'test'
         if @user.save
@@ -38,12 +51,12 @@ class Api::V1::UsersController < Api::V1::BaseController
     # user = User.find_by(email: params[:session][:email].downcase)
     # if user && user.authenticate(params[:session][:password])
 
-    # PUT /users/:id
+    # PUT /api/v1/users/:id
     def update
         @user = User.find(params[:id])
         if @user 
             if @user.authenticate(params[:password])
-                if @user.update(user_params)
+                if @user.update(update_user_params)
                     render json: { message: "User successfully updated" }, status: 200
                 else
                     render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
@@ -56,7 +69,7 @@ class Api::V1::UsersController < Api::V1::BaseController
         end
     end
 
-    # DELETE /users/:id
+    # DELETE /api/v1/users/:id
     def destroy
         @user = User.find(params[:id])
         if @user
@@ -68,13 +81,24 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
 
     private
-        def user_params
+        def create_user_params
             params.require(:user).permit(
                 :name, 
                 :email, 
                 :contact_no, 
                 :password, 
-                :password_confirmation)
+                :password_confirmation,
+                :role)
+        end
+
+        def update_user_params
+            params.require(:user).permit(
+                :name, 
+                :email, 
+                :contact_no, 
+                :password, 
+                :password_confirmation
+                )
         end
 
         # Before filters
