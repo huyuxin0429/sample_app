@@ -1,7 +1,7 @@
 class Api::V1::AddressesController < Api::V1::BaseController
     # skip_before_action :verify_authenticity_token
-    before_action :logged_in_user, only: [:create, :destroy]
-    before_action :correct_user, only: :destroy
+    before_action :logged_in_user_filter, only: [:create, :destroy]
+    before_action :correct_user_filter, only: :destroy
     def new
         
     end

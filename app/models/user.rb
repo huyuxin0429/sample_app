@@ -25,6 +25,12 @@ class User < ApplicationRecord
     ALL_NUMBER_REGEX =  /\A[0-9]*$\z/
     validates :contact_no, presence: true, 
         format: { with: ALL_NUMBER_REGEX }, length: { is: 8}
+
+
+
+    enum role: { customer: 'customer', merchant: 'merchant' }
+
+    validates :role, presence: true
     
     has_secure_password
 
