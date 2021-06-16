@@ -2,7 +2,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     # skip_before_action :verify_authenticity_token
     before_action :logged_in_user_filter, only: [:show]
     before_action :correct_user, only: [:show, :update, :destroy]
-    before_action :admin_user, only: [:index, :show, :update, :destroy ]
+    before_action :admin_user, only: [:index ]
 
     # GET /users
     def index
