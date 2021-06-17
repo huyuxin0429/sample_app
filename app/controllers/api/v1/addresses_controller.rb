@@ -1,7 +1,8 @@
 class Api::V1::AddressesController < Api::V1::BaseController
     # skip_before_action :verify_authenticity_token
-    before_action :logged_in_user_filter, only: [:create, :destroy]
-    before_action :correct_user_filter, only: :destroy
+    before_action :logged_in_user_filter, only: [:create, :destroy, :index, :show]
+    before_action :correct_user_filter, only: [:destroy, :index, :create, :show]
+    # before_action :admin_user_filter, only: [:destroy, :index, :create, :show]
     def new
         
     end
@@ -99,9 +100,13 @@ class Api::V1::AddressesController < Api::V1::BaseController
                 :name)
         end
 
-        # Before filters
-        def correct_user
-            @address = current_user.addresses.find_by(id: params[:id])
-            redirect_to root_url if @address.nil?
+        def correct_user_filter
+            # byebug
+            @user = User.find(params[:user_id])
+            
+            render json: { message: 'Unauthorised user' },
+                status: :unauthorized unless current_user?(@user) || current_user.admin?
         end
+
+
 end

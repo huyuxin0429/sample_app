@@ -67,8 +67,14 @@ ActiveRecord::Schema.define(version: 2021_06_16_095044) do
   end
 
   create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.float "price"
+    t.integer "quantity"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -88,4 +94,5 @@ ActiveRecord::Schema.define(version: 2021_06_16_095044) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
   add_foreign_key "microposts", "users"
+  add_foreign_key "products", "users"
 end

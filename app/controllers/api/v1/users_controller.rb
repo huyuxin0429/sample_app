@@ -102,7 +102,7 @@ class Api::V1::UsersController < Api::V1::BaseController
         end
 
         # Before filters
-        def correct_user
+        def correct_user_filter
             # byebug
             @user = User.find(params[:id])
             

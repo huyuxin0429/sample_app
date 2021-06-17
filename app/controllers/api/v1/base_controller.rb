@@ -68,13 +68,7 @@ class Api::V1::BaseController <  ActionController::API
         user && user == current_user
     end
 
-    def correct_user_filter
-        # byebug
-        @user = User.find(params[:id])
-        
-        render json: { message: 'Unauthorised user' },
-            status: :unauthorized unless current_user?(@user) || current_user.admin?
-    end
+    
 
     def admin_user_filter
         render json: { message: 'Unauthorised user' }, 
