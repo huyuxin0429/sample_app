@@ -28,7 +28,6 @@ class User < ApplicationRecord
     ALL_NUMBER_REGEX =  /\A[0-9]*$\z/
     validates :contact_no, presence: true, 
         format: { with: ALL_NUMBER_REGEX }, length: { is: 8}
-    validate :only_merchant_has_products
 
 
     enum role: { 
@@ -131,13 +130,7 @@ class User < ApplicationRecord
     
 
     private
-        def only_merchant_has_products
-            if self.role != 'merchant' && !self.merchant_product.nil?
-                errors.add("Non-merchants cannot have product listing")
-            end
-        end
 
-    
         # Converts email to all lower-case.
         def downcase_email
             email.downcase!
