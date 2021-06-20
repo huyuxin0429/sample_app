@@ -83,7 +83,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
 
     def createCustomer
-        @user = User.new(create_user_params)
+        @user = User.new(user_params)
         @user.role = "customer"
         @user.identifiable = Customer.create!()
         # puts @user.errors.full_messages
@@ -99,7 +99,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
 
     def createMerchant
-        @user = User.new(create_user_params)
+        @user = User.new(user_params)
         @user.role = "merchant"
         @user.identifiable = Merchant.create!()
         # puts @user.errors.full_messages
@@ -113,6 +113,8 @@ class Api::V1::UsersController < Api::V1::BaseController
             render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
         end
     end
+
+    
 
     # POST /api/v1/users
     # def create
@@ -139,14 +141,10 @@ class Api::V1::UsersController < Api::V1::BaseController
     def update
         @user = User.find(params[:id])
         if @user 
-            if @user.authenticate(params[:password])
-                if @user.update(update_user_params)
-                    render json: { message: "User successfully updated" }, status: 200
-                else
-                    render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
-                end
+            if @user.update(user_params)
+                render json: { message: "User successfully updated" }, status: 200
             else
-                render json: { error: "User not authenticated" }, status: 400
+                render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
             end
         else
             render json: { error: "User not found" }, status: 400
@@ -165,23 +163,13 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
 
     private
-        def create_user_params
+        def user_params
             params.permit(
                 :name, 
                 :email, 
                 :contact_no, 
                 :password, 
                 :password_confirmation)
-        end
-
-        def update_user_params
-            params.permit(
-                :name, 
-                :email, 
-                :contact_no, 
-                :password, 
-                :password_confirmation
-                )
         end
 
         # Before filters

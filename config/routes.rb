@@ -33,6 +33,9 @@ Rails.application.routes.draw do
       get 'customers/:user_id/addresses' => 'addresses#index'
       post 'customers/:user_id/addresses' => 'addresses#create'
       get 'customers/:user_id/addresses/:id' => 'addresses#show'
+      patch 'customers/:id' => 'users#update'
+      patch 'customers/:user_id/addresses/:id' => 'addresses#update'
+      
 
       post 'merchants' => 'users#createMerchant'
       get 'merchants' => 'users#indexMerchant'
@@ -41,15 +44,17 @@ Rails.application.routes.draw do
       get 'merchants/:user_id/addresses' => 'addresses#index'
       post 'merchants/:user_id/addresses' => 'addresses#create'
       get 'merchants/:user_id/addresses/:id' => 'addresses#show'
-      resources :users, only: [ :index, :create, :show, :update, :destroy] do
-        post :activate, on: :collection
-        resources :addresses, only: [:index, :create, :show, :update, :destroy]
-        resources :followers, only: [:index, :destroy]
-        resources :followings, only: [:index, :destroy] do
-          post :create, on: :member
-        end
-        resource :feed, only: [:show]
-      end
+      patch 'merchants/:id' => 'users#update'
+      patch 'merchants/:user_id/addresses/:id' => 'addresses#update'
+      # resources :users, only: [ :index, :create, :show, :update, :destroy] do
+      #   post :activate, on: :collection
+      #   resources :addresses, only: [:index, :create, :show, :update, :destroy]
+      #   resources :followers, only: [:index, :destroy]
+      #   resources :followings, only: [:index, :destroy] do
+      #     post :create, on: :member
+      #   end
+      #   resource :feed, only: [:show]
+      # end
       resources :microposts, only: [:index, :create, :show, :update, :destroy]
     end
   end
