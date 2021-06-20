@@ -13,7 +13,6 @@ class User < ApplicationRecord
 
     has_many :followers, through: :passive_relationships, source: :follower
 
-    has_many :products, dependent: :destroy
 
     belongs_to :identifiable, polymorphic: true
 

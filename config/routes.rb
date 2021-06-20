@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get 'customers/:user_id/addresses/:id' => 'addresses#show'
       patch 'customers/:id' => 'users#update'
       patch 'customers/:user_id/addresses/:id' => 'addresses#update'
+      delete 'customers/:id' => 'users#destroy'
       
 
       post 'merchants' => 'users#createMerchant'
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
       get 'merchants/:user_id/addresses/:id' => 'addresses#show'
       patch 'merchants/:id' => 'users#update'
       patch 'merchants/:user_id/addresses/:id' => 'addresses#update'
+      delete 'merchants/:id' => 'users#destroy'
       # resources :users, only: [ :index, :create, :show, :update, :destroy] do
       #   post :activate, on: :collection
       #   resources :addresses, only: [:index, :create, :show, :update, :destroy]
