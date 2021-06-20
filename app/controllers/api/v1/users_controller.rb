@@ -40,6 +40,28 @@ class Api::V1::UsersController < Api::V1::BaseController
         # render json: @user
     end
 
+    def showCustomer
+        @user = User.where(role: "customer").find_by(id: params[:id])
+         #, only: [:id, :name, :email, :contact_no]
+        # render json: @user
+        if @user
+            render json: @user
+        else
+            render json: { status: "error", message: "Customer not found" }, status: 400 
+        end
+    end
+
+    def showMerchant
+        @user = User.where(role: "merchant").find_by(id: params[:id])
+         #, only: [:id, :name, :email, :contact_no]
+        # render json: @user
+        if @user
+            render json: @user
+        else
+            render json: { status: "error", message: "Merchant not found" }, status: 400 
+        end
+    end
+
     def createCustomer
         @user = User.new(create_user_params)
         @user.role = "customer"
