@@ -18,7 +18,17 @@ class Api::V1::UsersController < Api::V1::BaseController
     # GET /api/v1/merchants
     def indexMerchant
         @users = User.where(role: "merchant")
-        render json: @users
+        render json: @users, include:
+            [:addresses =>{ :only =>  [
+                :id,
+                :street_address,
+                :city,
+                :country,
+                :postcode,
+                :building_no,
+                :unit_number,
+                :name
+            ] } ]
     end
 
 
@@ -41,6 +51,11 @@ class Api::V1::UsersController < Api::V1::BaseController
             @user.send_activation_email
             token = encode_token({user_id: @user.id})
             render json: { status: "saved", user: @user, token: token }
+            if @user.role == "customer"
+                @user.rollable = Customer.create()
+            elsif @user.role == "merchant"
+                @user.rollable = Merchant.create()
+            end
             # render json: @user, only: [:id, :name, :email, :contact_no], status: 201
         else
             render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 

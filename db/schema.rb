@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_19_145219) do
+ActiveRecord::Schema.define(version: 2021_06_20_093425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,11 +60,15 @@ ActiveRecord::Schema.define(version: 2021_06_19_145219) do
   create_table "customers", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "identifiable_id"
+    t.index ["identifiable_id"], name: "index_customers_on_identifiable_id"
   end
 
   create_table "merchants", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "identifiable_id"
+    t.index ["identifiable_id"], name: "index_merchants_on_identifiable_id"
   end
 
   create_table "microposts", force: :cascade do |t|
@@ -81,10 +85,8 @@ ActiveRecord::Schema.define(version: 2021_06_19_145219) do
     t.text "description"
     t.float "price"
     t.integer "quantity"
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -104,5 +106,4 @@ ActiveRecord::Schema.define(version: 2021_06_19_145219) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
   add_foreign_key "microposts", "users"
-  add_foreign_key "products", "users"
 end

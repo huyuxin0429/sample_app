@@ -7,6 +7,21 @@ class Api::V1::AddressesController < Api::V1::BaseController
         
     end
 
+    def showAllMerchantAddresses
+        @merchants = User.where(role: "merchant")
+        @addresses = @merchants.map{ |merchant| merchant.addresses }
+        render json: @addresses, only: [
+            :id,
+            :street_address,
+            :city,
+            :country,
+            :postcode,
+            :building_no,
+            :unit_number,
+            :name
+        ]
+    end
+
     # POST /api/v1/users/:id/addresses
     def create
         # @user = Users.find(params[:user_id])

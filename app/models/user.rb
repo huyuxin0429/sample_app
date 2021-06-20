@@ -15,6 +15,8 @@ class User < ApplicationRecord
 
     has_many :products, dependent: :destroy
 
+    belongs_to :identifiable, polymorphic: true
+
     attr_accessor :remember_token, :activation_token, :reset_token
 
     before_save :downcase_email
@@ -29,6 +31,8 @@ class User < ApplicationRecord
     validates :contact_no, presence: true, 
         format: { with: ALL_NUMBER_REGEX }, length: { is: 8}
 
+
+    
 
     enum role: { 
         customer: 'customer', 

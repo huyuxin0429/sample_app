@@ -28,9 +28,10 @@ Rails.application.routes.draw do
       delete 'logout' => 'sessions#destroy'
       # resources :sessions, only: [:create, :]
       get 'customers' => 'users#indexCustomer'
-      # get 'customers/:id' => 'users#showCustomer'
+      get 'customers/:id' => 'users#showCustomer'
       get 'merchants' => 'users#indexMerchant'
-      # get 'merchants/:id' => 'users#showMerchants'
+      get 'merchants/addresses' => 'addresses#showAllMerchantAddresses'
+      get 'merchants/:id' => 'users#showMerchants'
       resources :users, only: [ :index, :create, :show, :update, :destroy] do
         post :activate, on: :collection
         resources :addresses, only: [:index, :create, :show, :update, :destroy]

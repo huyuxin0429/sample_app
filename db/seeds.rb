@@ -16,7 +16,8 @@ user = User.create!(
     admin: true,
     activated: true,
     activated_at: Time.zone.now,
-    role: 'not_set')
+    role: 'not_set',
+    identifiable: Customer.create!())
 # Generate a bunch of additional customers.
 99.times do |n|
     name = Faker::Name.name
@@ -30,7 +31,8 @@ user = User.create!(
         contact_no: contact_no,
         activated: true,
         activated_at: Time.zone.now,
-        role: "customer")
+        role: "customer",
+        identifiable: Customer.create!())
 end
 # Generate a bunch of additional merchants.
 99.times do |n|
@@ -45,11 +47,14 @@ end
         contact_no: contact_no,
         activated: true,
         activated_at: Time.zone.now,
-        role: "merchant")
+        role: "merchant",
+        identifiable: Merchant.create!())
 end
 
 # Generate micropost for a subset of users.activated
 users = User.order(:created_at).take(6)
+merchants = User.where(role: "merchant").take(6)
+
 50.times do
     content = Faker::Lorem.sentence(word_count: 5)
     users.each{ |user| user.microposts.create!(content: content) }
@@ -73,6 +78,30 @@ end
         unit_number: unit_number,
         name: name
     )}
+
+    
+end
+
+3.times do
+    street_address = Faker::Address.street_address() 
+    city = Faker::Address.city() 
+    country =  Faker::Address.country() 
+    postcode =  Faker::Address.postcode() 
+    building_no =  Faker::Number.between(from: 1, to: 10)  
+    unit_number = "#23-233"
+    name =  Faker::Address.community 
+
+    merchants.each{|merchant| merchant.addresses.create!(
+        street_address: street_address,
+        city: city,
+        country: country,
+        postcode: postcode,
+        building_no: building_no,
+        unit_number: unit_number,
+        name: name
+    )}
+
+    
 end
 
 # Create following relationships.

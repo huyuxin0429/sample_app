@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :email
       t.integer :contact_no
+      # t.references :identifiable, polymorphic: true, index: true
 
       t.timestamps
     end
