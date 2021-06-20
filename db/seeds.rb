@@ -53,7 +53,7 @@ end
 
 # Generate micropost for a subset of users.activated
 users = User.order(:created_at).take(6)
-merchants = User.where(role: "merchant").take(6)
+merchants = User.where(role: "merchant")
 
 50.times do
     content = Faker::Lorem.sentence(word_count: 5)
@@ -82,7 +82,7 @@ end
     
 end
 
-3.times do
+1.times do
     street_address = Faker::Address.street_address() 
     city = Faker::Address.city() 
     country =  Faker::Address.country() 
