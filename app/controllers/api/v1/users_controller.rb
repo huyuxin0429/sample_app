@@ -40,28 +40,55 @@ class Api::V1::UsersController < Api::V1::BaseController
         # render json: @user
     end
 
-    # POST /api/v1/users
-    def create
-        # byebug
-
+    def createCustomer
         @user = User.new(create_user_params)
+        @user.role = "customer"
+        @user.identifiable = Customer.create!()
         # puts @user.errors.full_messages
         # puts 'test'
         if @user.save
             @user.send_activation_email
             token = encode_token({user_id: @user.id})
             render json: { status: "saved", user: @user, token: token }
-            if @user.role == "customer"
-                @user.rollable = Customer.create()
-            elsif @user.role == "merchant"
-                @user.rollable = Merchant.create()
-            end
             # render json: @user, only: [:id, :name, :email, :contact_no], status: 201
         else
             render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
         end
-
     end
+
+    def createMerchant
+        @user = User.new(create_user_params)
+        @user.role = "merchant"
+        @user.identifiable = Merchant.create!()
+        # puts @user.errors.full_messages
+        # puts 'test'
+        if @user.save
+            @user.send_activation_email
+            token = encode_token({user_id: @user.id})
+            render json: { status: "saved", user: @user, token: token }
+            # render json: @user, only: [:id, :name, :email, :contact_no], status: 201
+        else
+            render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
+        end
+    end
+
+    # POST /api/v1/users
+    # def create
+    #     # byebug
+
+    #     @user = User.new(create_user_params)
+    #     # puts @user.errors.full_messages
+    #     # puts 'test'
+    #     if @user.save
+    #         @user.send_activation_email
+    #         token = encode_token({user_id: @user.id})
+    #         render json: { status: "saved", user: @user, token: token }
+    #         # render json: @user, only: [:id, :name, :email, :contact_no], status: 201
+    #     else
+    #         render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
+    #     end
+
+    # end
 
     # user = User.find_by(email: params[:session][:email].downcase)
     # if user && user.authenticate(params[:session][:password])
@@ -97,17 +124,16 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     private
         def create_user_params
-            params.require(:user).permit(
+            params.permit(
                 :name, 
                 :email, 
                 :contact_no, 
                 :password, 
-                :password_confirmation,
-                :role)
+                :password_confirmation)
         end
 
         def update_user_params
-            params.require(:user).permit(
+            params.permit(
                 :name, 
                 :email, 
                 :contact_no, 

@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       get 'auto_login' => 'sessions#auto_login'
       delete 'logout' => 'sessions#destroy'
       # resources :sessions, only: [:create, :]
+      post 'customers' => 'users#createCustomer'
+      post 'merchants' => 'users#createMerchant'
       get 'customers' => 'users#indexCustomer'
       get 'customers/:id' => 'users#showCustomer'
       get 'merchants' => 'users#indexMerchant'
