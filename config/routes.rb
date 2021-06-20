@@ -31,12 +31,15 @@ Rails.application.routes.draw do
       post 'merchants' => 'users#createMerchant'
       get 'customers' => 'users#indexCustomer'
       get 'customers/:id' => 'users#showCustomer'
-      get 'customers/:id/addresses' => 'addresses#index'
+      get 'customers/:user_id/addresses' => 'addresses#index'
+      post 'customers/:user_id/addresses' => 'addresses#create'
       get 'customers/:user_id/addresses/:id' => 'addresses#show'
+
       get 'merchants' => 'users#indexMerchant'
       get 'merchants/addresses' => 'addresses#showAllMerchantAddresses'
       get 'merchants/:id' => 'users#showMerchant'
       get 'merchants/:user_id/addresses' => 'addresses#index'
+      post 'merchants/:user_id/addresses' => 'addresses#create'
       get 'merchants/:user_id/addresses/:id' => 'addresses#show'
       resources :users, only: [ :index, :create, :show, :update, :destroy] do
         post :activate, on: :collection

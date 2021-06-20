@@ -106,7 +106,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
 
     private
         def address_params
-            params.require(:address).permit(
+            params.permit(
                 :street_address,
                 :city,
                 :country,
