@@ -36,6 +36,8 @@ Rails.application.routes.draw do
       get 'merchants' => 'users#indexMerchant'
       get 'merchants/addresses' => 'addresses#showAllMerchantAddresses'
       get 'merchants/:id' => 'users#showMerchant'
+      get 'merchants/:user_id/addresses' => 'addresses#index'
+      get 'merchants/:user_id/addresses/:id' => 'addresses#show'
       resources :users, only: [ :index, :create, :show, :update, :destroy] do
         post :activate, on: :collection
         resources :addresses, only: [:index, :create, :show, :update, :destroy]

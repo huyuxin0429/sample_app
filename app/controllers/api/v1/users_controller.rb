@@ -45,7 +45,17 @@ class Api::V1::UsersController < Api::V1::BaseController
          #, only: [:id, :name, :email, :contact_no]
         # render json: @user
         if @user
-            render json: @user
+            render json: @user, include:
+            [:addresses =>{ :only =>  [
+                :id,
+                :street_address,
+                :city,
+                :country,
+                :postcode,
+                :building_no,
+                :unit_number,
+                :name
+            ] } ]
         else
             render json: { status: "error", message: "Customer not found" }, status: 400 
         end
@@ -56,7 +66,17 @@ class Api::V1::UsersController < Api::V1::BaseController
          #, only: [:id, :name, :email, :contact_no]
         # render json: @user
         if @user
-            render json: @user
+            render json: @user, include:
+            [:addresses =>{ :only =>  [
+                :id,
+                :street_address,
+                :city,
+                :country,
+                :postcode,
+                :building_no,
+                :unit_number,
+                :name
+            ] } ]
         else
             render json: { status: "error", message: "Merchant not found" }, status: 400 
         end
