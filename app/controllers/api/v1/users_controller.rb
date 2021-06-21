@@ -12,7 +12,18 @@ class Api::V1::UsersController < Api::V1::BaseController
         instance_variable = instance_variable_get("@#{controller_name.pluralize}")
         class_variable = controller_name.classify.constantize
         instance_variables = class_variable.all
-        render json: instance_variables #, only: [:id, :name, :email, :contact_no]
+        render json: instance_variables, include:
+                [:addresses =>{ :only =>  [
+                    :id,
+                    :street_address,
+                    :city,
+                    :country,
+                    :postcode,
+                    :building_no,
+                    :unit_number,
+                    :name
+                ] } ]
+         #, only: [:id, :name, :email, :contact_no]
     end
 
     # GET /api/v1/customers

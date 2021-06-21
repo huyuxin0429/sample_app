@@ -8,7 +8,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
     end
 
     def showAllMerchantAddresses
-        @merchants = User.where(role: "merchant")
+        @merchants = Merchants.all
         @addresses = @merchants.flat_map{ |merchant| merchant.addresses if merchant.addresses.size > 0 }
         @addresses = @addresses.select{ |merchant| not merchant.nil?}
         render json: @addresses, only: [

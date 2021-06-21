@@ -38,9 +38,21 @@ Rails.application.routes.draw do
       # delete 'customers/:id' => 'users#destroy'
       
 
+      # post 'merchants' => 'users#createMerchant'
+      # get 'merchants' => 'users#indexMerchant'
+      get 'merchants/addresses' => 'merchants#showAllMerchantAddresses'
+      # get 'merchants/:id' => 'users#showMerchant'
+      # get 'merchants/:user_id/addresses' => 'addresses#index'
+      # post 'merchants/:user_id/addresses' => 'addresses#create'
+      # get 'merchants/:user_id/addresses/:id' => 'addresses#show'
+      # patch 'merchants/:id' => 'users#update'
+      # patch 'merchants/:user_id/addresses/:id' => 'addresses#update'
+      # delete 'merchants/:id' => 'users#destroy'
+
       resources :merchants, only: [ :index, :create, :show, :update, :destroy] do
         resources :addresses, only: [:index, :create, :show, :update, :destroy]
       end
+
       resources :customers, only: [ :index, :create, :show, :update, :destroy] do
         resources :addresses, only: [:index, :create, :show, :update, :destroy]
       end
