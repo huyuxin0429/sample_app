@@ -27,27 +27,23 @@ Rails.application.routes.draw do
       get 'auto_login' => 'sessions#auto_login'
       delete 'logout' => 'sessions#destroy'
       # resources :sessions, only: [:create, :]
-      post 'customers' => 'users#createCustomer'
-      get 'customers' => 'users#indexCustomer'
-      get 'customers/:id' => 'users#showCustomer'
-      get 'customers/:user_id/addresses' => 'addresses#index'
-      post 'customers/:user_id/addresses' => 'addresses#create'
-      get 'customers/:user_id/addresses/:id' => 'addresses#show'
-      patch 'customers/:id' => 'users#update'
-      patch 'customers/:user_id/addresses/:id' => 'addresses#update'
-      delete 'customers/:id' => 'users#destroy'
+      # post 'customers' => 'users#createCustomer'
+      # get 'customers' => 'users#indexCustomer'
+      # get 'customers/:id' => 'users#showCustomer'
+      # get 'customers/:user_id/addresses' => 'addresses#index'
+      # post 'customers/:user_id/addresses' => 'addresses#create'
+      # get 'customers/:user_id/addresses/:id' => 'addresses#show'
+      # patch 'customers/:id' => 'users#update'
+      # patch 'customers/:user_id/addresses/:id' => 'addresses#update'
+      # delete 'customers/:id' => 'users#destroy'
       
 
-      post 'merchants' => 'users#createMerchant'
-      get 'merchants' => 'users#indexMerchant'
-      get 'merchants/addresses' => 'addresses#showAllMerchantAddresses'
-      get 'merchants/:id' => 'users#showMerchant'
-      get 'merchants/:user_id/addresses' => 'addresses#index'
-      post 'merchants/:user_id/addresses' => 'addresses#create'
-      get 'merchants/:user_id/addresses/:id' => 'addresses#show'
-      patch 'merchants/:id' => 'users#update'
-      patch 'merchants/:user_id/addresses/:id' => 'addresses#update'
-      delete 'merchants/:id' => 'users#destroy'
+      resources :merchants, only: [ :index, :create, :show, :update, :destroy] do
+        resources :addresses, only: [:index, :create, :show, :update, :destroy]
+      end
+      resources :customers, only: [ :index, :create, :show, :update, :destroy] do
+        resources :addresses, only: [:index, :create, :show, :update, :destroy]
+      end
       # resources :users, only: [ :index, :create, :show, :update, :destroy] do
       #   post :activate, on: :collection
       #   resources :addresses, only: [:index, :create, :show, :update, :destroy]

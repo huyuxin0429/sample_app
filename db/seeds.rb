@@ -15,24 +15,21 @@ user = User.create!(
     contact_no: 12341234,
     admin: true,
     activated: true,
-    activated_at: Time.zone.now,
-    role: 'not_set',
-    identifiable: Customer.create!())
+    activated_at: Time.zone.now)
 # Generate a bunch of additional customers.
 99.times do |n|
     name = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
     password = "password"
     contact_no = 12341234
-    User.create!(name: name,
+    Customer.create!(name: name,
         email: email,
         password: password,
         password_confirmation: password,
         contact_no: contact_no,
         activated: true,
-        activated_at: Time.zone.now,
-        role: "customer",
-        identifiable: Customer.create!())
+        activated_at: Time.zone.now
+    )
 end
 # Generate a bunch of additional merchants.
 99.times do |n|
@@ -40,24 +37,22 @@ end
     email = "merchant-#{n+1}@railstutorial.org"
     password = "password"
     contact_no = 12341234
-    User.create!(name: name,
+    Merchant.create!(name: name,
         email: email,
         password: password,
         password_confirmation: password,
         contact_no: contact_no,
         activated: true,
-        activated_at: Time.zone.now,
-        role: "merchant",
-        identifiable: Merchant.create!())
+        activated_at: Time.zone.now)
 end
 
 # Generate micropost for a subset of users.activated
-users = User.order(:created_at).take(6)
-merchants = User.where(role: "merchant")
+customers = Customer.order(:created_at).take(6)
+merchants = Merchant.all
 
 50.times do
     content = Faker::Lorem.sentence(word_count: 5)
-    users.each{ |user| user.microposts.create!(content: content) }
+    customers.each{ |customer| customer.microposts.create!(content: content) }
 end
 
 3.times do
@@ -69,7 +64,7 @@ end
     unit_number = "#23-233"
     name =  Faker::Address.community 
 
-    users.each{|user| user.addresses.create!(
+    customers.each{|customer| customer.addresses.create!(
         street_address: street_address,
         city: city,
         country: country,

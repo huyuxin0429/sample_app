@@ -118,7 +118,12 @@ class Api::V1::AddressesController < Api::V1::BaseController
 
         def correct_user_filter
             # byebug
-            @user = User.find(params[:user_id])
+            
+            if params.has_key?(:customer_id)
+                @user = Customer.find(params[:customer_id])
+            elsif params.has_key?(:merchant_id)
+                @user = Merchant.find(params[:merchant_id])
+            end
             
             render json: { message: 'Unauthorised user' },
                 status: :unauthorized unless current_user?(@user) || current_user.admin?
