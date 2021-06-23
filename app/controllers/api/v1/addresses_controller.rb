@@ -7,12 +7,17 @@ class Api::V1::AddressesController < Api::V1::BaseController
         
     end
 
+    def stated_user
+        user_id_name = params.keys.fourth.to_sym
+        User.find(params[user_id_name])
+    end
+
     
 
     # POST /api/v1/users/:id/addresses
     def create
         # @user = Users.find(params[:user_id])
-        @address = current_user.addresses.build(address_params)
+        @address = stated_user.addresses.build(address_params)
         if @address.save
             render json: { message: "Address created"}, status: 201
         else
@@ -26,8 +31,8 @@ class Api::V1::AddressesController < Api::V1::BaseController
     def index
         # byebug
         # @user = User.find(params[:user_id])
-        byebug
-        @addresses = current_user.addresses.all;
+        # byebug
+        @addresses = stated_user.addresses.all;
         
         render json: @addresses, only: [
             :id,
@@ -45,8 +50,8 @@ class Api::V1::AddressesController < Api::V1::BaseController
     # PUT api/v1/users/:user_id/addresses/:id
     def update
         # @user = User.find(params[:user_id])
-        if current_user.addresses && 
-            @address = current_user.addresses.find_by(id: params[:id])
+        if stated_user.addresses && 
+            @address = stated_user.addresses.find_by(id: params[:id])
             if @address.update(address_params)
                 render json: { message: "Address successfully updated" }, status: 200
             else
@@ -60,7 +65,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
     # GET /api/v1/users/:id/addresses/:address_id
     def show
         # @user = User.find(params[:user_id])
-        @address = current_user.addresses.find_by(id: params[:id])
+        @address = stated_user.addresses.find_by(id: params[:id])
         if @address
             render json: @address, only: [
                 :street_address,
@@ -81,7 +86,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
     def destroy
         # @user = User.find(params[:user_id])
         if current_user.addresses && 
-            @address = current_user.addresses.find_by(id: params[:id])
+            @address = stated_user.addresses.find_by(id: params[:id])
             @address.destroy
             render json: { message: "Address destroyed"}, status: 204
         else
@@ -113,7 +118,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
             end
             
             render json: { message: 'Unauthorised user' },
-                status: :unauthorized unless current_user?(@user) || current_user.admin?
+                status: :unauthorized unless current_user?(stated_user) || current_user.admin?
         end
 
 

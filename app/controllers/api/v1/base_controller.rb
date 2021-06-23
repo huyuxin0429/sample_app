@@ -58,7 +58,7 @@ class Api::V1::BaseController <  ActionController::API
     def current_merchant
         if decoded_token
             merchant_id = decoded_token[0]['data']['user_id']
-            byebug
+            # byebug
             @merchant = Merchant.find_by(id: merchant_id)
         end
     end

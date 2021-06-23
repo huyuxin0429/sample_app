@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
     belongs_to :merchant
-    validates :name, presence: true
+    validates :name, presence: true, uniqueness: true
     validates :price, presence: true
     validates :quantity, presence: true
     validates :merchant_id, presence: true

@@ -10,8 +10,8 @@ class Api::V1::ProductsController < Api::V1::BaseController
 
     # POST /api/v1/users/:id/products
     def create
-        # @user = Users.find(params[:user_id])
-        @product = current_merchant.products.build(product_params)
+        @merchant = Merchant.find(params[:merchant_id])
+        @product = @merchant.products.build(product_params)
         if @product.save
             render json: { message: "Product created"}, status: 201
         else
@@ -23,60 +23,64 @@ class Api::V1::ProductsController < Api::V1::BaseController
 
     # GET /api/v1/users/:id/products
     def index
+        @merchant = Merchant.find(params[:merchant_id])
         # byebug
-        # @user = User.find(params[:user_id])
-        @products = current_merchant.products.all;
-        render json: @products, only: [
-            :name,
-            :price,
-            :quantity,
-            :description,
-            :image
-        ]
+        @products = @merchant.products.all;
+        render json: @products
+        # , only: [
+            
+        #     :name,
+        #     :price,
+        #     :quantity,
+        #     :description,
+        #     :image
+        # ]
     end
 
 
     # PUT api/v1/users/:user_id/products/:id
     def update
+        @merchant = Merchant.find(params[:merchant_id])
         # @user = User.find(params[:user_id])
-        if current_user.products && 
-            @product = current_user.products.find_by(id: params[:id])
+        if @merchant.products && 
+            @product = @merchant.products.find_by(id: params[:id])
             if @product.update(product_params)
-                render json: { message: "Address successfully updated" }, status: 200
+                render json: { message: "Product successfully updated" }, status: 200
             else
                 render json: { status: "error", message: @product.errors.full_messages.join("/n")}, status: 400 
             end
         else
-            render json: { error: "Address not found" }, status: 400
+            render json: { error: "Product not found" }, status: 400
         end
     end
 
     # GET /api/v1/users/:id/products/:product_id
     def show
-        # @user = User.find(params[:user_id])
-        @product = current_user.products.find_by(id: params[:id])
+        @merchant = Merchant.find(params[:merchant_id])
+        @product = @merchant.products.find_by(id: params[:id])
         if @product
-            render json: @product, only: [
-                :name,
-                :price,
-                :description,
-                :image
-            ]
+            render json: @product
+            # , only: [
+            #     :name,
+            #     :price,
+            #     :description,
+            #     :image
+            # ]
         else
-            render json: { error: "Address does not exist." }, status: 400
+            render json: { error: "Product does not exist." }, status: 400
         end
         
     end
 
     # DELETE /api/v1/users/:id/products/:product_id
     def destroy
-        # @user = User.find(params[:user_id])
-        if current_user.products && 
-            @product = current_user.products.find_by(id: params[:id])
+        @merchant = Merchant.find(params[:merchant_id])
+        if @merchant.products && 
+            @product = @merchant.products.find_by(id: params[:id])
             @product.destroy
-            render json: { message: "Address destroyed"}, status: 204
+            render json: { message: "Product destroyed"}, status: 204
         else
-            render json: { error: "Address does not exist." }, status: 400
+            render json: { error: "Product does not exist." }, status: 400
         end
  
       
@@ -87,6 +91,8 @@ class Api::V1::ProductsController < Api::V1::BaseController
             params.permit(
                 :name,
                 :price,
+                :quantity,
+                :merchant_id,
                 :description,
                 :image
         )
