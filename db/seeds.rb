@@ -99,6 +99,22 @@ end
     
 end
 
+3.times do
+    description =  Faker::Lorem.sentence(word_count: 5)
+    quantity =  Faker::Number.between(from: 1, to: 10)  
+    price = Faker::Commerce.price()
+    name =  Faker::Commerce.product_name()
+
+    merchants.each{|merchant| merchant.products.create!(
+        description: description,
+        quantity: quantity,
+        price: price,
+        name: name
+    )}
+
+    
+end
+
 # Create following relationships.
 users = User.all
 user = users.first

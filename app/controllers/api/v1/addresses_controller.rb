@@ -7,26 +7,11 @@ class Api::V1::AddressesController < Api::V1::BaseController
         
     end
 
-    def showAllMerchantAddresses
-        @merchants = Merchants.all
-        @addresses = @merchants.flat_map{ |merchant| merchant.addresses if merchant.addresses.size > 0 }
-        @addresses = @addresses.select{ |merchant| not merchant.nil?}
-        render json: @addresses, only: [
-            :id,
-            :street_address,
-            :city,
-            :country,
-            :postcode,
-            :building_no,
-            :unit_number,
-            :name
-        ]
-    end
+    
 
     # POST /api/v1/users/:id/addresses
     def create
         # @user = Users.find(params[:user_id])
-        current_user
         @address = current_user.addresses.build(address_params)
         if @address.save
             render json: { message: "Address created"}, status: 201
@@ -41,7 +26,9 @@ class Api::V1::AddressesController < Api::V1::BaseController
     def index
         # byebug
         # @user = User.find(params[:user_id])
+        byebug
         @addresses = current_user.addresses.all;
+        
         render json: @addresses, only: [
             :id,
             :street_address,

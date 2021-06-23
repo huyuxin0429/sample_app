@@ -51,6 +51,7 @@ Rails.application.routes.draw do
 
       resources :merchants, only: [ :index, :create, :show, :update, :destroy] do
         resources :addresses, only: [:index, :create, :show, :update, :destroy]
+        resources :products, only: [:index, :create, :show, :update, :destroy]
       end
 
       resources :customers, only: [ :index, :create, :show, :update, :destroy] do

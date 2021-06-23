@@ -11,8 +11,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
     # POST /api/v1/users/:id/products
     def create
         # @user = Users.find(params[:user_id])
-        current_user
-        @product = current_user.products.build(product_params)
+        @product = current_merchant.products.build(product_params)
         if @product.save
             render json: { message: "Product created"}, status: 201
         else
@@ -26,10 +25,11 @@ class Api::V1::ProductsController < Api::V1::BaseController
     def index
         # byebug
         # @user = User.find(params[:user_id])
-        @products = current_user.products.all;
+        @products = current_merchant.products.all;
         render json: @products, only: [
             :name,
             :price,
+            :quantity,
             :description,
             :image
         ]

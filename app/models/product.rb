@@ -1,8 +1,9 @@
 class Product < ApplicationRecord
-    belongs_to :user
+    belongs_to :merchant
     validates :name, presence: true
     validates :price, presence: true
-    validates :user_id, presence: true
+    validates :quantity, presence: true
+    validates :merchant_id, presence: true
     has_one_attached :image
 
     validates :image, content_type: { in: %w[image/jpeg /image/gif image/png],
