@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 2021_06_21_100831) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "merchant_id"
     t.index ["merchant_id"], name: "index_products_on_merchant_id"
+    t.index ["name", "merchant_id"], name: "index_products_on_name_and_merchant_id", unique: true
   end
 
   create_table "relationships", force: :cascade do |t|

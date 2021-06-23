@@ -1,9 +1,10 @@
 class Product < ApplicationRecord
     belongs_to :merchant
-    validates :name, presence: true, uniqueness: true
+    validates :name, presence: true
     validates :price, presence: true
     validates :quantity, presence: true
     validates :merchant_id, presence: true
+    validates_uniqueness_of :name, :scope => [:merchant_id]
     has_one_attached :image
 
     validates :image, content_type: { in: %w[image/jpeg /image/gif image/png],
