@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      get 'health/index'
+    end
+  end
   get 'password_resets/new'
   get 'password_resets/edit'
   get 'sessions/new'
@@ -48,14 +53,25 @@ Rails.application.routes.draw do
       # patch 'merchants/:id' => 'users#update'
       # patch 'merchants/:user_id/addresses/:id' => 'addresses#update'
       # delete 'merchants/:id' => 'users#destroy'
+      post 'newOrder' => 'orders#create'
 
       resources :merchants, only: [ :index, :create, :show, :update, :destroy] do
         resources :addresses, only: [:index, :create, :show, :update, :destroy]
-        resources :products, only: [:index, :create, :show, :update, :destroy]
+        resources :products, only: [:index, :create, :show, :update, :destroy] do
+          resources :orders, only: [:index, :show, :destroy] do
+            resources :order_entries, only: [:index, :show, :update]
+          end
+        end
+        resources :orders, only: [:index, :show, :destroy] do
+          resources :order_entries, only: [:index, :show, :update]
+        end
       end
 
-      resources :customers, only: [ :index, :create, :show, :update, :destroy] do
+      resources :customers, only: [ :create, :index, :show, :update, :destroy] do
         resources :addresses, only: [:index, :create, :show, :update, :destroy]
+        resources :orders, only: [:index, :show, :destroy] do
+          resources :order_entries, only: [:index, :show, :update]
+        end
       end
       # resources :users, only: [ :index, :create, :show, :update, :destroy] do
       #   post :activate, on: :collection

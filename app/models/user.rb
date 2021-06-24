@@ -28,7 +28,7 @@ class User < ApplicationRecord
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
     ALL_NUMBER_REGEX =  /\A[0-9]*$\z/
     validates :contact_no, presence: true, 
-        format: { with: ALL_NUMBER_REGEX }, length: { is: 8}
+        numericality: { only_integer: true }, length: { is: 8}
 
 
     

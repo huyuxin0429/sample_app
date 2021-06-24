@@ -23,7 +23,7 @@ class Api::V1::BaseController <  ActionController::API
     
     def auth_header
     # { Authorization: 'Bearer <token>' }
-    request.headers['Authorization']
+        request.headers['Authorization']
     end
 
     def decoded_token
@@ -49,8 +49,14 @@ class Api::V1::BaseController <  ActionController::API
 
     def current_user
         if decoded_token
-            user_id = decoded_token[0]['data']['user_id']
+            # step1 = decoded_token[0]
+            # step2 = step1["data"]
+            # step3 = step2["user_id"].to_i
+            # byebug
+            user_id = decoded_token[0]["data"]["user_id"]
             @user = User.find_by(id: user_id)
+            # byebug
+
         end
                 
     end

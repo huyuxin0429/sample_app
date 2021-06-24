@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_21_100831) do
+ActiveRecord::Schema.define(version: 2021_06_24_081530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,34 @@ ActiveRecord::Schema.define(version: 2021_06_21_100831) do
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
+  create_table "order_entries", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "order_id"
+    t.integer "units_bought"
+    t.float "total_unit_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_order_entries_on_order_id"
+    t.index ["product_id"], name: "index_order_entries_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.bigint "merchant_id"
+    t.float "total_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "pick_up_address_id"
+    t.bigint "drop_off_address_id"
+    t.index ["customer_id", "created_at"], name: "index_orders_on_customer_id_and_created_at"
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["drop_off_address_id"], name: "index_orders_on_drop_off_address_id"
+    t.index ["merchant_id", "created_at"], name: "index_orders_on_merchant_id_and_created_at"
+    t.index ["merchant_id", "customer_id"], name: "index_orders_on_merchant_id_and_customer_id"
+    t.index ["merchant_id"], name: "index_orders_on_merchant_id"
+    t.index ["pick_up_address_id"], name: "index_orders_on_pick_up_address_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -110,7 +138,7 @@ ActiveRecord::Schema.define(version: 2021_06_21_100831) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.string "activation_digest"
-    t.boolean "activated"
+    t.boolean "activated", default: false
     t.datetime "activated_at"
     t.string "type"
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -121,4 +149,6 @@ ActiveRecord::Schema.define(version: 2021_06_21_100831) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
   add_foreign_key "microposts", "users"
+  add_foreign_key "orders", "addresses", column: "drop_off_address_id"
+  add_foreign_key "orders", "addresses", column: "pick_up_address_id"
 end

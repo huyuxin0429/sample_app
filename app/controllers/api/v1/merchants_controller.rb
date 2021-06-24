@@ -18,4 +18,12 @@ class Api::V1::MerchantsController < Api::V1::UsersController
             :name
         ]
     end
+
+    # def show
+    #     # @user = User.find(params[:id])
+    #     # render json: @user #, only: [:id, :name, :email, :contact_no]
+    #     @user = Merchant.find_by(id: params[:id])
+    #     if @
+    #     render json: @user #, only: [:id, :name, :email, :contact_no]
+    # end
 end

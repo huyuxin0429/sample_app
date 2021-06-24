@@ -32,15 +32,14 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'bootstrap-sass', '~> 3.4.1'
 
-gem 'rspec', '~> 3.5'
+
 
 
 
 #additional validation for active storage
 gem 'active_storage_validations', '0.8.2'
 
-# Create fake users
-gem "faker"
+
 
 # Image processing
 gem 'image_processing', '1.9.3'
@@ -60,6 +59,11 @@ gem "jwt"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # Use sqlite3 as the database for Active Record
+  gem "rspec-rails"
+  # Create fake users
+  gem "faker"
+
+
 
   gem 'rails-controller-testing'
   gem 'win32console'
@@ -97,13 +101,12 @@ group :test do
 
   gem 'database_cleaner-active_record'
 
-  gem "rspec-rails"
-  gem "factory_girl_rails"
+  # gem "rspec-rails"
   gem 'ffaker'
 end
 
 group :production do
-  gem 'pg', '~> 1.2', '>= 1.2.3'
+  # gem 'pg', '~> 1.2', '>= 1.2.3'
   #gem 'rails_12factor', '0.0.2'
 end
 

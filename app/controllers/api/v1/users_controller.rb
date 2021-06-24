@@ -52,10 +52,19 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     # GET /api/v1/users/:id
     def show
+        instance_variable = instance_variable_get("@#{controller_name.pluralize}")
+        class_variable = controller_name.classify.constantize
+        instance_variable = class_variable.find_by(id: params[:id])
         # @user = User.find(params[:id])
         # render json: @user #, only: [:id, :name, :email, :contact_no]
-        @user = identify_user_in_params
-        render json: @user #, only: [:id, :name, :email, :contact_no]
+        
+        # if params.keys.fourth == :
+        if instance_variable
+            render json: instance_variable #, only: [:id, :name, :email, :contact_no]
+        else
+            render json: { error: "User does not exist." }, status: 400
+        end
+
     end
 
     # def showCustomer
@@ -136,19 +145,16 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     # POST /api/v1/users
     def create
-        instance_variable = instance_variable_get("@#{controller_name.pluralize}")
+        # instance_variable = instance_variable_get("@#{controller_name.pluralize}")
         class_variable = controller_name.classify.constantize
-        # byebug
         instance_variable = class_variable.new(user_params)
-        # puts @user.errors.full_messages
-        # puts 'test'
+
         if instance_variable.save
             instance_variable.send_activation_email
             token = encode_token({user_id: instance_variable.id})
-            render json: { status: "saved", user: instance_variable, token: token }
-            # render json: @user, only: [:id, :name, :email, :contact_no], status: 201
+            render json: { status: "saved", user: instance_variable, token: token }, status: 201
         else
-            render json: { status: "error", message: instance_variable.errors.full_messages.join("/n")}, status: 400 
+            render json: { status: "error", message: instance_variable.errors.full_messages}, status: 400 
         end
 
     end
@@ -158,12 +164,15 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     # PUT /api/v1/users/:id
     def update
-        @user = identifiable_user_in_params
-        if @user 
-            if @user.update(user_params)
+        instance_variable = instance_variable_get("@#{controller_name.pluralize}")
+        class_variable = controller_name.classify.constantize
+        instance_variable = class_variable.find_by(id: params[:id])
+
+        if instance_variable
+            if instance_variable.update(user_params)
                 render json: { message: "User successfully updated" }, status: 200
             else
-                render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
+                render json: { status: "error", message: instance_variable.errors.full_messages}, status: 400 
             end
         else
             render json: { error: "User not found" }, status: 400
@@ -172,9 +181,10 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     # DELETE /api/v1/users/:id
     def destroy
-        @user = identifiable_user_in_params
-        if @user
-            @user.destroy
+        class_variable = controller_name.classify.constantize
+        instance_variable = class_variable.find_by(id: params[:id])
+        if instance_variable
+            instance_variable.destroy
             render json: { message: "User successfully deleted." }, status: 204
         else
             render json: { error: "User does not exist." }, status: 400
