@@ -33,7 +33,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'bootstrap-sass', '~> 3.4.1'
 
 
-
+gem "faker"
 
 
 #additional validation for active storage
@@ -61,7 +61,7 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem "rspec-rails"
   # Create fake users
-  gem "faker"
+  
 
 
 
@@ -102,7 +102,7 @@ group :test do
   gem 'database_cleaner-active_record'
 
   # gem "rspec-rails"
-  gem 'ffaker'
+  # gem 'ffaker'
 end
 
 group :production do

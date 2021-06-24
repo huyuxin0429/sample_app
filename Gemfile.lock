@@ -99,7 +99,6 @@ GEM
     execjs (2.8.1)
     faker (2.18.0)
       i18n (>= 1.6, < 2)
-    ffaker (2.18.0)
     ffi (1.15.3-x64-mingw32)
     formatador (0.3.0)
     globalid (0.4.2)
@@ -297,7 +296,6 @@ DEPENDENCIES
   capybara (>= 3.26)
   database_cleaner-active_record
   faker
-  ffaker
   guard
   guard-minitest
   image_processing (= 1.9.3)
