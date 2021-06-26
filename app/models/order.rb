@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
     belongs_to :customer
     belongs_to :merchant
+    belongs_to :drone, optional: true
     has_many :order_entries
     has_many :products, through: :order_entries
 
@@ -13,6 +14,14 @@ class Order < ApplicationRecord
     validate :customer_contains_drop_off_address
     validate :merchant_contains_pick_up_address
     before_save :calculate_total_price
+
+    enum status: { 
+        merchant_preparing: "merchant_preparing", 
+        awaiting_drone_pickup: "awaiting_drone_pickup", 
+        enroute_to_customer: "enroute_to_customer",
+        awaiting_customer_pickup: "awaiting_customer_pickup", 
+        completed: "completed"
+      }
 
 
     def all_order_entries_are_from_same_merchant

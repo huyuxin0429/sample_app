@@ -8,8 +8,8 @@ class CreateAddresses < ActiveRecord::Migration[6.1]
       t.string :building_no
       t.string :unit_number
       t.string :name
-      t.references :user, null: false, foreign_key: true
-
+      # t.references :user, null: false, foreign_key: true
+      t.references :addressable, polymorphic: true
       t.timestamps
     end
   end

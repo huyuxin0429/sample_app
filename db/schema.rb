@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_25_170138) do
+ActiveRecord::Schema.define(version: 2021_06_26_120506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,19 +51,23 @@ ActiveRecord::Schema.define(version: 2021_06_25_170138) do
     t.string "building_no"
     t.string "unit_number"
     t.string "name"
-    t.bigint "user_id", null: false
+    t.string "addressable_type"
+    t.bigint "addressable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "latitude"
     t.decimal "longitude"
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
     t.index ["latitude", "longitude"], name: "index_addresses_on_latitude_and_longitude"
-    t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
   create_table "customers", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
+
+# Could not dump table "drones" because of following StandardError
+#   Unknown type 'drone_status' for column 'status'
 
   create_table "merchants", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -90,22 +94,8 @@ ActiveRecord::Schema.define(version: 2021_06_25_170138) do
     t.index ["product_id"], name: "index_order_entries_on_product_id"
   end
 
-  create_table "orders", force: :cascade do |t|
-    t.bigint "customer_id"
-    t.bigint "merchant_id"
-    t.float "total_price"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "pick_up_address_id"
-    t.bigint "drop_off_address_id"
-    t.index ["customer_id", "created_at"], name: "index_orders_on_customer_id_and_created_at"
-    t.index ["customer_id"], name: "index_orders_on_customer_id"
-    t.index ["drop_off_address_id"], name: "index_orders_on_drop_off_address_id"
-    t.index ["merchant_id", "created_at"], name: "index_orders_on_merchant_id_and_created_at"
-    t.index ["merchant_id", "customer_id"], name: "index_orders_on_merchant_id_and_customer_id"
-    t.index ["merchant_id"], name: "index_orders_on_merchant_id"
-    t.index ["pick_up_address_id"], name: "index_orders_on_pick_up_address_id"
-  end
+# Could not dump table "orders" because of following StandardError
+#   Unknown type 'order_status' for column 'status'
 
   create_table "products", force: :cascade do |t|
     t.string "name"
@@ -150,7 +140,6 @@ ActiveRecord::Schema.define(version: 2021_06_25_170138) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "addresses", "users"
   add_foreign_key "microposts", "users"
   add_foreign_key "orders", "addresses", column: "drop_off_address_id"
   add_foreign_key "orders", "addresses", column: "pick_up_address_id"

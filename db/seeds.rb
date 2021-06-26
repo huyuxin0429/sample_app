@@ -8,6 +8,8 @@
 
 
 require "#{Rails.root}/lib/SG random address generator/generate_new_address.rb"
+require "#{Rails.root}/lib/Simulator/drone_handler.rb"
+include DroneHandler
 include GenerateNewAddress
 
 user = User.create!(
@@ -49,6 +51,20 @@ end
         activated_at: Time.zone.now)
 end
 
+3.times do |n|
+    customGenerated = GenerateNewAddress.new
+    country =  customGenerated[0]
+    postcode =  customGenerated[1]
+    drone = Drone.create!()
+    # byebug
+    drone.address = Address.new(
+        country: country,
+        postcode: postcode
+    )
+    # drone.current_address.addressable = drone
+
+end
+
 # Generate micropost for a subset of users.activated
 customers = Customer.all
 merchants = Merchant.all
@@ -60,16 +76,27 @@ merchants = Merchant.all
 
 3.times do
     
-    customGenerated = GenerateNewAddress.new
-    street_address = Faker::Address.street_address() 
-    city = Faker::Address.city() 
-    country =  customGenerated[0]
-    postcode =  customGenerated[1]
-    building_no =  Faker::Number.between(from: 1, to: 10)  
-    unit_number = "#23-233"
-    name =  Faker::Address.community 
+    # customGenerated = GenerateNewAddress.new
+    # street_address = Faker::Address.street_address() 
+    # city = Faker::Address.city() 
+    # country =  customGenerated[0]
+    # postcode =  customGenerated[1]
+    # building_no =  Faker::Number.between(from: 1, to: 10)  
+    # unit_number = "#23-233"
+    # name =  Faker::Address.community 
     # byebug
-    customers.each{|customer| add = customer.addresses.new(
+    customers.each{|customer| 
+        
+        customGenerated = GenerateNewAddress.new
+        street_address = Faker::Address.street_address() 
+        city = Faker::Address.city() 
+        country =  customGenerated[0]
+        postcode =  customGenerated[1]
+        building_no =  Faker::Number.between(from: 1, to: 10)  
+        unit_number = "#23-233"
+        name =  Faker::Address.community 
+        
+        add = customer.addresses.new(
         street_address: street_address,
         city: city,
         country: country,
@@ -87,16 +114,27 @@ merchants = Merchant.all
 end
 
 1.times do
-    customGenerated = GenerateNewAddress.new
-    street_address = Faker::Address.street_address() 
-    city = Faker::Address.city() 
-    country =  customGenerated[0]
-    postcode =  customGenerated[1]
-    building_no =  Faker::Number.between(from: 1, to: 10)  
-    unit_number = "#23-233"
+    # customGenerated = GenerateNewAddress.new
+    # street_address = Faker::Address.street_address() 
+    # city = Faker::Address.city() 
+    # country =  customGenerated[0]
+    # postcode =  customGenerated[1]
+    # building_no =  Faker::Number.between(from: 1, to: 10)  
+    # unit_number = "#23-233"
     name =  Faker::Address.community 
 
-    merchants.each{|merchant| add = merchant.addresses.create!(
+    merchants.each{|merchant| 
+        
+        customGenerated = GenerateNewAddress.new
+        street_address = Faker::Address.street_address() 
+        city = Faker::Address.city() 
+        country =  customGenerated[0]
+        postcode =  customGenerated[1]
+        building_no =  Faker::Number.between(from: 1, to: 10)  
+        unit_number = "#23-233"
+        name =  Faker::Address.community 
+
+        add = merchant.addresses.create!(
         street_address: street_address,
         city: city,
         country: country,
@@ -135,7 +173,7 @@ merchants.each{|merchant|
 
 customers = Customer.all 
 
-10.times do
+2.times do
     customers.each{|customer|
         merchant = Merchant.order("RANDOM()").first
         order = Order.new()
@@ -156,6 +194,7 @@ customers = Customer.all
             total_price += total_unit_price
             order.order_entries << entry
         }
+        addOrderToDroneQueue(order)
         order.total_price = total_price
         order.save!
     }
