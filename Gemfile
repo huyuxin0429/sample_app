@@ -56,7 +56,12 @@ gem "jwt"
 
 # gem 'yarn'
 # gem 'google-maps', '~> 2.2'
+
+#For location based functions
 gem 'geocoder'
+
+#for timed jobs
+gem 'whenever'
 
 
 

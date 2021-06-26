@@ -51,19 +51,7 @@ end
         activated_at: Time.zone.now)
 end
 
-3.times do |n|
-    customGenerated = GenerateNewAddress.new
-    country =  customGenerated[0]
-    postcode =  customGenerated[1]
-    drone = Drone.create!()
-    # byebug
-    drone.address = Address.new(
-        country: country,
-        postcode: postcode
-    )
-    # drone.current_address.addressable = drone
 
-end
 
 # Generate micropost for a subset of users.activated
 customers = Customer.all
@@ -85,32 +73,50 @@ merchants = Merchant.all
     # unit_number = "#23-233"
     # name =  Faker::Address.community 
     # byebug
-    customers.each{|customer| 
-        
-        customGenerated = GenerateNewAddress.new
-        street_address = Faker::Address.street_address() 
-        city = Faker::Address.city() 
-        country =  customGenerated[0]
-        postcode =  customGenerated[1]
-        building_no =  Faker::Number.between(from: 1, to: 10)  
-        unit_number = "#23-233"
-        name =  Faker::Address.community 
-        
-        add = customer.addresses.new(
-        street_address: street_address,
-        city: city,
-        country: country,
-        postcode: postcode,
-        building_no: building_no,
-        unit_number: unit_number,
-        name: name
-        )
-        # byebug
-        add.save!
+customers.each{|customer| 
+    
+    customGenerated = GenerateNewAddress.new
+    street_address = Faker::Address.street_address() 
+    city = Faker::Address.city() 
+    country =  customGenerated[0]
+    postcode =  customGenerated[1]
+    building_no =  Faker::Number.between(from: 1, to: 10)  
+    unit_number = "#23-233"
+    name =  Faker::Address.community 
+    
+    add = customer.addresses.new(
+    street_address: street_address,
+    city: city,
+    country: country,
+    postcode: postcode,
+    building_no: building_no,
+    unit_number: unit_number,
+    name: name
+    )
+    # byebug
+    add.save!
 
-        }
+    }
 
     
+end
+
+3.times do |n|
+    customGenerated = GenerateNewAddress.new
+    country =  customGenerated[0]
+    postcode =  customGenerated[1]
+    drone = Drone.create!()
+    # byebug
+
+    address = Address.new(
+        country: country,
+        postcode: postcode
+    )
+    address.addressable = drone
+    drone.current_address = address
+    address.save!
+    # drone.current_address.addressable = drone
+
 end
 
 1.times do

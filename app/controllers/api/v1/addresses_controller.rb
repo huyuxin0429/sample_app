@@ -8,7 +8,12 @@ class Api::V1::AddressesController < Api::V1::BaseController
     end
 
     def stated_user
-        user_id_name = params.keys.fourth.to_sym
+        if params.key?(:customer_id)
+            user_id_name = :customer_id
+        elsif params.key?(:merchant_id)
+            user_id_name = :merchant_id
+        end
+
         User.find(params[user_id_name])
     end
 
