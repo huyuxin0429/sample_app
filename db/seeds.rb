@@ -6,7 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Create a main sample user.
+
+require "#{Rails.root}/lib/SG random address generator/generate_new_address.rb"
+include GenerateNewAddress
+
 user = User.create!(
     name: "Example User",
     email: "example@railstutorial.org",
@@ -17,7 +20,7 @@ user = User.create!(
     activated: true,
     activated_at: Time.zone.now)
 # Generate a bunch of additional customers.
-30.times do |n|
+3.times do |n|
     name = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
     password = "password"
@@ -32,7 +35,7 @@ user = User.create!(
     )
 end
 # Generate a bunch of additional merchants.
-30.times do |n|
+3.times do |n|
     name = Faker::Company.name
     email = "merchant-#{n+1}@railstutorial.org"
     password = "password"
@@ -56,15 +59,17 @@ merchants = Merchant.all
 # end
 
 3.times do
+    
+    customGenerated = GenerateNewAddress.new
     street_address = Faker::Address.street_address() 
     city = Faker::Address.city() 
-    country =  Faker::Address.country() 
-    postcode =  Faker::Address.postcode() 
+    country =  customGenerated[0]
+    postcode =  customGenerated[1]
     building_no =  Faker::Number.between(from: 1, to: 10)  
     unit_number = "#23-233"
     name =  Faker::Address.community 
-
-    customers.each{|customer| customer.addresses.create!(
+    # byebug
+    customers.each{|customer| add = customer.addresses.new(
         street_address: street_address,
         city: city,
         country: country,
@@ -72,21 +77,26 @@ merchants = Merchant.all
         building_no: building_no,
         unit_number: unit_number,
         name: name
-    )}
+        )
+        # byebug
+        add.save!
+
+        }
 
     
 end
 
 1.times do
+    customGenerated = GenerateNewAddress.new
     street_address = Faker::Address.street_address() 
     city = Faker::Address.city() 
-    country =  Faker::Address.country() 
-    postcode =  Faker::Address.postcode() 
+    country =  customGenerated[0]
+    postcode =  customGenerated[1]
     building_no =  Faker::Number.between(from: 1, to: 10)  
     unit_number = "#23-233"
     name =  Faker::Address.community 
 
-    merchants.each{|merchant| merchant.addresses.create!(
+    merchants.each{|merchant| add = merchant.addresses.create!(
         street_address: street_address,
         city: city,
         country: country,
@@ -94,7 +104,10 @@ end
         building_no: building_no,
         unit_number: unit_number,
         name: name
-    )}
+        )
+        # byebug
+        add.save!
+        }
 
     
 end

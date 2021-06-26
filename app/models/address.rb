@@ -7,4 +7,11 @@ class Address < ApplicationRecord
     validates :building_no, presence: true
     validates :unit_number, presence: true
     validates :name, presence: true
+    before_save :geocode
+    
+    def geocode_info
+        [country, postcode].compact.join(', ')
+    end
+
+    geocoded_by :geocode_info
 end

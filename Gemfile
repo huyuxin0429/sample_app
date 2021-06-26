@@ -55,6 +55,10 @@ gem 'pg', '~> 1.2', '>= 1.2.3'
 gem "jwt"
 
 # gem 'yarn'
+# gem 'google-maps', '~> 2.2'
+gem 'geocoder'
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
