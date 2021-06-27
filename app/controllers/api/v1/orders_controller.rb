@@ -41,7 +41,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
 
     class OrderError < OrderingErrors
         def message
-            "Error in order entry"
+            "Error in order"
         end
     end
 
@@ -76,6 +76,8 @@ class Api::V1::OrdersController < Api::V1::BaseController
             @order = Order.new
             @order.customer = @customer
             @order.merchant = @merchant
+            @order.pick_up_address_id = params[:pick_up_address_id]
+            @order.drop_off_address_id = params[:drop_off_address_id]
             @order.total_price = params[:total_price]
             order_entries_raw = params[:order_entries]
             order_entries_raw.each{|raw_entry|
@@ -172,6 +174,8 @@ class Api::V1::OrdersController < Api::V1::BaseController
          def order_params
              params.permit(
                 :customer_id,
+                :pick_up_address_id,
+                :drop_off_address_id,
                 :merchant_id,
                 :order_entries
              )

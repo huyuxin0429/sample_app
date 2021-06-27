@@ -61,10 +61,10 @@ module DroneHandler
             if !@@initialised
                 startSimulation
             end
-            puts "Simulating!"
+            # puts "Simulating!"
             drones = Drone.all
             drones.each{|drone|
-                puts 'test'
+                # puts 'test'
                 drone.simulate($time_delta_in_seconds)
             }
             while Drone.all.count > $drone_num
