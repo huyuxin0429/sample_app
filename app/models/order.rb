@@ -70,6 +70,7 @@ class Order < ApplicationRecord
         if customer
             found = false
             customer.addresses.each{|address|
+                # byebug
                 if address.id == drop_off_address_id
                     found = true
                     break
