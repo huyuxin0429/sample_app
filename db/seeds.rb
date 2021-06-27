@@ -101,7 +101,7 @@ customers.each{|customer|
     
 end
 
-3.times do |n|
+1.times do |n|
     customGenerated = GenerateNewAddress.new
     country =  customGenerated[0]
     postcode =  customGenerated[1]
@@ -200,9 +200,10 @@ customers = Customer.all
             total_price += total_unit_price
             order.order_entries << entry
         }
-        addOrderToDroneQueue(order)
+        # DroneHandler.addOrderToDroneQueue(order)
         order.total_price = total_price
         order.save!
+        # puts 'added order'
     }
 end
 

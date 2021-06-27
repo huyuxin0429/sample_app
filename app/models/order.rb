@@ -14,6 +14,30 @@ class Order < ApplicationRecord
     validate :customer_contains_drop_off_address
     validate :merchant_contains_pick_up_address
     before_save :calculate_total_price
+    # before_save :add_to_drone_order_queue
+
+    # def add_to_drone_order_queue
+    #     DroneHandler.addOrderToDroneQueue(self)
+    # end
+
+
+    scope :waiting_order, ->() {
+        where(status: "merchant_preparing").where(drone: nil)
+    }
+    def progress
+        if merchant_preparing? 
+            awaiting_drone_pickup!
+        elsif awaiting_drone_pickup? && drone.waiting_for_pickup?
+            enroute_to_customer!
+        elsif enroute_to_customer? 
+            awaiting_customer_pickup!
+        elsif awaiting_customer_pickup? 
+            completed!
+            # self.drone = nil
+        end
+        save!
+    end
+
 
     enum status: { 
         merchant_preparing: "merchant_preparing", 

@@ -61,7 +61,7 @@ gem "jwt"
 gem 'geocoder'
 
 #for timed jobs
-gem 'whenever'
+gem 'rufus-scheduler'
 
 
 

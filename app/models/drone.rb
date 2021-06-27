@@ -9,6 +9,9 @@ class Drone < ApplicationRecord
   # def present_and_changed
   #   (latitude.present? and longitude.present?) and (latitude_changed? || longitude_changed?)
   # end
+  scope :free, ->() {
+    where(status: "free_stationary").or(where(status: "free_moving"))
+  }
 
   enum status: { 
     free_stationary: "free_stationary", 
@@ -31,22 +34,29 @@ class Drone < ApplicationRecord
   def simulate(time_delta)
     if is_moving?
       approach(target_address, time_delta)
-    elsif wating_for_pickup?
+    elsif waiting_for_pickup?
+      # byebug
       if order.awaiting_drone_pickup?
         order.enroute_to_customer!
         heading_to_drop_off!
       end
-    elsif wating_for_drop_off?
+    elsif waiting_for_drop_off?
       if order.completed?
         free_stationary!
+        order.drone = nil
+        self.order = nil
       end
     end
+    save!
   end
 
   def deliver(order)
     self.order = order
     self.target_address = Address.find(id: order.pick_up_address_id)
     heading_to_pickup!
+    self.save!
+    byebug
+    
   end
 
   private
@@ -65,17 +75,19 @@ class Drone < ApplicationRecord
         bearing = Geocoder::Calculations.bearing_between(current_address, target_address)
         current_address = Geocoder::Calculations.endpoint(current_address, bearing, new_distance)
       end
+      save!
     end
 
     def next_status
       if free_moving?
         free_stationary!
       elsif heading_to_pickup?
-        wating_for_pickup!
+        waiting_for_pickup!
       elsif heading_to_drop_off?
         order.awaiting_customer_pickup!
-        wating_for_drop_off!
+        waiting_for_drop_off!
       end
+      save!
     end
 
 end

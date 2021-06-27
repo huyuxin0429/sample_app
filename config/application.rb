@@ -15,6 +15,7 @@ module SampleApp
 
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths << Rails.root.join("lib/**/")
 
     # Configuration for the application, engines, and railties goes here.
     #

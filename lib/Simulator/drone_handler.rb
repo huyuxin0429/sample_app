@@ -2,18 +2,29 @@ module DroneHandler
     $time_delta_in_seconds = 20
     $drone_num = 10
     $drone_speed = 1
-    @@orderQueue = Queue.new
+    @@initialised = false
+
+
+    # count  = 0
+    # Rufus::Scheduler.singleton.every '10s' do
+    #     puts "handler simualting count" + count.to_s
+    #     count += 1
+    #     simulate
+    # end
+
     class << self
-        def addOrderToDroneQueue(order)
-            # orderAdd = Address.find(order.pick_up_address_id)
-            # availDrones = Drone.where(status: 'free_stationary').or(Drone.where(status: 'free_stationary'))
-            # drone = availDrones.near(orderAdd).first
-            # drone.
-            # drone.status = :heading_to_pickup
-            # drone.setDestination(orderAdd)
-            # drone
-            @@orderQueue << order
-        end
+        # def addOrderToDroneQueue(order)
+        #     puts'adding 2 queue'
+        #     # orderAdd = Address.find(order.pick_up_address_id)
+        #     # availDrones = Drone.where(status: 'free_stationary').or(Drone.where(status: 'free_stationary'))
+        #     # drone = availDrones.near(orderAdd).first
+        #     # drone.
+        #     # drone.status = :heading_to_pickup
+        #     # drone.setDestination(orderAdd)
+        #     # drone
+        #     $orderQueue << order
+        #     byebug
+        # end
     
         def setDroneNumber(num)
             $drone_num = num
@@ -37,20 +48,45 @@ module DroneHandler
             drones = Drone.all
             drones.each{|drone|
                 drone.speed = speed
+                drone.save!
             }
+        end
+
+        def startSimulation()
+            @@initialised = true
+            setDroneSpeed($drone_speed)
         end
     
         def simulate()
+            if !@@initialised
+                startSimulation
+            end
             puts "Simulating!"
             drones = Drone.all
             drones.each{|drone|
+                puts 'test'
                 drone.simulate($time_delta_in_seconds)
             }
-            while count > drone_num 
-                Drone.find_by(is_free?).destroy
+            while Drone.all.count > $drone_num
+                puts 'test1'
+                Drone.free.first.destroy
             end
-            Drone.where(is_free?).each{ |drone|
-                drone.deliver(@@orderQueue.pop)
+            # byebug
+
+            Drone.free.reload.each{ |drone|
+                # byebug
+                waitingOrder = Order.waiting_order.reload.first
+                if waitingOrder.nil?
+                    break
+                end
+                # byebug
+                waitingOrder.drone = drone
+                drone.order = waitingOrder
+                drone.heading_to_pickup!
+                drone.save!
+                waitingOrder.save!
+
+                
             }
     
             
