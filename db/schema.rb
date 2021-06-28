@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_26_120506) do
+ActiveRecord::Schema.define(version: 2021_06_27_183420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,12 @@ ActiveRecord::Schema.define(version: 2021_06_26_120506) do
     t.index ["product_id"], name: "index_order_entries_on_product_id"
   end
 
+  create_table "order_maps", force: :cascade do |t|
+    t.string "words"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
 # Could not dump table "orders" because of following StandardError
 #   Unknown type 'order_status' for column 'status'
 
@@ -140,6 +146,7 @@ ActiveRecord::Schema.define(version: 2021_06_26_120506) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "drones", "addresses", column: "destination_address_id"
   add_foreign_key "microposts", "users"
   add_foreign_key "orders", "addresses", column: "drop_off_address_id"
   add_foreign_key "orders", "addresses", column: "pick_up_address_id"

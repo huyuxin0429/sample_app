@@ -8,7 +8,7 @@ class CreateDrones < ActiveRecord::Migration[6.1]
       # t.decimal :latitude
       # t.decimal :longitude
       t.decimal :speed
-      # t.references :destination_address, foreign_key: { to_table: :addresses }, optional: true
+      t.references :destination_address, foreign_key: { to_table: :addresses }, optional: true
       t.timestamps
     end
     add_column :drones, :status, :drone_status, default: :free_stationary

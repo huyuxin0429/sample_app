@@ -14,6 +14,7 @@ class Order < ApplicationRecord
     validate :customer_contains_drop_off_address
     validate :merchant_contains_pick_up_address
     before_save :calculate_total_price
+    before_save :broadcast
     # before_save :add_to_drone_order_queue
 
     # def add_to_drone_order_queue
@@ -26,16 +27,43 @@ class Order < ApplicationRecord
     }
     def progress
         if merchant_preparing? 
-            awaiting_drone_pickup!
+            merchant_load_order
         elsif awaiting_drone_pickup? && drone.waiting_for_pickup?
+            # byebug
             enroute_to_customer!
         elsif enroute_to_customer? 
             awaiting_customer_pickup!
         elsif awaiting_customer_pickup? 
-            completed!
+            customer_unload_order
             # self.drone = nil
         end
-        save!
+        # save!
+    end
+
+    def merchant_load_order
+        # byebug
+        awaiting_drone_pickup!
+        # byebug
+        # broadcast
+        # save!
+    end
+
+    def customer_unload_order
+        completed!
+        # broadcast
+        # save!
+    end
+        
+        
+
+    def save_broadcast
+        if status_changed?
+            broadcast
+        end
+    end
+
+    def broadcast
+        ActionCable.server.broadcast 'order_channel', self.to_json
     end
 
 
@@ -77,7 +105,7 @@ class Order < ApplicationRecord
                 end
             }
             if !found
-                # byebug
+                byebug
                 errors.add( :drop_off_address_id ,"invalid")
             end
         end
@@ -87,6 +115,7 @@ class Order < ApplicationRecord
         if merchant
             found = false
             merchant.addresses.each{|address|
+                # byebug
                 if address.id == pick_up_address_id
                     found = true
                     break

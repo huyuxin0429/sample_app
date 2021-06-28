@@ -67,7 +67,7 @@ module DroneHandler
                 # puts 'test'
                 drone.simulate($time_delta_in_seconds)
             }
-            while Drone.all.count > $drone_num
+            while Drone.all.reload.count > $drone_num
                 puts 'test1'
                 Drone.free.first.destroy
             end
@@ -80,10 +80,9 @@ module DroneHandler
                     break
                 end
                 # byebug
+                
+                drone.deliver(waitingOrder)
                 waitingOrder.drone = drone
-                drone.order = waitingOrder
-                drone.heading_to_pickup!
-                drone.save!
                 waitingOrder.save!
 
                 

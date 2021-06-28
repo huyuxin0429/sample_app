@@ -76,4 +76,7 @@ Rails.application.configure do
 
   host = 'localhost:3000'
   config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+
+  config.action_cable.allowed_request_origins = [
+    /http:\/\/*/, /https:\/\/*/, 'chrome-extension://fgponpodhbmadfljofbimhhlengambbn' ]
 end

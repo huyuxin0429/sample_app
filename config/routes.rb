@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :order_maps
   namespace :api do
     namespace :v1 do
       get 'health/index'
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      mount ActionCable.server, at: '/cable'
       resources :account_activations,     only: [:edit]
       post 'login' => 'sessions#create'
       get 'auto_login' => 'sessions#auto_login'

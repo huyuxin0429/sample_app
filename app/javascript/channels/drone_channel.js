@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create("MapChannel", {
+consumer.subscriptions.create("DroneChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
   },
@@ -11,7 +11,5 @@ consumer.subscriptions.create("MapChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    puts(data);
-    alert(data.content);
   }
 });
