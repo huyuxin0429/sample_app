@@ -63,7 +63,7 @@ gem 'geocoder'
 #for timed jobs
 gem 'rufus-scheduler'
 
-
+gem 'redis'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -84,7 +84,7 @@ group :development, :test do
   # Attempting migration to postgres for development
   # gem 'sqlite3', '~> 1.4'
 
-  gem 'redis'
+  
 
   
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
