@@ -106,7 +106,7 @@ customers.each{|customer|
     
 end
 
-20.times do |n|
+10.times do |n|
     customGenerated = GenerateNewAddress.new
     country =  customGenerated[0]
     postcode =  customGenerated[1]

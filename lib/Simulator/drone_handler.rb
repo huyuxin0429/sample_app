@@ -72,7 +72,7 @@ module DroneHandler
                 drone.simulate($time_delta_in_seconds)
             }
             while Drone.all.reload.count > $drone_num
-                puts 'test1'
+                # puts 'test1'
                 Drone.free.first.destroy
             end
             # byebug
