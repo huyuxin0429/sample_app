@@ -22,7 +22,7 @@ user = User.create!(
     activated: true,
     activated_at: Time.zone.now)
 # Generate a bunch of additional customers.
-1.times do |n|
+10.times do |n|
     name = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
     password = "password"
@@ -37,7 +37,7 @@ user = User.create!(
     )
 end
 # Generate a bunch of additional merchants.
-1.times do |n|
+20.times do |n|
     name = Faker::Company.name
     email = "merchant-#{n+1}@railstutorial.org"
     password = "password"
@@ -106,7 +106,7 @@ customers.each{|customer|
     
 end
 
-1.times do |n|
+20.times do |n|
     customGenerated = GenerateNewAddress.new
     country =  customGenerated[0]
     postcode =  customGenerated[1]
@@ -172,7 +172,7 @@ end
 
 
 merchants.each{|merchant| 
-    6.times do
+    20.times do
         # Faker::Config.random = rand()
         description =  Faker::Lorem.sentence(word_count: 5)
         quantity =  Faker::Number.between(from: 1, to: 10)  
