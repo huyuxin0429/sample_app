@@ -16,7 +16,7 @@ Geocoder.configure(
     units: :km,
   
     # caching (see Caching section below for details):
-    # cache: Redis.new,
-    # cache_prefix: "..."
+    cache: Redis.new,
+    cache_prefix: "geocoder"
   
   )

@@ -1,5 +1,5 @@
 module DroneHandler
-    $time_delta_in_seconds = 20
+    $time_delta_in_seconds = 5
     $drone_num = 10
     $drone_speed = 1
     @@initialised = false
@@ -50,6 +50,10 @@ module DroneHandler
                 drone.speed = speed
                 drone.save!
             }
+        end
+
+        def timeDelta
+            $time_delta_in_seconds
         end
 
         def startSimulation()
