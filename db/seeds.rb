@@ -90,7 +90,7 @@ customers.each{|customer|
     search_data =  [country, postcode].compact.join(', ')
     result = Geocoder.search(search_data).first
     while result.nil?
-        byebug
+        # byebug
         puts 'geocoder looping'
         result = Geocoder.search(search_data).first
     end
@@ -167,7 +167,7 @@ puts 'created drones'
         search_data =  [country, postcode].compact.join(', ')
         result = Geocoder.search(search_data).first 
         while result.nil?
-            byebug
+            # byebug
             puts 'geocoder looping'
             result = Geocoder.search(search_data).first
         end
