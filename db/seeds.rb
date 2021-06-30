@@ -28,7 +28,7 @@ puts 'created admin'
     email = "example-#{n+1}@railstutorial.org"
     password = "password"
     contact_no = 12341234
-    Customer.create!(name: name,
+    cust = Customer.new(name: name,
         email: email,
         password: password,
         password_confirmation: password,
@@ -36,6 +36,22 @@ puts 'created admin'
         activated: true,
         activated_at: Time.zone.now
     )
+
+    while !cust.save
+        name = Faker::Name.name
+        email = "example-#{n+1}@railstutorial.org"
+        password = "password"
+        contact_no = 12341234
+        cust = Customer.new(name: name,
+            email: email,
+            password: password,
+            password_confirmation: password,
+            contact_no: contact_no,
+            activated: true,
+            activated_at: Time.zone.now
+        )
+
+    end
 end
 puts 'created customer'
 # Generate a bunch of additional merchants.
@@ -44,13 +60,27 @@ puts 'created customer'
     email = "merchant-#{n+1}@railstutorial.org"
     password = "password"
     contact_no = 12341234
-    Merchant.create!(name: name,
+    merc = Merchant.new(name: name,
         email: email,
         password: password,
         password_confirmation: password,
         contact_no: contact_no,
         activated: true,
         activated_at: Time.zone.now)
+    while !merc.save
+        name = Faker::Company.name
+        email = "merchant-#{n+1}@railstutorial.org"
+        password = "password"
+        contact_no = 12341234
+        merc = Merchant.new(name: name,
+            email: email,
+            password: password,
+            password_confirmation: password,
+            contact_no: contact_no,
+            activated: true,
+            activated_at: Time.zone.now
+        )
+    end
 end
 
 puts 'created merchant'
@@ -93,6 +123,27 @@ customers.each{|customer|
         # byebug
         puts 'geocoder looping'
         customGenerated = GenerateNewAddress.new
+        country =  customGenerated[0]
+        postcode =  customGenerated[1]
+        search_data =  [country, postcode].compact.join(', ')
+        result = Geocoder.search(search_data).first
+    end
+    result = result.coordinates
+
+    add = customer.addresses.new(
+        latitude: result[0],
+        longitude: result[1],
+        street_address: street_address,
+        city: city,
+        country: country,
+        postcode: postcode,
+        building_no: building_no,
+        unit_number: unit_number,
+        name: name
+    )
+    # byebug
+    while !add.save
+        customGenerated = GenerateNewAddress.new
         street_address = Faker::Address.street_address() 
         city = Faker::Address.city() 
         country =  customGenerated[0]
@@ -102,23 +153,29 @@ customers.each{|customer|
         name =  Faker::Address.community 
         search_data =  [country, postcode].compact.join(', ')
         result = Geocoder.search(search_data).first
+        while result.nil?
+            # byebug
+            puts 'geocoder looping'
+            customGenerated = GenerateNewAddress.new
+            country =  customGenerated[0]
+            postcode =  customGenerated[1]
+            search_data =  [country, postcode].compact.join(', ')
+            result = Geocoder.search(search_data).first
+        end
+        result = result.coordinates
+
+        add = customer.addresses.new(
+            latitude: result[0],
+            longitude: result[1],
+            street_address: street_address,
+            city: city,
+            country: country,
+            postcode: postcode,
+            building_no: building_no,
+            unit_number: unit_number,
+            name: name
+        )
     end
-    result = result.coordinates
-
-
-    add = customer.addresses.create!(
-    latitude: result[0],
-    longitude: result[1],
-    street_address: street_address,
-    city: city,
-    country: country,
-    postcode: postcode,
-    building_no: building_no,
-    unit_number: unit_number,
-    name: name
-    )
-    # byebug
-    add.save!
 
     }
 
@@ -182,6 +239,27 @@ puts 'created drones'
             # byebug
             puts 'geocoder looping'
             customGenerated = GenerateNewAddress.new
+            country =  customGenerated[0]
+            postcode =  customGenerated[1]
+            search_data =  [country, postcode].compact.join(', ')
+            result = Geocoder.search(search_data).first
+        end
+        result = result.coordinates
+
+        add = merchant.addresses.new(
+            latitude: result[0],
+            longitude: result[1],
+            street_address: street_address,
+            city: city,
+            country: country,
+            postcode: postcode,
+            building_no: building_no,
+            unit_number: unit_number,
+            name: name
+        )
+        # byebug
+        while !add.save
+            customGenerated = GenerateNewAddress.new
             street_address = Faker::Address.street_address() 
             city = Faker::Address.city() 
             country =  customGenerated[0]
@@ -190,24 +268,31 @@ puts 'created drones'
             unit_number = "#23-233"
             name =  Faker::Address.community 
             search_data =  [country, postcode].compact.join(', ')
-            result = Geocoder.search(search_data).first
+            result = Geocoder.search(search_data).first 
+            while result.nil?
+                # byebug
+                puts 'geocoder looping'
+                customGenerated = GenerateNewAddress.new
+                country =  customGenerated[0]
+                postcode =  customGenerated[1]
+                search_data =  [country, postcode].compact.join(', ')
+                result = Geocoder.search(search_data).first
+            end
+            result = result.coordinates
+    
+            add = merchant.addresses.new(
+                latitude: result[0],
+                longitude: result[1],
+                street_address: street_address,
+                city: city,
+                country: country,
+                postcode: postcode,
+                building_no: building_no,
+                unit_number: unit_number,
+                name: name
+            )
         end
-        result = result.coordinates
-
-        add = merchant.addresses.create!(
-        latitude: result[0],
-        longitude: result[1],
-        street_address: street_address,
-        city: city,
-        country: country,
-        postcode: postcode,
-        building_no: building_no,
-        unit_number: unit_number,
-        name: name
-        )
-        # byebug
-        add.save!
-        }
+    }
 
     
 end
@@ -223,12 +308,25 @@ merchants.each{|merchant|
         quantity =  Faker::Number.between(from: 1, to: 10)  
         price = Faker::Commerce.price()
         name =  Faker::Commerce.product_name()
-        merchant.products.create!(
-        description: description,
-        quantity: quantity,
-        price: price,
-        name: name
+        prod = merchant.products.new(
+            description: description,
+            quantity: quantity,
+            price: price,
+            name: name
         )
+
+        while !prod.save
+            description =  Faker::Lorem.sentence(word_count: 5)
+            quantity =  Faker::Number.between(from: 1, to: 10)  
+            price = Faker::Commerce.price()
+            name =  Faker::Commerce.product_name()
+            prod = merchant.products.new(
+                description: description,
+                quantity: quantity,
+                price: price,
+                name: name
+            )
+        end
     end
 }
 
