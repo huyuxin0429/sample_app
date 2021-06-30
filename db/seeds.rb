@@ -22,6 +22,7 @@ user = User.create!(
     activated: true,
     activated_at: Time.zone.now)
 # Generate a bunch of additional customers.
+puts 'created admin'
 5.times do |n|
     name = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
@@ -36,6 +37,7 @@ user = User.create!(
         activated_at: Time.zone.now
     )
 end
+puts 'created customer'
 # Generate a bunch of additional merchants.
 5.times do |n|
     name = Faker::Company.name
@@ -50,6 +52,8 @@ end
         activated: true,
         activated_at: Time.zone.now)
 end
+
+puts 'created merchant'
 
 
 
@@ -86,6 +90,8 @@ customers.each{|customer|
     search_data =  [country, postcode].compact.join(', ')
     result = Geocoder.search(search_data).first
     while result.nil?
+        byebug
+        puts 'geocoder looping'
         result = Geocoder.search(search_data).first
     end
     result = result.coordinates
@@ -109,6 +115,8 @@ customers.each{|customer|
 
     
 end
+
+puts 'created cust address'
 
 3.times do |n|
     customGenerated = GenerateNewAddress.new
@@ -134,6 +142,7 @@ end
     # drone.current_address.addressable = drone
 
 end
+puts 'created drones'
 
 5.times do
     # customGenerated = GenerateNewAddress.new
@@ -158,6 +167,8 @@ end
         search_data =  [country, postcode].compact.join(', ')
         result = Geocoder.search(search_data).first 
         while result.nil?
+            byebug
+            puts 'geocoder looping'
             result = Geocoder.search(search_data).first
         end
         result = result.coordinates
@@ -180,6 +191,8 @@ end
     
 end
 
+puts 'created merchant address'
+
 
 
 merchants.each{|merchant| 
@@ -197,6 +210,8 @@ merchants.each{|merchant|
         )
     end
 }
+
+puts 'created merchant products'
     
     
 
@@ -230,6 +245,8 @@ customers = Customer.all
         # puts 'added order'
     }
 end
+
+puts 'created orders'
 
 
 # Create following relationships.

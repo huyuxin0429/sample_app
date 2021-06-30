@@ -23,6 +23,31 @@ class Api::V1::AddressesController < Api::V1::BaseController
     def create
         # @user = Users.find(params[:user_id])
         @address = stated_user.addresses.build(address_params)
+        street_address = address_params.street_address
+        city = address_params.city
+        country = address_params.country
+        postcode = address_params.postcode
+        building_no = address_params.building_no
+        unit_number = address_params.unit_number
+
+        search_data =  
+            [street_address, 
+            city, 
+            country, 
+            postcode, 
+            building_no,
+            unit_number
+            ].compact.join(', ')
+        
+        result = Geocoder.search(search_data).first
+        while result.nil?
+            puts 'geocoder looping'
+            result = Geocoder.search(search_data).first
+        end
+        result = result.coordinates
+        @address.latitude = result[0]
+        @address.longitude = result[1]
+
         if @address.save
             render json: { message: "Address created"}, status: 201
         else
