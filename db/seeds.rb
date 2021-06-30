@@ -92,6 +92,15 @@ customers.each{|customer|
     while result.nil?
         # byebug
         puts 'geocoder looping'
+        customGenerated = GenerateNewAddress.new
+        street_address = Faker::Address.street_address() 
+        city = Faker::Address.city() 
+        country =  customGenerated[0]
+        postcode =  customGenerated[1]
+        building_no =  Faker::Number.between(from: 1, to: 10)  
+        unit_number = "#23-233"
+        name =  Faker::Address.community 
+        search_data =  [country, postcode].compact.join(', ')
         result = Geocoder.search(search_data).first
     end
     result = result.coordinates
@@ -126,6 +135,9 @@ puts 'created cust address'
     # byebug
     result = Geocoder.search(country + ',' + postcode)[0]
     while result.nil?
+        customGenerated = GenerateNewAddress.new
+        country =  customGenerated[0]
+        postcode =  customGenerated[1]
         result = Geocoder.search(country + ',' + postcode)[0]
     end
     # byebug
@@ -169,6 +181,15 @@ puts 'created drones'
         while result.nil?
             # byebug
             puts 'geocoder looping'
+            customGenerated = GenerateNewAddress.new
+            street_address = Faker::Address.street_address() 
+            city = Faker::Address.city() 
+            country =  customGenerated[0]
+            postcode =  customGenerated[1]
+            building_no =  Faker::Number.between(from: 1, to: 10)  
+            unit_number = "#23-233"
+            name =  Faker::Address.community 
+            search_data =  [country, postcode].compact.join(', ')
             result = Geocoder.search(search_data).first
         end
         result = result.coordinates
