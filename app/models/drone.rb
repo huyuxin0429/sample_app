@@ -68,7 +68,7 @@ class Drone < ApplicationRecord
       # output_json = self.to_json + self.current_address.to_json + destination_address.to_json
       ActionCable.server.broadcast 'drone_channel', self.to_json
       ActionCable.server.broadcast 'drone_channel', self.current_address.to_json
-      ActionCable.server.broadcast 'drone_channel', self.destination_address.to_json
+      ActionCable.server.broadcast 'drone_channel', destination_address.to_json
       # ActionCable.server.broadcast "drone_channel_user#{order.customer_id}", self.to_json
       # ActionCable.server.broadcast "drone_channel_user#{order.merchant_id}", self.to_json
     end

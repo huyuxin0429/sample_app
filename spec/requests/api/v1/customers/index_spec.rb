@@ -55,7 +55,7 @@ describe "GET api/v1/customers/", type: :request do
         
         json_array = JSON.parse(response.body)
         json_didy = json_array[0].deep_symbolize_keys
-        byebug
+        # byebug
         expect(json_didy[:name]).to eq('didy')
         expect(json_didy[:contact_no]).to eq(12341234)
         expect(json_didy[:email]).to eq('didy@test.com')

@@ -4,10 +4,12 @@ include DroneHandler
 require 'clockwork'
 include Clockwork
 
+require  'rake'
+
 #   
 
 
 
 every(DroneHandler.timeDelta.seconds, 'Run simulation') do
-    DroneHandler.simulate()
+    Rake::Task['run_simulator:drone_sim'].invoke
 end

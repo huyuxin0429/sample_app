@@ -8,7 +8,7 @@
 
 
 require "#{Rails.root}/lib/SG random address generator/generate_new_address.rb"
-require "#{Rails.root}/lib/Simulator/drone_handler.rb"
+require "#{Rails.root}/lib/drone_handler.rb"
 include DroneHandler
 include GenerateNewAddress
 
@@ -22,7 +22,7 @@ user = User.create!(
     activated: true,
     activated_at: Time.zone.now)
 # Generate a bunch of additional customers.
-10.times do |n|
+5.times do |n|
     name = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
     password = "password"
@@ -37,7 +37,7 @@ user = User.create!(
     )
 end
 # Generate a bunch of additional merchants.
-20.times do |n|
+5.times do |n|
     name = Faker::Company.name
     email = "merchant-#{n+1}@railstutorial.org"
     password = "password"
@@ -84,7 +84,11 @@ customers.each{|customer|
     unit_number = "#23-233"
     name =  Faker::Address.community 
     search_data =  [country, postcode].compact.join(', ')
-    result = Geocoder.search(search_data).first.coordinates
+    result = Geocoder.search(search_data).first
+    while result.nil?
+        result = Geocoder.search(search_data).first
+    end
+    result = result.coordinates
 
 
     add = customer.addresses.create!(
@@ -106,13 +110,16 @@ customers.each{|customer|
     
 end
 
-10.times do |n|
+3.times do |n|
     customGenerated = GenerateNewAddress.new
     country =  customGenerated[0]
     postcode =  customGenerated[1]
     drone = Drone.new()
     # byebug
     result = Geocoder.search(country + ',' + postcode)[0]
+    while result.nil?
+        result = Geocoder.search(country + ',' + postcode)[0]
+    end
     # byebug
     address = Address.new(
         latitude: result.latitude,
@@ -149,7 +156,11 @@ end
         unit_number = "#23-233"
         name =  Faker::Address.community 
         search_data =  [country, postcode].compact.join(', ')
-        result = Geocoder.search(search_data).first.coordinates 
+        result = Geocoder.search(search_data).first 
+        while result.nil?
+            result = Geocoder.search(search_data).first
+        end
+        result = result.coordinates
 
         add = merchant.addresses.create!(
         latitude: result[0],
