@@ -58,25 +58,25 @@ class Drone < ApplicationRecord
         changed = true
         free_stationary!
         # self.destination_address_id = nil
-        order.drone = nil
-        self.order = nil
+        
       end
     end
     save!
     if changed
       destination_address = Address.find(destination_address_id)
       # output_json = self.to_json + self.current_address.to_json + destination_address.to_json
-      ActionCable.server.broadcast 'drone_channel', self.to_json
-      ActionCable.server.broadcast 'drone_channel', self.current_address.to_json
-      ActionCable.server.broadcast 'drone_channel', destination_address.to_json
+      output_hash = {drone: self, drone_curr_address: self.current_address, drone_destination_address: destination_address}
+      ActionCable.server.broadcast 'drone_channel', output_hash.to_json
 
-      ActionCable.server.broadcast "drone_channel_user_#{self.order.customer_id}", self.to_json
-      ActionCable.server.broadcast "drone_channel_user_#{self.order.customer_id}", self.current_address.to_json
-      ActionCable.server.broadcast "drone_channel_user_#{self.order.customer_id}", destination_address.to_json
+      ActionCable.server.broadcast "drone_channel_user_#{self.order.customer_id}", output_hash.to_json
 
-      ActionCable.server.broadcast "drone_channel_user_#{self.order.merchant_id}", self.to_json
-      ActionCable.server.broadcast "drone_channel_user_#{self.order.merchant_id}", self.current_address.to_json
-      ActionCable.server.broadcast "drone_channel_user_#{self.order.merchant_id}", destination_address.to_json
+      ActionCable.server.broadcast "drone_channel_user_#{self.order.merchant_id}", output_hash.to_json
+
+      if order.completed?
+        order.drone = nil
+        self.order = nil
+      end
+
 
       # ActionCable.server.broadcast "drone_channel_user#{order.customer_id}", self.to_json
       # ActionCable.server.broadcast "drone_channel_user#{order.merchant_id}", self.to_json
