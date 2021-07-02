@@ -8,7 +8,7 @@ return if defined?(Rails::Console) || Rails.env.test? || File.split($0).last == 
 
 
 # Stupid recurrent task...
-#
+
 s.every DroneHandler.timeDelta.to_s + 's' do
     ActiveRecord::Base.connection_pool.with_connection do
         #your code here

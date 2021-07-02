@@ -69,6 +69,15 @@ class Drone < ApplicationRecord
       ActionCable.server.broadcast 'drone_channel', self.to_json
       ActionCable.server.broadcast 'drone_channel', self.current_address.to_json
       ActionCable.server.broadcast 'drone_channel', destination_address.to_json
+
+      ActionCable.server.broadcast "drone_channel_user_#{self.order.customer_id}", self.to_json
+      ActionCable.server.broadcast "drone_channel_user_#{self.order.customer_id}", self.current_address.to_json
+      ActionCable.server.broadcast "drone_channel_user_#{self.order.customer_id}", destination_address.to_json
+
+      ActionCable.server.broadcast "drone_channel_user_#{self.order.merchant_id}", self.to_json
+      ActionCable.server.broadcast "drone_channel_user_#{self.order.merchant_id}", self.current_address.to_json
+      ActionCable.server.broadcast "drone_channel_user_#{self.order.merchant_id}", destination_address.to_json
+
       # ActionCable.server.broadcast "drone_channel_user#{order.customer_id}", self.to_json
       # ActionCable.server.broadcast "drone_channel_user#{order.merchant_id}", self.to_json
     end
