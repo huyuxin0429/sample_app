@@ -21,9 +21,13 @@ class Order < ApplicationRecord
     #     DroneHandler.addOrderToDroneQueue(self)
     # end
 
+    scope :outstandingOrders, ->() {
+        where.not(status: "completed")
+    }
+
 
     scope :waiting_order, ->() {
-        where(status: "merchant_preparing").where(drone: nil)
+        where(status: "merchant_preparing").or(where(status: "awaiting_drone_pickup")).where(drone: nil)
     }
     def progress
         if merchant_preparing? 
@@ -31,9 +35,9 @@ class Order < ApplicationRecord
         elsif awaiting_drone_pickup? && drone.waiting_for_pickup?
             # byebug
             enroute_to_customer!
-        elsif enroute_to_customer? 
+        elsif enroute_to_customer? && drone.waiting_for_drop_off?
             awaiting_customer_pickup!
-        elsif awaiting_customer_pickup? 
+        elsif awaiting_customer_pickup?  && drone.waiting_for_drop_off?
             customer_unload_order
             # self.drone = nil
         end

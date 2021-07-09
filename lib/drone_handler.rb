@@ -1,8 +1,7 @@
+
+require "#{Rails.root}/lib/SG random address generator/generate_new_address.rb"
+include GenerateNewAddress
 module DroneHandler
-    $time_delta_in_seconds = 5
-    $drone_num = 10
-    $drone_speed = 1
-    @@initialised = false
 
 
     # count  = 0
@@ -27,24 +26,15 @@ module DroneHandler
         # end
     
         def setDroneNumber(num)
-            $drone_num = num
-            count = Drone.all.count
-            while count < num 
-                customGenerated = GenerateNewAddress.new
-                country =  customGenerated[0]
-                postcode =  customGenerated[1]
-                drone = Drone.create!()
-                address = Address.new(
-                    country: country,
-                    postcode: postcode
-                )
-                address.addressable = drone
-                drone.current_address = address
-                address.save!
-            end
+            Setting.drone_num = num
+
+            
+            # count = Drone.all.reload.count
+           
         end
     
         def setDroneSpeed(speed)
+            Setting.drone_speed = speed
             drones = Drone.all
             drones.each{|drone|
                 drone.speed = speed
@@ -53,28 +43,65 @@ module DroneHandler
         end
 
         def timeDelta
-            $time_delta_in_seconds
+            Setting.time_delta_in_seconds
         end
 
         def startSimulation()
-            @@initialised = true
-            setDroneSpeed($drone_speed)
+            Setting.drone_sim_initialised = true
+            setDroneSpeed(Setting.drone_speed)
         end
     
         def simulate()
-            if !@@initialised
+            # byebug
+            message = Setting.test_websocket_message
+            channel = Setting.test_websocket_message_channel
+
+            ActionCable.server.broadcast channel, message
+
+            if !Setting.drone_sim_initialised
                 startSimulation
             end
             # puts "Simulating!"
             drones = Drone.all
             drones.each{|drone|
                 # puts 'test'
-                drone.simulate($time_delta_in_seconds)
+                drone.simulate(Setting.time_delta_in_seconds)
             }
-            while Drone.all.reload.count > $drone_num
+            while Drone.all.reload.count > Setting.drone_num
                 # puts 'test1'
-                Drone.free.first.destroy
+                if  !Drone.free.first.nil?
+                    Drone.free.first.destroy
+                end
+                
             end
+
+            while Drone.all.reload.count < Setting.drone_num 
+                customGenerated = GenerateNewAddress.new
+                country =  customGenerated[0]
+                postcode =  customGenerated[1]
+                drone = Drone.new()
+                # byebug
+                result = Geocoder.search(country + ',' + postcode)[0]
+                while result.nil?
+                    customGenerated = GenerateNewAddress.new
+                    country =  customGenerated[0]
+                    postcode =  customGenerated[1]
+                    result = Geocoder.search(country + ',' + postcode)[0]
+                end
+                # byebug
+                address = Address.new(
+                    latitude: result.latitude,
+                    longitude: result.longitude
+                )
+                address.addressable = drone
+                # byebug
+                drone.current_address = address
+                drone.save!
+                address.save!
+
+            end
+
+            
             # byebug
 
             Drone.free.reload.each{ |drone|

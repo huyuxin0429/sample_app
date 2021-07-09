@@ -66,6 +66,12 @@ gem 'rufus-scheduler'
 
 gem 'redis'
 
+  # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "rails-settings-cached", "~> 2.6"
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # Use sqlite3 as the database for Active Record
@@ -90,6 +96,11 @@ group :development, :test do
   
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'spring',      '1.1.3'
+
+
+
+
+
 end
 
 group :development do
@@ -120,5 +131,4 @@ group :production do
   #gem 'rails_12factor', '0.0.2'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+

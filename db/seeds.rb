@@ -23,7 +23,7 @@ user = User.create!(
     activated_at: Time.zone.now)
 # Generate a bunch of additional customers.
 puts 'created admin'
-5.times do |n|
+2.times do |n|
     name = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
     password = "password"
@@ -55,7 +55,7 @@ puts 'created admin'
 end
 puts 'created customer'
 # Generate a bunch of additional merchants.
-5.times do |n|
+2.times do |n|
     name = Faker::Company.name
     email = "merchant-#{n+1}@railstutorial.org"
     password = "password"
@@ -184,7 +184,7 @@ end
 
 puts 'created cust address'
 
-3.times do |n|
+5.times do |n|
     customGenerated = GenerateNewAddress.new
     country =  customGenerated[0]
     postcode =  customGenerated[1]
@@ -213,7 +213,7 @@ puts 'created cust address'
 end
 puts 'created drones'
 
-5.times do
+1.times do
     # customGenerated = GenerateNewAddress.new
     # street_address = Faker::Address.street_address() 
     # city = Faker::Address.city() 
@@ -337,7 +337,7 @@ puts 'created merchant products'
 
 customers = Customer.all 
 
-10.times do
+1.times do
     customers.each{|customer|
         merchant = Merchant.order("RANDOM()").first
         order = Order.new()

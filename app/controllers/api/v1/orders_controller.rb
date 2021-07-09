@@ -58,6 +58,8 @@ class Api::V1::OrdersController < Api::V1::BaseController
         end
     end
 
+    
+
      # POST /api/v1/users/:id/orders
      def create
         
@@ -89,6 +91,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
                 @order_entry = OrderEntry.new(filtered_params)
                 @order_entry.order = @order
                 if !@order_entry.save
+                    byebug
                     raise OrderEntryError.new(@order_entry.errors.full_messages) #message: @order_entry.errors.full_messages.join("/n") 
                 end
                 @order.order_entries << @order_entry
@@ -113,6 +116,12 @@ class Api::V1::OrdersController < Api::V1::BaseController
          
          render json: @orders, include:
             [:order_entries]
+     end
+
+     def outstandingOrders
+        @orders = stated_user.orders.outstandingOrders
+         
+        render json: @orders
      end
  
  

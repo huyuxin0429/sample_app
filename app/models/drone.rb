@@ -72,6 +72,8 @@ class Drone < ApplicationRecord
 
       ActionCable.server.broadcast "drone_channel_user_#{self.order.merchant_id}", output_hash.to_json
 
+      puts output_hash.to_json
+
       if order.completed?
         order.drone = nil
         self.order = nil

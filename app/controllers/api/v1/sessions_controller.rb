@@ -7,6 +7,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
 
     # POST api/v1/sessions
     def create
+        # byebug
         user = User.find_by(email: params[:email].downcase)
         if user 
             if user.authenticate(params[:password])
