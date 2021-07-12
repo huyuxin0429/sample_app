@@ -2,7 +2,7 @@ class OrderChannel < ApplicationCable::Channel
   def subscribed
     stop_all_streams
     # stream_from "some_channel"
-    # stream_from "order_channel"
+    stream_from "order_channel"
     # stream_from "order_channel#{current_user.id}"
 
     if current_user
@@ -14,27 +14,25 @@ class OrderChannel < ApplicationCable::Channel
       
     end
   end
-  
 
   def request
 
     if current_user.admin?
-        orders = Order.outstandingOrders
+        orders = Order.where.not(status: "completed")
         orders.map { |order|
             {
               order: order, 
               # order_curr_address: order.current_address, 
-
-              order_curr_address: order.status2Address()
-                 
+              order_curr_address: 
+                ? order.status == "merchant_preparing" || order.status == "awaiting_drone_pickup"
+                : Address.find(order.pick_up_address_id)
+                ? order.status == "enroute_to_customer"
+                : order.drone.current_address
+                ? order.status == "awaiting_customer_pickup" || order.status == "completed" 
+                : Address.find(order.drop_off_address_id)
             }
         }
-
-        orders.each { |order|
-
-          ActionCable.server.broadcast "order_channel", order.to_json
-          # count += 1
-        }
+        ActionCable.server.broadcast "order_channel", orders.to_json
 
 
     else
@@ -56,6 +54,7 @@ class OrderChannel < ApplicationCable::Channel
         return nil
       end
 
+      orders = order.where(order: orders).distinct
       # byebug
 
       # orders.map { |order|
@@ -68,11 +67,8 @@ class OrderChannel < ApplicationCable::Channel
       # count = 0
       orders.each { |order|
         # puts count
-        output_hash =  {
-          order: order, 
-          # order_curr_address: order.current_address, 
-          order_curr_address: order.status2Address()
-        }
+        destination_address = Address.find(order.destination_address_id)
+        output_hash = {order: order, order_curr_address: order.current_address, order_destination_address: destination_address}
         # byebug
         ActionCable.server.broadcast "order_channel_user_#{current_user.id}", output_hash.to_json
         # count += 1
@@ -91,7 +87,7 @@ class OrderChannel < ApplicationCable::Channel
 
     # ActionCable.server.broadcast "order_channel_user_#{current_user.id}", orders.to_json
    
-    end
+
   end
 
   def unsubscribed

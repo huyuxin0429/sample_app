@@ -5,7 +5,7 @@ class OrderEntry < ApplicationRecord
     validates :units_bought, numericality: { :greater_than  => 0, only_integer: true }
     validate :product_price_times_units_bought_is_total_sum
     # validates :total_unit_price, numericality: {}
-    before_save :calculate_total_unit_price
+    # before_save :calculate_total_unit_price
 
 
     def product_price_times_units_bought_is_total_sum

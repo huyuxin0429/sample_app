@@ -27,11 +27,6 @@ class DroneChannel < ApplicationCable::Channel
               }
           }
           ActionCable.server.broadcast "drone_channel", drones.to_json
-          drones.each { |drone|
-            # puts count
-            ActionCable.server.broadcast "drone_channel", drone.to_json
-            # count += 1
-          }
 
 
       else

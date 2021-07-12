@@ -2,7 +2,7 @@ class OrderChannel < ApplicationCable::Channel
   def subscribed
     stop_all_streams
     # stream_from "some_channel"
-    # stream_from "order_channel"
+    stream_from "order_channel"
     # stream_from "order_channel#{current_user.id}"
 
     if current_user
@@ -14,7 +14,6 @@ class OrderChannel < ApplicationCable::Channel
       
     end
   end
-  
 
   def request
 
@@ -24,9 +23,13 @@ class OrderChannel < ApplicationCable::Channel
             {
               order: order, 
               # order_curr_address: order.current_address, 
-
-              order_curr_address: order.status2Address()
-                 
+              order_curr_address: 
+                 order.status == "merchant_preparing" || order.status == "awaiting_drone_pickup"
+                ? Address.find(order.pick_up_address_id)
+                : order.status == "enroute_to_customer"
+                ? order.drone.current_address
+                : order.status == "awaiting_customer_pickup" || order.status == "completed" 
+                ? Address.find(order.drop_off_address_id)
             }
         }
 
@@ -71,7 +74,13 @@ class OrderChannel < ApplicationCable::Channel
         output_hash =  {
           order: order, 
           # order_curr_address: order.current_address, 
-          order_curr_address: order.status2Address()
+          order_curr_address: 
+            ? order.status == "merchant_preparing" || order.status == "awaiting_drone_pickup"
+            : Address.find(order.pick_up_address_id)
+            ? order.status == "enroute_to_customer"
+            : order.drone.current_address
+            ? order.status == "awaiting_customer_pickup" || order.status == "completed" 
+            : Address.find(order.drop_off_address_id)
         }
         # byebug
         ActionCable.server.broadcast "order_channel_user_#{current_user.id}", output_hash.to_json
@@ -91,7 +100,7 @@ class OrderChannel < ApplicationCable::Channel
 
     # ActionCable.server.broadcast "order_channel_user_#{current_user.id}", orders.to_json
    
-    end
+
   end
 
   def unsubscribed

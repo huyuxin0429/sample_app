@@ -9,10 +9,10 @@ class Order < ApplicationRecord
     # validate :all_order_entries_prices_add_up_to_total_price
     validates :total_price, presence: true, numericality: {}
     validates :order_entries, :length => { :minimum => 1 }
-    # validates :pick_up_address_id, presence: true
+    validates :pick_up_address_id, presence: true
     validates :drop_off_address_id, presence: true
     validate :customer_contains_drop_off_address
-    # validate :merchant_contains_pick_up_address
+    validate :merchant_contains_pick_up_address
     before_save :calculate_total_price
     before_save :broadcast
     

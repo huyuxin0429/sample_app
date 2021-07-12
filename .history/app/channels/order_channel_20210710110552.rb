@@ -91,7 +91,7 @@ class OrderChannel < ApplicationCable::Channel
 
     # ActionCable.server.broadcast "order_channel_user_#{current_user.id}", orders.to_json
    
-    end
+
   end
 
   def unsubscribed
