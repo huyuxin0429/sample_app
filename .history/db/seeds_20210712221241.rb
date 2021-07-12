@@ -386,22 +386,21 @@ stations.each{ |station|
 
 puts 'created stations'
 
-# edges.each{ |edge| 
-#     src_station_provided_id = edge[0]
-#     dest_stations_provided_ids = edge[1]
-#     dest_stations_provided_ids.each{ |dest_station_provided_id| 
-#         dest_station = Station.find_by(provided_id: dest_station_provided_id)
-#         src_station = Station.find_by(provided_id: src_station_provided_id)
-#         new_edge = Edge.new(cost: src_station.address.distance_to(dest_station.address))
-#         new_edge.src_id = src_station.provided_id
-#         new_edge.dest_id = dest_station.provided_id
-#         new_edge.save!
-#         src_station.edges << new_edge
-#     }
-#     byebug
-# }
-# 
-# puts 'created edges'
+edges.each{ |edge| 
+    src_station_provided_id = edge[0]
+    dest_stations_provided_ids = edge[1]
+    dest_stations_provided_ids.each{ |dest_station_provided_id| 
+        dest_station = Station.find_by(provided_id: dest_station_provided_id)
+        src_station = Station.find_by(provided_id: src_station_provided_id)
+        new_edge = Edge.new(cost: src_station.address.distance_to(dest_station.address))
+        new_edge.src = src_station
+        new_edge.dest = dest_station
+        src_station.edges << new_edge
+    }
+    byebug
+}
+
+puts 'created edges'
 
 # Create following relationships.
 # users = User.all

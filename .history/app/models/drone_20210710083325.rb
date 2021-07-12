@@ -1,6 +1,6 @@
 class Drone < ApplicationRecord
   has_one :order
-  has_one :current_address, class_name: "Address", as: :addressable, dependent: :destroy 
+  has_one :current_address, class_name: "Address", as: :addressable, dependent: :destroy # Cant use any other word other than address/addressable, no idea why
   # has_one :target_address, class_name: "Address", as: :addressable, dependent: :destroy
   
 

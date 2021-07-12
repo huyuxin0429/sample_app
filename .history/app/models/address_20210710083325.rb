@@ -2,14 +2,14 @@ class Address < ApplicationRecord
     belongs_to :addressable, polymorphic: true
     validates :addressable_id, presence: true
     validates :addressable_type, presence: true
-    with_options if: :need_be_specific do |specific|
-        specific.validates :street_address, presence: true
-        specific.validates :city, presence: true
-        specific.validates :building_no, presence: true
-        specific.validates :unit_number, presence: true
-        specific.validates :name, presence: true
-        specific.validates :country, presence: true
-        specific.validates :postcode, presence: true
+    with_options if: :not_drone do |not_drone|
+        not_drone.validates :street_address, presence: true
+        not_drone.validates :city, presence: true
+        not_drone.validates :building_no, presence: true
+        not_drone.validates :unit_number, presence: true
+        not_drone.validates :name, presence: true
+        not_drone.validates :country, presence: true
+        not_drone.validates :postcode, presence: true
     end
     
     validates :latitude, presence: true
@@ -32,19 +32,18 @@ class Address < ApplicationRecord
         end
     end
 
-    before_validation :reverse_geocode, if: :no_need_be_specific
+    before_validation :reverse_geocode, if: :drone
     
     def latlng_exist
         
     end
 
-    def need_be_specific
-        !no_need_be_specific
+    def not_drone
+        !(addressable_type == "Drone")
     end
 
-    def no_need_be_specific
-        (addressable_type == "Drone" || 
-            addressable_type == "Station" )
+    def drone
+        (addressable_type == "Drone")
     end
 
     def deep_copy 

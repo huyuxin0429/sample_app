@@ -401,7 +401,7 @@ puts 'created stations'
 #     byebug
 # }
 # 
-# puts 'created edges'
+puts 'created edges'
 
 # Create following relationships.
 # users = User.all

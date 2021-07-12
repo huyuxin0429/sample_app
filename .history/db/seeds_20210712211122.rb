@@ -373,35 +373,26 @@ stations = GraphModules.getStationHash
 edges = GraphModules.getEdgeHash
 
 stations.each{ |station|
-    # byebug
+    byebug
     new_station = Station.new()
     new_station.provided_id = station[0]
-    address = Address.new(latitude: station[1][:lat], longitude: station[1][:lng])
-    address.addressable = new_station
-    
-    new_station.address = address
+    new_station.address = Address.create!(latitude: station.[1][:lat], longitude: station[1][:lng])
     new_station.save!
-    address.save!
 }
 
 puts 'created stations'
 
-# edges.each{ |edge| 
-#     src_station_provided_id = edge[0]
-#     dest_stations_provided_ids = edge[1]
-#     dest_stations_provided_ids.each{ |dest_station_provided_id| 
-#         dest_station = Station.find_by(provided_id: dest_station_provided_id)
-#         src_station = Station.find_by(provided_id: src_station_provided_id)
-#         new_edge = Edge.new(cost: src_station.address.distance_to(dest_station.address))
-#         new_edge.src_id = src_station.provided_id
-#         new_edge.dest_id = dest_station.provided_id
-#         new_edge.save!
-#         src_station.edges << new_edge
-#     }
-#     byebug
-# }
-# 
-# puts 'created edges'
+edges.each{ |edge| 
+    src_station = edge[0]
+    dest_stations = edge[1]
+    dest_stations.each{ |dest_station| 
+        new_edge = Edge.create!(src: src_station, dest: dest_station, cost: src_station.address.distance_to(dest_station.address))
+        src_station.edges << new_edge
+    }
+    byebug
+}
+
+puts 'created edges'
 
 # Create following relationships.
 # users = User.all
