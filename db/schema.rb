@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_104559) do
+ActiveRecord::Schema.define(version: 2021_07_14_101849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,18 +70,18 @@ ActiveRecord::Schema.define(version: 2021_07_12_104559) do
 #   Unknown type 'drone_status' for column 'status'
 
   create_table "edges", force: :cascade do |t|
-    t.bigint "src_id"
-    t.bigint "dest_id"
+    t.integer "src_id"
+    t.integer "dest_id"
     t.float "cost"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dest_id"], name: "index_edges_on_dest_id"
-    t.index ["src_id"], name: "index_edges_on_src_id"
   end
 
-  create_table "graphs", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table "edges_stations", id: false, force: :cascade do |t|
+    t.bigint "station_id"
+    t.bigint "edge_id"
+    t.index ["edge_id"], name: "index_edges_stations_on_edge_id"
+    t.index ["station_id"], name: "index_edges_stations_on_station_id"
   end
 
   create_table "merchants", force: :cascade do |t|
@@ -149,7 +149,6 @@ ActiveRecord::Schema.define(version: 2021_07_12_104559) do
   end
 
   create_table "stations", force: :cascade do |t|
-    t.integer "provided_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -176,8 +175,6 @@ ActiveRecord::Schema.define(version: 2021_07_12_104559) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "drones", "addresses", column: "destination_address_id"
-  add_foreign_key "edges", "stations", column: "dest_id"
-  add_foreign_key "edges", "stations", column: "src_id"
   add_foreign_key "microposts", "users"
   add_foreign_key "orders", "addresses", column: "drop_off_address_id"
   add_foreign_key "orders", "addresses", column: "pick_up_address_id"
