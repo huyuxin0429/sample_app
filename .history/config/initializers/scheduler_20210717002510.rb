@@ -24,17 +24,17 @@ end
 
 
 if Rails.env.development? 
-    # s.every DroneHandler.timeDelta.to_s + 's' do
-    #     ActiveRecord::Base.connection_pool.with_connection do
-    #         #your code here
-    #         DroneHandler.simulate
-    #     end
+#     s.every DroneHandler.timeDelta.to_s + 's' do
+#         ActiveRecord::Base.connection_pool.with_connection do
+#             #your code here
+#             DroneHandler.simulate
+#         end
         
-    #     # ActionCable.server.broadcast 'map_channel', Drone.all.to_json
-    # #   Rails.logger.info "hello, it's #{Time.now}"
-    # #   Rails.logger.flush
-    # end
-end
+#         # ActionCable.server.broadcast 'map_channel', Drone.all.to_json
+#     #   Rails.logger.info "hello, it's #{Time.now}"
+#     #   Rails.logger.flush
+#     end
+# end
 
 # s.every DroneHandler.timeDelta.to_s + 's' do
 #     ActiveRecord::Base.connection_pool.with_connection do
