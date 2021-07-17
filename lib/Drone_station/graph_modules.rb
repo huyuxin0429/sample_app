@@ -4,7 +4,6 @@ module GraphModules
         @@edge_file = File.open("#{Rails.root}/lib/Drone_station/station_connections.csv")
         @@file_data = @@file.readlines.map(&:chomp)
         @@edge_data = @@edge_file.readlines.map(&:chomp)
-        # puts @@file_data
         @@edge_hash = {}
         @@station_hash = {}
         @@file_data.each { |line|
@@ -46,24 +45,10 @@ module GraphModules
         @@file.close
 
 
-        #Path Generation stuff
-
-        # @@shortest_paths = Setting.shortest_paths
-        # @@next = Setting.next
-
-        # @@stations = Station.all.to_a.map{ |station| 
-        #     station.id
-        # }
-
-        # @@edges = Edge.all.to_a
-
         def path(src, dest)
             @@shortest_paths = Setting.shortest_paths
             @@next = Setting.next
-            # byebug
-            puts @@next
-            puts @@next[src]
-            puts @@next[src][dest]
+
             if @@next[src][dest] == nil
                 return []
             else

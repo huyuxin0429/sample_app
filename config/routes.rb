@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       post 'drones/setSpeed' => 'drones#setDroneSpeed'
       post 'drones/setNumber' => 'drones#setDroneNumber'
       post 'edges' => 'edges#create'
+      
       resources :drones, only: [ :index, :show]
       resources :stations, only: [ :index, :create, :show, :destroy] do
         resources :edges, only: [ :index, :show, :destroy]
@@ -83,6 +84,7 @@ Rails.application.routes.draw do
       resources :customers, only: [ :create, :index, :show, :update, :destroy] do
         resources :addresses, only: [:index, :create, :show, :update, :destroy]
         resources :orders, only: [:index, :show, :destroy] do
+          post 'customerCollectOrder' => 'orders#custUpdateOrder'
           resources :order_entries, only: [:index, :show, :update]
         end
       end

@@ -7,6 +7,25 @@ class Api::V1::OrdersController < Api::V1::BaseController
      def new
          
      end
+
+
+     def custUpdateOrder
+        order = stated_user.orders.find(params[:id])
+        if order.status == "awaiting_customer_pickup"
+            order.progress
+            render json: { message: "Order delivered"}, status: 200
+        end
+        render json: { message: "Invalid status"}, status: 400
+     end
+
+     def merchantUpdateOrder
+        order = stated_user.orders.find(params[:id])
+        if order.status == "merchant_preparing"
+            order.progress
+            render json: { message: "Order picked up"}, status: 200
+        end
+        render json: { message: "Invalid status"}, status: 400
+     end
  
      def stated_user
         if params.key?(:customer_id)

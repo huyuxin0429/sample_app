@@ -16,7 +16,8 @@ class Api::V1::EdgesController < Api::V1::BaseController
 
 
         if @edge
-            render json: @edge
+            render json: @edge, include:
+            [:stations]
         else
             render json: { error: "Edge does not exist." }, status: 400
         end

@@ -65,16 +65,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
         # byebug
         @addresses = stated_user.addresses.all;
         
-        render json: @addresses, only: [
-            :id,
-            :street_address,
-            :city,
-            :country,
-            :postcode,
-            :building_no,
-            :unit_number,
-            :name
-        ]
+        render json: @addresses
     end
 
 
@@ -99,15 +90,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
         # @user = User.find(params[:user_id])
         @address = stated_user.addresses.find_by(id: params[:id])
         if @address
-            render json: @address, only: [
-                :street_address,
-                :city,
-                :country,
-                :postcode,
-                :building_no,
-                :unit_number,
-                :name
-            ]
+            render json: @address
         else
             render json: { error: "Address does not exist." }, status: 400
         end
