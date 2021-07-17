@@ -10,21 +10,27 @@ class Api::V1::OrdersController < Api::V1::BaseController
 
 
      def custUpdateOrder
-        order = stated_user.orders.find(params[:id])
-        if order.status == "awaiting_customer_pickup"
+        # byebug
+        order = stated_user.orders.find_by(id: params[:order_id])
+
+
+        if order and order.status == "awaiting_customer_pickup"
             order.progress
             render json: { message: "Order delivered"}, status: 200
+        else
+            render json: { message: "Invalid status or order does not exist"}, status: 400
+
         end
-        render json: { message: "Invalid status"}, status: 400
      end
 
      def merchantUpdateOrder
-        order = stated_user.orders.find(params[:id])
+        order = stated_user.orders.find(params[:order_id])
         if order.status == "merchant_preparing"
             order.progress
             render json: { message: "Order picked up"}, status: 200
+        else
+            render json: { message: "Invalid status or order does not exist"}, status: 400
         end
-        render json: { message: "Invalid status"}, status: 400
      end
  
      def stated_user
