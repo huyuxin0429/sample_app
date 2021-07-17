@@ -7,7 +7,8 @@ class Api::V1::AccountActivationsController < Api::V1::BaseController
             # log_in user
             # flash[:success] = "Account activated!"
             # redirect_to user
-            render json: { status: "saved", message: "account activated"}, status: 200
+            # render json: { status: "saved", message: "account activated"}, status: 200
+            redirect_to "http://drdelivery.vercel.app/success"
         else
 
             # flash[:danger] = "Invalid activation link"

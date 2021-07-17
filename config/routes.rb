@@ -70,6 +70,9 @@ Rails.application.routes.draw do
       end
 
       resources :merchants, only: [ :index, :create, :show, :update, :destroy] do
+        resources :orders, only: [:index, :show, :destroy] do
+          post 'merchantSendOrder' => 'orders#merchantUpdateOrder'
+        end
         resources :addresses, only: [:index, :create, :show, :update, :destroy]
         resources :products, only: [:index, :create, :show, :update, :destroy] do
           resources :orders, only: [:index, :show, :destroy] do
