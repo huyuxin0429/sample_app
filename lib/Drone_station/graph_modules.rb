@@ -61,6 +61,9 @@ module GraphModules
             @@shortest_paths = Setting.shortest_paths
             @@next = Setting.next
             # byebug
+            puts @@next
+            puts @@next[src]
+            puts @@next[src][dest]
             if @@next[src][dest] == nil
                 return []
             else
