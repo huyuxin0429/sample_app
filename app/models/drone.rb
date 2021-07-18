@@ -1,3 +1,5 @@
+include SimStats
+
 class Drone < ApplicationRecord
   has_one :order
   has_one :current_address, class_name: "Address", as: :addressable, dependent: :destroy 
@@ -61,16 +63,14 @@ class Drone < ApplicationRecord
         self.destination_address_id = self.address_id_route[0]
         # byebug
         changed = true
-        order.enroute_to_customer!
-        # byebug
-        heading_to_drop_off!
+        next_status
         # byebug
       end
     elsif waiting_for_drop_off?
       if order.completed?
         self.destination_address_id = self.address_id_route[0]
         changed = true
-        free_moving!
+        next_status
         # self.destination_address_id = nil
         
       end
@@ -138,6 +138,7 @@ class Drone < ApplicationRecord
     # byebug
     heading_to_pickup!
     self.save!
+    SimStats.droneStartDelivery(self)
     # byebug
     
   end
@@ -163,7 +164,11 @@ class Drone < ApplicationRecord
         self.address_id_route = self.address_id_route[1..]
 
         if (heading_to_pickup? || heading_to_drop_off?) and target_address.addressable_type != "Station"
+          if heading_to_pickup?
+            SimStats.droneReachMerchant(self)
+          end
           next_status
+          
         elsif free_moving?
           if !self.address_id_route[0].nil?
             self.destination_address_id = self.address_id_route[0]
@@ -208,9 +213,15 @@ class Drone < ApplicationRecord
         free_stationary!
       elsif heading_to_pickup?
         waiting_for_pickup!
+      elsif waiting_for_pickup?
+        self.order.progress
+        heading_to_drop_off!
       elsif heading_to_drop_off?
-        order.awaiting_customer_pickup!
+        self.order.progress
         waiting_for_drop_off!
+      elsif waiting_for_drop_off?
+        self.order.progress
+        free_moving!
         # order.save!
       end
       save!

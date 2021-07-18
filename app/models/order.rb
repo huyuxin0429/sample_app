@@ -35,7 +35,7 @@ class Order < ApplicationRecord
         if status == "merchant_preparing" || status == "awaiting_drone_pickup"
           return Address.find(pick_up_address_id)
         elsif (status == "enroute_to_customer")
-          return order.drone.current_address
+          return self.drone.current_address
         elsif (status == "awaiting_customer_pickup" || status == "completed" )
           return Address.find(drop_off_address_id)
         end
@@ -45,12 +45,12 @@ class Order < ApplicationRecord
     def progress
         if merchant_preparing? 
             merchant_load_order
-        elsif awaiting_drone_pickup? && drone && drone.waiting_for_pickup?
+        elsif awaiting_drone_pickup? #&& drone && drone.waiting_for_pickup?
             # byebug
             enroute_to_customer!
-        elsif enroute_to_customer? && drone.waiting_for_drop_off?
+        elsif enroute_to_customer? #&& drone.waiting_for_drop_off?
             awaiting_customer_pickup!
-        elsif awaiting_customer_pickup?  && drone.waiting_for_drop_off?
+        elsif awaiting_customer_pickup?  #&& drone.waiting_for_drop_off?
             customer_unload_order
             # self.drone = nil
         end
