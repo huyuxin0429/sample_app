@@ -19,7 +19,8 @@ class Api::V1::SessionsController < Api::V1::BaseController
                     render json: { status: "ok", 
                                     message: "Login successful", 
                                     user_id: user.id, 
-                                    token: token }, status: 200
+                                    token: token,
+                                    user_type: user.user_type?}, status: 200
                 else
                     # message = "Account not activated. "
                     # message += "Check your email for the activation link"
