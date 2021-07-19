@@ -77,6 +77,7 @@ class Order < ApplicationRecord
     end
 
     def customer_unload_order
+        SimStats.completeDelivery(self)
         completed!
         # broadcast
         # save!

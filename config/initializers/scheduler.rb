@@ -28,6 +28,7 @@ if Rails.env.development?
         ActiveRecord::Base.connection_pool.with_connection do
             #your code here
             DroneHandler.simulate
+            SimStats.sendData
         end
         
         # ActionCable.server.broadcast 'map_channel', Drone.all.to_json
