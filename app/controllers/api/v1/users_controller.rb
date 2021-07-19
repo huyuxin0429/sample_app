@@ -51,6 +51,10 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 
     # GET /api/v1/users/:id
+
+    
+
+
     def show
         instance_variable = instance_variable_get("@#{controller_name.pluralize}")
         class_variable = controller_name.classify.constantize

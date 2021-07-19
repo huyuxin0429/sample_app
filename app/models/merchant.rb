@@ -3,4 +3,5 @@ class Merchant < User
     has_many :products, dependent: :destroy
     has_many :orders, through: :products, dependent: :destroy
 
+
 end
