@@ -48,7 +48,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
         result = result.coordinates
         @address.latitude = result[0]
         @address.longitude = result[1]
-        @address.user_type = address_params["user_type"]
+        # @address.user_type = address_params["user_type"]
 
         if @address.save
             render json: { message: "Address created"}, status: 201
