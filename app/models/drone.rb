@@ -67,6 +67,9 @@ class Drone < ApplicationRecord
         # byebug
       end
     elsif waiting_for_drop_off?
+      if order.nil?
+        byebug
+      end
       if order.completed?
         self.destination_address_id = self.address_id_route[0]
         changed = true

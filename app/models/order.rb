@@ -21,6 +21,7 @@ class Order < ApplicationRecord
     # def add_to_drone_order_queue
     #     DroneHandler.addOrderToDroneQueue(self)
     # end
+    
 
     scope :outstandingOrders, ->() {
         where.not(status: "completed")
