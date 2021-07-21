@@ -41,9 +41,9 @@ class Api::V1::AddressesController < Api::V1::BaseController
             ].compact.join(', ')
         
         result = Geocoder.search(search_data).first
-        while result.nil?
-            puts 'geocoder looping'
-            result = Geocoder.search(search_data).first
+        if result.nil?
+            render json: {status: "error", message: "Invalid address created"}, status: 401
+            return
         end
         result = result.coordinates
         @address.latitude = result[0]
