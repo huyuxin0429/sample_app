@@ -5,11 +5,11 @@ class Address < ApplicationRecord
     with_options if: :need_be_specific do |specific|
         specific.validates :street_address, presence: true
         specific.validates :city, presence: true
-        specific.validates :building_no, presence: true
+        specific.validates :building_no, presence: true, numericality: { only_integer: true }
         specific.validates :unit_number, presence: true
         specific.validates :name, presence: true
         specific.validates :country, presence: true
-        specific.validates :postcode, presence: true
+        specific.validates :postcode, presence: true, numericality: { only_integer: true }
     end
     
     validates :latitude, presence: true

@@ -76,6 +76,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
         if stated_user.addresses && 
             @address = stated_user.addresses.find_by(id: params[:id])
             if @address.update(address_params)
+                # byebug
                 render json: { message: "Address successfully updated" }, status: 200
             else
                 render json: { status: "error", message: @address.errors.full_messages.join("/n")}, status: 400 
