@@ -187,6 +187,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     def destroy
         class_variable = controller_name.classify.constantize
         instance_variable = class_variable.find_by(id: params[:id])
+        # byebug
         if instance_variable
             instance_variable.destroy
             render json: { message: "User successfully deleted." }, status: 204

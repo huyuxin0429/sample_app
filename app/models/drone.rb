@@ -48,6 +48,14 @@ class Drone < ApplicationRecord
     return address_routes
   end
 
+  def cancelOrder
+    self.destination_address_id = Address.where(addressable_type: "Station").near(current_address, 50, units: :km).first.id
+    self.address_id_route = [self.destination_address_id]
+    self.free_moving!
+    # self.order = nil
+
+  end
+
 
   def simulate(time_delta)
     # byebug

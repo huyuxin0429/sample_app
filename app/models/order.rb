@@ -2,8 +2,16 @@ class Order < ApplicationRecord
     belongs_to :customer
     belongs_to :merchant
     belongs_to :drone, optional: true
-    has_many :order_entries
+    has_many :order_entries, dependent: :destroy
     has_many :products, through: :order_entries
+
+    before_destroy :setDroneDestToNil
+
+    def setDroneDestToNil
+        if self.drone
+            self.drone.cancelOrder
+        end
+    end
 
     validate :all_order_entries_are_from_same_merchant
     # validate :all_order_entries_prices_add_up_to_total_price

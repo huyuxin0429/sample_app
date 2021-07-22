@@ -11,6 +11,15 @@ class Address < ApplicationRecord
         specific.validates :country, presence: true
         specific.validates :postcode, presence: true, numericality: { only_integer: true }
     end
+    before_destroy :deleteOrder
+
+    def deleteOrder
+        orders = Order.where(pick_up_address_id: self.id).or(Order.where(drop_off_address_id: self.id))
+        orders.each { |order|
+            order.destroy
+        
+        }
+    end
     
     validates :latitude, presence: true
     validates :longitude, presence: true

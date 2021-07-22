@@ -42,13 +42,13 @@ class Api::V1::AddressesController < Api::V1::BaseController
         
         result = Geocoder.search(search_data).first
         if result.nil?
-            render json: {status: "error", message: "Invalid address created"}, status: 401
+            render json: {status: "error", message: "Invalid address"}, status: 401
             return
         end
         result = result.coordinates
         @address.latitude = result[0]
         @address.longitude = result[1]
-        # @address.user_type = address_params["user_type"]
+        # @address.user_type = address_paI rams["user_type"]
 
         if @address.save
             render json: { message: "Address created"}, status: 201
@@ -75,9 +75,32 @@ class Api::V1::AddressesController < Api::V1::BaseController
         # @user = User.find(params[:user_id])
         if stated_user.addresses && 
             @address = stated_user.addresses.find_by(id: params[:id])
+            oldAddress = @address.deep_copy
             if @address.update(address_params)
+                street_address = address_params["street_address"]
+                city = address_params["city"]
+                country = address_params["country"]
+                postcode = address_params["postcode"]
+                building_no = address_params["building_no"]
+                unit_number = address_params["unit_number"]
+        
+                search_data =  
+                    [street_address, 
+                    city, 
+                    country, 
+                    postcode, 
+                    building_no,
+                    unit_number
+                    ].compact.join(', ')
+                result = Geocoder.search(search_data).first
+                if result.nil?
+                    render json: {status: "error", message: "Invalid address"}, status: 401
+                else
+                    render json: { message: "Address successfully updated" }, status: 200
+
+                end
+                
                 # byebug
-                render json: { message: "Address successfully updated" }, status: 200
             else
                 render json: { status: "error", message: @address.errors.full_messages.join("/n")}, status: 400 
             end
