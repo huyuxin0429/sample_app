@@ -29,7 +29,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
                     # redirect_to root_url
                 end
             else
-                render json: { status: "error", message: "User not authenticated" }, status: 403
+                render json: { status: "error", message: "Password incorrect" }, status: 403
             end
         else
             # flash.now[:danger] = 'Invalid email/password combination'
