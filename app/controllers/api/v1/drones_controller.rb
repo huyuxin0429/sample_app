@@ -22,7 +22,8 @@ class Api::V1::DronesController < Api::V1::BaseController
 
     def index
         @drones = Drone.all 
-        render json: @drones
+        render json: @drones, include:
+            [:current_address]
     end
 
     def show
@@ -30,7 +31,7 @@ class Api::V1::DronesController < Api::V1::BaseController
 
         if @drone
             render json: @drone, include:
-            [:order]
+            [:current_address, :order]
         else
             render json: { error: "Drone does not exist." }, status: 400
         end
