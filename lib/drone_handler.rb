@@ -111,19 +111,37 @@ module DroneHandler
             
             # byebug
 
-            Drone.free.reload.each{ |drone|
-                # byebug
-                waitingOrder = Order.waiting_order.reload.first
-                if waitingOrder.nil?
-                    break
-                end
-                # byebug
+            # Drone.free.reload.each{ |drone|
+            #     # byebug
+            #     waitingOrder = Order.waiting_order.reload.first
+            #     if waitingOrder.nil?
+            #         break
+            #     end
+            #     # byebug
                 
-                drone.deliver(waitingOrder)
-                waitingOrder.drone = drone
-                waitingOrder.save!
+            #     drone.deliver(waitingOrder)
+            #     waitingOrder.drone = drone
+            #     waitingOrder.save!
 
                 
+            # }
+
+            waitingOrders = Order.waiting_order.reload
+            waitingOrders.each { |order| 
+                if Drone.free.reload.first.nil?
+                    break
+                end
+                
+                droneAddresses = Drone.free.reload.map{ |drone|
+                    drone.current_address.id
+                }
+                nearest = Address.where(id: droneAddresses).near(Address.find(order.pick_up_address_id)).first
+                # nearest = droneAddresses.near(Address.find(order.pick_up_address_id)).first
+                closestDrone = Drone.find(nearest.addressable_id)
+                closestDrone.deliver(order)
+                order.drone = closestDrone
+                order.save!
+
             }
     
             
