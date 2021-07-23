@@ -153,6 +153,13 @@ ActiveRecord::Schema.define(version: 2021_07_14_101849) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "stations_edges", id: false, force: :cascade do |t|
+    t.bigint "station_id"
+    t.bigint "edge_id"
+    t.index ["edge_id"], name: "index_stations_edges_on_edge_id"
+    t.index ["station_id"], name: "index_stations_edges_on_station_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
