@@ -15,5 +15,6 @@ class Api::V1::AccountActivationsController < Api::V1::BaseController
             # redirect_to root_url
             # render json: { status: "error", message: "invalid activation link"}, status: 403
             redirect_to "http://drdelivery.vercel.app/failure"
+        end
     end
 end
