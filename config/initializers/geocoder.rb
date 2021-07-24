@@ -1,13 +1,13 @@
 Geocoder.configure(
 
     # street address geocoding service (default :nominatim)
-    lookup: :google,
+    lookup: :bing,
   
     # IP address geocoding service (default :ipinfo_io)
     ip_lookup: :maxmind,
   
     # to use an API key:
-    api_key: "AIzaSyCEkczgoE41K_X4sk4maD-ju_64GB-zSj4",
+    api_key: "t1ICJhXTgMoo5DsxzNnq~mAKEXzUmovK9eVezECGzwg~AqnsLDBsQi86fnjf5k--ccR7vp8oTz8F-TYW8ZK_XNhg-a5u82OFb9mKrofRwaM6",
   
     # geocoding service request timeout, in seconds (default 3):
     timeout: 5,
