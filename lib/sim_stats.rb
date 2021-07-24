@@ -1,21 +1,21 @@
 module SimStats
     class << self
-        @@deliveryCount = 0
-        @@totalDeliveryTime = 0
-        @@simulationStartTime = 0
-        @@initalized = false
-        @@droneTransitTime = 0
-        @@droneTransitCount = 0
+        # Setting.deliveryCount = 0
+        # Setting.totalDeliveryTime = 0
+        # Setting.simulationStartTime = 0
+        # Setting.initalized = false
+        # Setting.droneTransitTime = 0
+        # Setting.droneTransitCount = 0
 
-        @@droneStartDeliveryTime = {}
+        # Setting.droneStartDeliveryTime = {}
 
         def droneStartDelivery(drone)
-            @@droneStartDeliveryTime[drone.id] = timeNow
+            Setting.droneStartDeliveryTime[drone.id] = timeNow
         end
 
         def droneReachMerchant(drone)
-            @@droneTransitTime += (timeNow - @@droneStartDeliveryTime[drone.id])
-            @@droneTransitCount += 1
+            Setting.droneTransitTime += (timeNow - Setting.droneStartDeliveryTime[drone.id])
+            Setting.droneTransitCount += 1
 
         end
 
@@ -24,21 +24,21 @@ module SimStats
         end
 
         def initialize 
-            @@initialized = true
-            @@simulationStartTime = timeNow
+            Setting.initialized = true
+            Setting.simulationStartTime = timeNow
         end
 
 
         def sendData
 
             output_hash = {
-                deliveryCount: @@deliveryCount,
-                avgTimePerDelivery: @@deliveryCount == 0 ? 0 : @@totalDeliveryTime/@@deliveryCount,
+                deliveryCount: Setting.deliveryCount,
+                avgTimePerDelivery: Setting.deliveryCount == 0 ? 0 : Setting.totalDeliveryTime/Setting.deliveryCount,
                 noFreeDrones: Drone.free.count,
                 deliveriesCompletedLastHour: Order.where(status: "completed").where(updated_at: (1.hours.ago)..Time.now ).count,
-                avgDroneTransitTime: @@droneTransitCount == 0 ? 0 : @@droneTransitTime/@@droneTransitCount,
+                avgDroneTransitTime: Setting.droneTransitCount == 0 ? 0 : Setting.droneTransitTime/Setting.droneTransitCount,
                 outstandingOrdersCount: Order.outstandingOrders.count,
-                ordersNotAssgined: Order.waiting_order.count
+                ordersNotAssigned: Order.waiting_order.count
             }
             ActionCable.server.broadcast "sim_stats_channel", output_hash.to_json
 
@@ -46,8 +46,8 @@ module SimStats
 
         def completeDelivery(order)
             timeTaken = timeNow - order.created_at.to_i
-            @@totalDeliveryTime += timeTaken
-            @@deliveryCount += 1
+            Setting.totalDeliveryTime += timeTaken
+            Setting.deliveryCount += 1
 
 
         end

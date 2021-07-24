@@ -18,4 +18,12 @@ class Setting < RailsSettings::Base
   field :test_websocket_message_channel, type: :string, default: "drone_channel_user_2"
   field :shortest_paths, type: :array, default: []
   field :next, type: :array, default: []
+
+  field :deliveryCount, type: :integer, default: 0
+  field :totalDeliveryTime, type: :float, default: 0
+  field :simulationStartTime, type: :float, default: 0
+  field :initalized, type: :boolean, default: false
+  field :droneTransitTime, type: :float, default: 0
+  field :droneTransitCount, type: :integer, default: 0
+  field :droneStartDeliveryTime, type: :hash, default: {}
 end
