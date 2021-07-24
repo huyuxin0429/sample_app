@@ -6,7 +6,7 @@ class AddressTest < ActiveSupport::TestCase
     street_address: "Chai Chee Road",
     city: "Singapore",
     country: "Singapore",
-    postcode: "123412",
+    postal_code: "123412",
     building_no: "23",
     unit_number: "#23-323",
     name: "Home"

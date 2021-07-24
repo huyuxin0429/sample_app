@@ -27,7 +27,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
         street_address = address_params["street_address"]
         city = address_params["city"]
         country = address_params["country"]
-        postcode = address_params["postcode"]
+        postal_code = address_params["postal_code"]
         building_no = address_params["building_no"]
         unit_number = address_params["unit_number"]
 
@@ -35,7 +35,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
             [street_address, 
             city, 
             country, 
-            postcode, 
+            postal_code, 
             building_no,
             unit_number
             ].compact.join(', ')
@@ -80,7 +80,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
             street_address = address_params["street_address"]
             city = address_params["city"]
             country = address_params["country"]
-            postcode = address_params["postcode"]
+            postal_code = address_params["postal_code"]
             building_no = address_params["building_no"]
             unit_number = address_params["unit_number"]
 
@@ -88,7 +88,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
                 [street_address, 
                 city, 
                 country, 
-                postcode, 
+                postal_code, 
                 building_no,
                 unit_number
                 ].compact.join(', ')
@@ -140,7 +140,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
                 :street_address,
                 :city,
                 :country,
-                :postcode,
+                :postal_code,
                 :building_no,
                 :unit_number,
                 :name

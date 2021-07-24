@@ -9,7 +9,7 @@ class Address < ApplicationRecord
         specific.validates :unit_number, presence: true
         specific.validates :name, presence: true
         specific.validates :country, presence: true
-        specific.validates :postcode, presence: true, numericality: { only_integer: true }
+        specific.validates :postal_code, presence: true, numericality: { only_integer: true }
     end
     before_destroy :deleteOrder
 
@@ -28,14 +28,14 @@ class Address < ApplicationRecord
     before_save :latlng_exist
 
     def present_and_changed_or_missing_coords
-        (!country.nil? && !postcode.nil? && (self.postcode_changed? || country_changed?)) or (latitude.nil? || longitude.nil?)
+        (!country.nil? && !postal_code.nil? && (self.postal_code_changed? || country_changed?)) or (latitude.nil? || longitude.nil?)
     end
 
     reverse_geocoded_by :latitude, :longitude do |obj, results|
         # byebug
         if geo = results.first
             obj.city = geo.city
-            obj.postcode = geo.postal_code
+            obj.postal_code = geo.postal_code
             obj.country = geo.country
             obj.city = geo.city
         end
@@ -64,7 +64,7 @@ class Address < ApplicationRecord
             unit_number: self.unit_number,
             name: self.name,
             country: self.country,
-            postcode: self.postcode,
+            postal_code: self.postal_code,
             latitude: self.latitude,
             longitude: self.longitude
         )
@@ -76,13 +76,13 @@ class Address < ApplicationRecord
 
 
     def present_and_changed
-        (postcode.present? and country.present?) and (postcode_changed? || country_changed?) 
+        (postal_code.present? and country.present?) and (postal_code_changed? || country_changed?) 
     end
         
         
     
     def geocode_info
-        [country, postcode].compact.join(', ')
+        [country, postal_code].compact.join(', ')
     end
 
     geocoded_by :geocode_info

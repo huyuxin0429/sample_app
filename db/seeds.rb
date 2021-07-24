@@ -151,7 +151,7 @@ merchants = Merchant.all
     # street_address = Faker::Address.street_address() 
     # city = Faker::Address.city() 
     # country =  customGenerated[0]
-    # postcode =  customGenerated[1]
+    # postal_code =  customGenerated[1]
     # building_no =  Faker::Number.between(from: 1, to: 10)  
     # unit_number = "#23-233"
     # name =  Faker::Address.community 
@@ -162,19 +162,19 @@ customers.each{|customer|
     street_address = Faker::Address.street_address() 
     city = Faker::Address.city() 
     country =  customGenerated[0]
-    postcode =  customGenerated[1]
+    postal_code =  customGenerated[1]
     building_no =  Faker::Number.between(from: 1, to: 10)  
     unit_number = "#23-233"
     name =  Faker::Address.community 
-    search_data =  [country, postcode].compact.join(', ')
+    search_data =  [country, postal_code].compact.join(', ')
     result = Geocoder.search(search_data).first
     while result.nil?
         # byebug
         puts 'geocoder looping'
         customGenerated = GenerateNewAddress.new
         country =  customGenerated[0]
-        postcode =  customGenerated[1]
-        search_data =  [country, postcode].compact.join(', ')
+        postal_code =  customGenerated[1]
+        search_data =  [country, postal_code].compact.join(', ')
         result = Geocoder.search(search_data).first
     end
     result = result.coordinates
@@ -185,7 +185,7 @@ customers.each{|customer|
         street_address: street_address,
         city: city,
         country: country,
-        postcode: postcode,
+        postal_code: postal_code,
         building_no: building_no,
         unit_number: unit_number,
         name: name
@@ -196,19 +196,19 @@ customers.each{|customer|
         street_address = Faker::Address.street_address() 
         city = Faker::Address.city() 
         country =  customGenerated[0]
-        postcode =  customGenerated[1]
+        postal_code =  customGenerated[1]
         building_no =  Faker::Number.between(from: 1, to: 10)  
         unit_number = "#23-233"
         name =  Faker::Address.community 
-        search_data =  [country, postcode].compact.join(', ')
+        search_data =  [country, postal_code].compact.join(', ')
         result = Geocoder.search(search_data).first
         while result.nil?
             # byebug
             puts 'geocoder looping'
             customGenerated = GenerateNewAddress.new
             country =  customGenerated[0]
-            postcode =  customGenerated[1]
-            search_data =  [country, postcode].compact.join(', ')
+            postal_code =  customGenerated[1]
+            search_data =  [country, postal_code].compact.join(', ')
             result = Geocoder.search(search_data).first
         end
         result = result.coordinates
@@ -219,7 +219,7 @@ customers.each{|customer|
             street_address: street_address,
             city: city,
             country: country,
-            postcode: postcode,
+            postal_code: postal_code,
             building_no: building_no,
             unit_number: unit_number,
             name: name
@@ -236,15 +236,15 @@ puts 'created cust address'
 5.times do |n|
     customGenerated = GenerateNewAddress.new
     country =  customGenerated[0]
-    postcode =  customGenerated[1]
+    postal_code =  customGenerated[1]
     drone = Drone.new()
     # byebug
-    result = Geocoder.search(country + ',' + postcode)[0]
+    result = Geocoder.search(country + ',' + postal_code)[0]
     while result.nil?
         customGenerated = GenerateNewAddress.new
         country =  customGenerated[0]
-        postcode =  customGenerated[1]
-        result = Geocoder.search(country + ',' + postcode)[0]
+        postal_code =  customGenerated[1]
+        result = Geocoder.search(country + ',' + postal_code)[0]
     end
     # byebug
     address = Address.new(
@@ -267,7 +267,7 @@ puts 'created drones'
     # street_address = Faker::Address.street_address() 
     # city = Faker::Address.city() 
     # country =  customGenerated[0]
-    # postcode =  customGenerated[1]
+    # postal_code =  customGenerated[1]
     # building_no =  Faker::Number.between(from: 1, to: 10)  
     # unit_number = "#23-233"
     name =  Faker::Address.community 
@@ -278,19 +278,19 @@ puts 'created drones'
         street_address = Faker::Address.street_address() 
         city = Faker::Address.city() 
         country =  customGenerated[0]
-        postcode =  customGenerated[1]
+        postal_code =  customGenerated[1]
         building_no =  Faker::Number.between(from: 1, to: 10)  
         unit_number = "#23-233"
         name =  Faker::Address.community 
-        search_data =  [country, postcode].compact.join(', ')
+        search_data =  [country, postal_code].compact.join(', ')
         result = Geocoder.search(search_data).first 
         while result.nil?
             # byebug
             puts 'geocoder looping'
             customGenerated = GenerateNewAddress.new
             country =  customGenerated[0]
-            postcode =  customGenerated[1]
-            search_data =  [country, postcode].compact.join(', ')
+            postal_code =  customGenerated[1]
+            search_data =  [country, postal_code].compact.join(', ')
             result = Geocoder.search(search_data).first
         end
         result = result.coordinates
@@ -301,7 +301,7 @@ puts 'created drones'
             street_address: street_address,
             city: city,
             country: country,
-            postcode: postcode,
+            postal_code: postal_code,
             building_no: building_no,
             unit_number: unit_number,
             name: name
@@ -312,19 +312,19 @@ puts 'created drones'
             street_address = Faker::Address.street_address() 
             city = Faker::Address.city() 
             country =  customGenerated[0]
-            postcode =  customGenerated[1]
+            postal_code =  customGenerated[1]
             building_no =  Faker::Number.between(from: 1, to: 10)  
             unit_number = "#23-233"
             name =  Faker::Address.community 
-            search_data =  [country, postcode].compact.join(', ')
+            search_data =  [country, postal_code].compact.join(', ')
             result = Geocoder.search(search_data).first 
             while result.nil?
                 # byebug
                 puts 'geocoder looping'
                 customGenerated = GenerateNewAddress.new
                 country =  customGenerated[0]
-                postcode =  customGenerated[1]
-                search_data =  [country, postcode].compact.join(', ')
+                postal_code =  customGenerated[1]
+                search_data =  [country, postal_code].compact.join(', ')
                 result = Geocoder.search(search_data).first
             end
             result = result.coordinates
@@ -335,7 +335,7 @@ puts 'created drones'
                 street_address: street_address,
                 city: city,
                 country: country,
-                postcode: postcode,
+                postal_code: postal_code,
                 building_no: building_no,
                 unit_number: unit_number,
                 name: name

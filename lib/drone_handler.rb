@@ -85,15 +85,15 @@ module DroneHandler
             while Drone.all.reload.count < getUpdatedDroneNum
                 customGenerated = GenerateNewAddress.new
                 country =  customGenerated[0]
-                postcode =  customGenerated[1]
+                postal_code =  customGenerated[1]
                 drone = Drone.new()
                 # byebug
-                result = Geocoder.search(country + ',' + postcode)[0]
+                result = Geocoder.search(country + ',' + postal_code)[0]
                 while result.nil?
                     customGenerated = GenerateNewAddress.new
                     country =  customGenerated[0]
-                    postcode =  customGenerated[1]
-                    result = Geocoder.search(country + ',' + postcode)[0]
+                    postal_code =  customGenerated[1]
+                    result = Geocoder.search(country + ',' + postal_code)[0]
                 end
                 # byebug
                 address = Address.new(

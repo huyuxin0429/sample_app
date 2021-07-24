@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2021_07_14_101849) do
     t.string "street_address"
     t.string "city"
     t.string "country"
-    t.string "postcode"
+    t.string "postal_code"
     t.string "building_no"
     t.string "unit_number"
     t.string "name"

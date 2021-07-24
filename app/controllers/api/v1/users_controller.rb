@@ -18,7 +18,7 @@ class Api::V1::UsersController < Api::V1::BaseController
                     :street_address,
                     :city,
                     :country,
-                    :postcode,
+                    :postal_code,
                     :building_no,
                     :unit_number,
                     :name
@@ -40,7 +40,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     #             :street_address,
     #             :city,
     #             :country,
-    #             :postcode,
+    #             :postal_code,
     #             :building_no,
     #             :unit_number,
     #             :name
@@ -82,7 +82,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     #             :street_address,
     #             :city,
     #             :country,
-    #             :postcode,
+    #             :postal_code,
     #             :building_no,
     #             :unit_number,
     #             :name
@@ -103,7 +103,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     #             :street_address,
     #             :city,
     #             :country,
-    #             :postcode,
+    #             :postal_code,
     #             :building_no,
     #             :unit_number,
     #             :name
