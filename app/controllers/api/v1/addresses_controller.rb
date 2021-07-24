@@ -76,33 +76,31 @@ class Api::V1::AddressesController < Api::V1::BaseController
         if stated_user.addresses && 
             @address = stated_user.addresses.find_by(id: params[:id])
             oldAddress = @address.deep_copy
-            if @address.update(address_params)
-                street_address = address_params["street_address"]
-                city = address_params["city"]
-                country = address_params["country"]
-                postcode = address_params["postcode"]
-                building_no = address_params["building_no"]
-                unit_number = address_params["unit_number"]
-        
-                search_data =  
-                    [street_address, 
-                    city, 
-                    country, 
-                    postcode, 
-                    building_no,
-                    unit_number
-                    ].compact.join(', ')
-                result = Geocoder.search(search_data).first
-                if result.nil?
-                    render json: {status: "error", message: "Invalid address"}, status: 401
-                else
-                    render json: { message: "Address successfully updated" }, status: 200
 
-                end
-                
+            street_address = address_params["street_address"]
+            city = address_params["city"]
+            country = address_params["country"]
+            postcode = address_params["postcode"]
+            building_no = address_params["building_no"]
+            unit_number = address_params["unit_number"]
+
+            search_data =  
+                [street_address, 
+                city, 
+                country, 
+                postcode, 
+                building_no,
+                unit_number
+                ].compact.join(', ')
+            result = Geocoder.search(search_data).first
+            if result.nil?
+                render json: {status: "error", message: "Invalid address"}, status: 401
+
+            elsif @address.update(address_params)
+                    render json: { message: "Address successfully updated" }, status: 200
                 # byebug
             else
-                render json: { status: "error", message: @address.errors.full_messages.join("/n")}, status: 400 
+                render json: { status: "error", message: @address.errors.full_messages}, status: 400 
             end
         else
             render json: { error: "Address not found" }, status: 400
