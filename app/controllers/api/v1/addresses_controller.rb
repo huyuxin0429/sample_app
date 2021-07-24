@@ -54,7 +54,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
             render json: { message: "Address created"}, status: 201
         else
             render json: { status: "error", 
-                message: @address.errors.full_messages.join("/n") }, 
+                message: @address.errors.full_messages }, 
                 status: 401
         end
     end
