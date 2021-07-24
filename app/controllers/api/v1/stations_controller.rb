@@ -20,11 +20,26 @@ class Api::V1::StationsController < Api::V1::BaseController
     def create
         if !Station.find_by(id: station_params[:id]).nil?
             render json: { message: "Provided id already exists"  }, status: 400
+        elsif !((station_params[:longitude] and station_params[:latitude]) or station_params[:postal_code])
+            render json: { message: "Invalid address"  }, status: 400
+        elsif station_params[:id].nil?
+            render json: { message: "Must provide id"  }, status: 400
         else
-            address = Address.new(
-                longitude: station_params[:longitude],
-                latitude: station_params[:latitude]
-            )
+            if station_params[:postal_code]
+                # byebug
+                result = Geocoder.search(station_params[:postal_code]).first
+                result = result.coordinates
+                address = Address.new(
+                    longitude: result[0],
+                    latitude: result[1]
+                )
+            else
+                address = Address.new(
+                    longitude: station_params[:longitude],
+                    latitude: station_params[:latitude]
+                )
+            end
+            
             station = Station.new()
             station.id = station_params[:id]
             station.address = address
@@ -49,6 +64,7 @@ class Api::V1::StationsController < Api::V1::BaseController
     private
         def station_params
             params.permit(
+                :postal_code,
                 :latitude,
                 :longitude,
                 :id
