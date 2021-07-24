@@ -23,6 +23,7 @@ if Rails.env.production?
 end
 
 
+
 if Rails.env.development? 
     s.every DroneHandler.timeDelta.to_s + 's' do
         ActiveRecord::Base.connection_pool.with_connection do
