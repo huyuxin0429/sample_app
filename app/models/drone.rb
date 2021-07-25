@@ -175,7 +175,7 @@ class Drone < ApplicationRecord
         self.current_address = target_address.deep_copy
         self.current_address.save!
         self.address_id_route = self.address_id_route[1..]
-        byebug
+        # byebug
         if (heading_to_pickup? || heading_to_drop_off?) and target_address.addressable_type != "Station"
           if heading_to_pickup?
             SimStats.droneReachMerchant(self)
