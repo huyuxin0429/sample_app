@@ -77,7 +77,7 @@
 # # Please see the section "writing your own geocoders" for more information.
 # # Geokit::Geocoders::external_key = 'REPLACE_WITH_YOUR_API_KEY'
 
-# # This is the order in which the geocoders are called in a failover scenario
+# # This is the order in which the geocoders are called in a failover describe
 # # If you only want to use a single geocoder, put a single symbol in the array.
 # #
 # # Valid symbols are: :bing, :ca, :fcc, :geocodio, :geonames, :google,

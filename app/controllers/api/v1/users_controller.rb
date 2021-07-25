@@ -209,10 +209,10 @@ class Api::V1::UsersController < Api::V1::BaseController
         # Before filters
         def correct_user_filter
             # byebug
-            @user = User.find(params[:id])
+            @user = User.find_by(id: params[:id])
             
             render json: { message: 'Unauthorised user' },
-                status: :unauthorized unless current_user?(@user) || current_user.admin?
+                status: :unauthorized unless current_user?(@user) || (current_user && current_user.admin?)
         end
 
         def admin_user

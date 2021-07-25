@@ -4,4 +4,5 @@ class Api::V1::CustomersControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
+
 end

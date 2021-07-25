@@ -10,34 +10,43 @@ describe "POST api/v1/account_activation", type: :request do
         }
 
 
-        scenario 'no account activation' do
-        
-            expect(customer.reload.activated?).to eq(false)
+        describe 'no account activation' do
+            it 'does not accivate account' do
+                expect(customer.reload.activated?).to eq(false)
+            end
+            
     
         end
         
-        scenario 'valid account activation' do
+        describe 'valid account activation' do
             # byebug
-            get edit_api_v1_account_activation_url(customer.activation_token, email: customer.email)
-            # byebug
-            expect(response.status).to eq(200)
-            # byebug
-            expect(customer.reload.activated?).to eq(true)
-
+            it 'activates account' do
+                get edit_api_v1_account_activation_url(customer.activation_token, email: customer.email)
+                # byebug
+                expect(response.status).to eq(302)
+                # byebug
+                expect(customer.reload.activated?).to eq(true)
+            end
         end
 
-        scenario 'invalid account activation' do
+        describe 'invalid account activation' do
             # byebug
-            get edit_api_v1_account_activation_url(customer.activation_token, email: "invalid email")
-            expect(response.status).to eq(403)
-            expect(customer.reload.activated?).to eq(false)
+            it 'does not activate account' do
+                get edit_api_v1_account_activation_url(customer.activation_token, email: "invalid email")
+                expect(response.status).to eq(302)
+                expect(customer.reload.activated?).to eq(false)
+            end
+            
 
         end
-        scenario 'invalid account activation' do
+        describe 'invalid account activation' do
             # byebug
-            get edit_api_v1_account_activation_url("invalid token", email: customer.email)
-            expect(response.status).to eq(403)
-            expect(customer.reload.activated?).to eq(false)
+            it 'does not activate account' do
+                get edit_api_v1_account_activation_url("invalid token", email: customer.email)
+                expect(response.status).to eq(302)
+                expect(customer.reload.activated?).to eq(false)
+            end
+            
 
         end
 

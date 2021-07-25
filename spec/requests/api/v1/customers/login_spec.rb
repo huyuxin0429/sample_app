@@ -9,17 +9,20 @@ describe "POST api/v1/login", type: :request do
     activated: true)
         }
 
-    scenario 'valid logging in' do
+    describe 'valid logging in' do
+        it 'logs user in' do
+            post '/api/v1/login', params: {
+                email: "didy@test.com", 
+                password: "12341234"
+            }
+            json = JSON.parse(response.body).deep_symbolize_keys
+            # byebug
+            # id = json[:user_id]
+            # token = json[:token]
+            expect(json[:message]).to eq("Login successful")
+        end
         
-        post '/api/v1/login', params: {
-            email: "didy@test.com", 
-            password: "12341234"
-        }
-        json = JSON.parse(response.body).deep_symbolize_keys
-        # byebug
-        # id = json[:user_id]
-        # token = json[:token]
-        expect(json[:message]).to eq("Login successful")
+       
         # byebug
         # token = "Bearer " + token
         # request.headers["Authorization"] = token
@@ -39,18 +42,21 @@ describe "POST api/v1/login", type: :request do
 
     end
 
-    scenario 'invalid logging in' do
+    describe 'invalid logging in' do
+        it 'does not log user in' do
+            post '/api/v1/login', params: {
+                email: "didsdsddy@test.com", 
+                password: "12341234"
+            }
+            json = JSON.parse(response.body).deep_symbolize_keys
+            # byebug
+            # id = json[:user_id]
+            # token = json[:token]
+            expect(json[:message]).to eq("User not found")
+            expect(response.status).to eq(401)
+        end
         
-        post '/api/v1/login', params: {
-            email: "didsdsddy@test.com", 
-            password: "12341234"
-        }
-        json = JSON.parse(response.body).deep_symbolize_keys
-        # byebug
-        # id = json[:user_id]
-        # token = json[:token]
-        expect(json[:message]).to eq("User not found")
-        expect(response.status).to eq(401)
+      
         # byebug
         # token = "Bearer " + token
         # request.headers["Authorization"] = token

@@ -1,2 +1,0 @@
-class OrderMap < ApplicationRecord
-end

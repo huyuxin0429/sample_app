@@ -109,12 +109,6 @@ ActiveRecord::Schema.define(version: 2021_07_14_101849) do
     t.index ["product_id"], name: "index_order_entries_on_product_id"
   end
 
-  create_table "order_maps", force: :cascade do |t|
-    t.string "words"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
 # Could not dump table "orders" because of following StandardError
 #   Unknown type 'order_status' for column 'status'
 
