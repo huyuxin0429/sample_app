@@ -4,7 +4,7 @@ describe "POST api/v1/customers", type: :request do
     scenario 'valid customer attributes' do
         post '/api/v1/customers', params: {
             name: "didymus",
-            contact_no: "12341234",
+            contact_number: "12341234",
             email: "didy@test.com",
             password: "12341234",
             password_confirmation: "12341234"
@@ -16,7 +16,7 @@ describe "POST api/v1/customers", type: :request do
         user = json[:user]
         # check the value of the returned response hash
         expect(user[:name]).to eq('didymus')
-        expect(user[:contact_no]).to eq(12341234)
+        expect(user[:contact_number]).to eq(12341234)
         expect(user[:email]).to eq('didy@test.com')
     
         # 1 new bookmark record is created
@@ -26,7 +26,7 @@ describe "POST api/v1/customers", type: :request do
     scenario 'invalid customer attributes' do
         post '/api/v1/customers', params: {
             name: "",
-            contact_no: "",
+            contact_number: "",
             email: "",
             password: "12341234",
             password_confirmation: "123htj41234"

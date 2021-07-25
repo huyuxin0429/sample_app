@@ -14,7 +14,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                               password: "",
                                               password_confirmation: "1234",
                                               address: "",
-                                              contact_no: "" } }
+                                              contact_number: "" } }
     # assert_not flash.empty?
     assert_template "users/edit"
   end
@@ -26,13 +26,13 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     name = "BobTheBuilder"
     email = "user@gmail.com"
     address = "Chai Chee"
-    contact_no = 43124312
+    contact_number = 43124312
     patch user_path(@user), params: { user: { name: name,
       email: email,
       password: "",
       password_confirmation: "",
       address: address,
-      contact_no: contact_no } }
+      contact_number: contact_number } }
     # debugger
     assert_not flash.empty?
     assert_redirected_to @user
@@ -40,7 +40,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_equal name, @user.name
     assert_equal email, @user.email
     assert_equal address, @user.address
-    assert_equal contact_no, @user.contact_no
+    assert_equal contact_number, @user.contact_number
   end
 
   test "successful edit with friendly forwarding" do
@@ -50,13 +50,13 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     name = "BobTheBuilder"
     email = "user@gmail.com"
     address = "Chai Chee"
-    contact_no = 43124312
+    contact_number = 43124312
     patch user_path(@user), params: { user: { name: name,
       email: email,
       password: "",
       password_confirmation: "",
       address: address,
-      contact_no: contact_no } }
+      contact_number: contact_number } }
     # debugger
     assert_not flash.empty?
     assert_redirected_to @user
@@ -64,6 +64,6 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_equal name, @user.name
     assert_equal email, @user.email
     assert_equal address, @user.address
-    assert_equal contact_no, @user.contact_no
+    assert_equal contact_number, @user.contact_number
   end
 end

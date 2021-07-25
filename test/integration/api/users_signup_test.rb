@@ -7,7 +7,7 @@ class Api::UsersSignupTest < ActionDispatch::IntegrationTest
   # def setup
   #     name: "test user",
   #     email: "uniqueemail@email.com",
-  #     contact_no: "12341234",
+  #     contact_number: "12341234",
   #     password: "12341234",
   #     password_confirmation: "12341234"
   # end

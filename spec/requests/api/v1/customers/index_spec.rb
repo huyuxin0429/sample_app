@@ -8,7 +8,7 @@ describe "GET api/v1/customers/", type: :request do
     let!(:customer) { Customer.create(
         name: "didy", 
         email: "didy@test.com", 
-        contact_no: "12341234", 
+        contact_number: "12341234", 
         password: "12341234", 
         password_confirmation: "12341234",
         activated: true)
@@ -18,7 +18,7 @@ describe "GET api/v1/customers/", type: :request do
     let!(:admin) { User.create(
         name: "admin", 
         email: "admin@test.com", 
-        contact_no: "12341234", 
+        contact_number: "12341234", 
         password: "12341234", 
         password_confirmation: "12341234",
         activated: true,
@@ -57,7 +57,7 @@ describe "GET api/v1/customers/", type: :request do
         json_didy = json_array[0].deep_symbolize_keys
         # byebug
         expect(json_didy[:name]).to eq('didy')
-        expect(json_didy[:contact_no]).to eq(12341234)
+        expect(json_didy[:contact_number]).to eq(12341234)
         expect(json_didy[:email]).to eq('didy@test.com')
         
 

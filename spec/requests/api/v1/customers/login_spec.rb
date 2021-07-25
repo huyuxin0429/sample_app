@@ -3,7 +3,7 @@ describe "POST api/v1/login", type: :request do
         id: 9999999,
         name: "didy", 
         email: "didy@test.com", 
-        contact_no: "12341234", 
+        contact_number: "12341234", 
         password: "12341234", 
         password_confirmation: "12341234",
     activated: true)
@@ -34,7 +34,7 @@ describe "POST api/v1/login", type: :request do
         # # # check the value of the returned response hash
         # # expect(json[:message]).to eq('Login successful')
         # expect(json[:name]).to eq('didy')
-        # expect(json[:contact_no]).to eq(12341234)
+        # expect(json[:contact_number]).to eq(12341234)
         # expect(json[:email]).to eq('didy@test.com')
 
     end
@@ -65,7 +65,7 @@ describe "POST api/v1/login", type: :request do
         # # # check the value of the returned response hash
         # # expect(json[:message]).to eq('Login successful')
         # expect(json[:name]).to eq('didy')
-        # expect(json[:contact_no]).to eq(12341234)
+        # expect(json[:contact_number]).to eq(12341234)
         # expect(json[:email]).to eq('didy@test.com')
 
     end

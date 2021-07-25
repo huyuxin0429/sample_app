@@ -17,7 +17,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                               password: "foo", 
                               password_confirmation: "bar", 
                               address: "", 
-                              contact_no: "1234" }}
+                              contact_number: "1234" }}
     end
     assert_template "users/new"
     # assert_select 'div#<CSS id for error explanation>'
@@ -32,7 +32,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                               password: "foobar123", 
                               password_confirmation: "foobar123", 
                               address: "Chai Chee Raod", 
-                              contact_no: "12341234" }}
+                              contact_number: "12341234" }}
       
     end
     follow_redirect!
@@ -48,7 +48,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                           email: "user@example.com",
                                           password: "password",
                                           password_confirmation: "password",
-                                          contact_no: "12341234",
+                                          contact_number: "12341234",
                                           address: "Chai Chee" }} 
     end
     assert_equal 1, ActionMailer::Base.deliveries.size

@@ -5,7 +5,7 @@ class UserTest < ActiveSupport::TestCase
   #   assert true
   # end
   def setup
-    @user = User.new(name: "Test user", email: "testuser@gmail.com", contact_no: 12341234, 
+    @user = User.new(name: "Test user", email: "testuser@gmail.com", contact_number: 12341234, 
       address: "Chai Chee Avenue 3", password: "foobar" , password_confirmation: "foobar" )
   end
 
@@ -80,25 +80,25 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
-  test "contact_no should be present" do
-    @user.contact_no = "   "
+  test "contact_number should be present" do
+    @user.contact_number = "   "
     assert_not @user.valid?
   end
 
-  test "contact_no should be all numbers" do
-    @user.contact_no = "fdsfsdf2332"
+  test "contact_number should be all numbers" do
+    @user.contact_number = "fdsfsdf2332"
     assert_not @user.valid?
   end
 
-  test "contact_no is 8 digit" do
-    @user.contact_no = "23452345"
+  test "contact_number is 8 digit" do
+    @user.contact_number = "23452345"
     assert @user.valid?
   end
 
-  test "contact_no cannot be more or less than 8 digit" do
-    @user.contact_no = "1" * 7
+  test "contact_number cannot be more or less than 8 digit" do
+    @user.contact_number = "1" * 7
     assert_not @user.valid?
-    @user.contact_no = "1" * 9
+    @user.contact_number = "1" * 9
     assert_not @user.valid?
   end
 

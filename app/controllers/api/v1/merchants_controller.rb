@@ -21,9 +21,9 @@ class Api::V1::MerchantsController < Api::V1::UsersController
 
     # def show
     #     # @user = User.find(params[:id])
-    #     # render json: @user #, only: [:id, :name, :email, :contact_no]
+    #     # render json: @user #, only: [:id, :name, :email, :contact_number]
     #     @user = Merchant.find_by(id: params[:id])
     #     if @
-    #     render json: @user #, only: [:id, :name, :email, :contact_no]
+    #     render json: @user #, only: [:id, :name, :email, :contact_number]
     # end
 end

@@ -66,7 +66,7 @@ user = User.create!(
     email: "example@railstutorial.org",
     password: "foobar",
     password_confirmation: "foobar",
-    contact_no: 12341234,
+    contact_number: 12341234,
     admin: true,
     activated: true,
     activated_at: Time.zone.now)
@@ -76,12 +76,12 @@ puts 'created admin'
     name = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
     password = "password"
-    contact_no = 12341234
+    contact_number = 12341234
     cust = Customer.new(name: name,
         email: email,
         password: password,
         password_confirmation: password,
-        contact_no: contact_no,
+        contact_number: contact_number,
         activated: true,
         activated_at: Time.zone.now
     )
@@ -90,12 +90,12 @@ puts 'created admin'
         name = Faker::Name.name
         email = "example-#{n+1}@railstutorial.org"
         password = "password"
-        contact_no = 12341234
+        contact_number = 12341234
         cust = Customer.new(name: name,
             email: email,
             password: password,
             password_confirmation: password,
-            contact_no: contact_no,
+            contact_number: contact_number,
             activated: true,
             activated_at: Time.zone.now
         )
@@ -108,24 +108,24 @@ puts 'created customer'
     name = Faker::Company.name
     email = "merchant-#{n+1}@railstutorial.org"
     password = "password"
-    contact_no = 12341234
+    contact_number = 12341234
     merc = Merchant.new(name: name,
         email: email,
         password: password,
         password_confirmation: password,
-        contact_no: contact_no,
+        contact_number: contact_number,
         activated: true,
         activated_at: Time.zone.now)
     while !merc.save
         name = Faker::Company.name
         email = "merchant-#{n+1}@railstutorial.org"
         password = "password"
-        contact_no = 12341234
+        contact_number = 12341234
         merc = Merchant.new(name: name,
             email: email,
             password: password,
             password_confirmation: password,
-            contact_no: contact_no,
+            contact_number: contact_number,
             activated: true,
             activated_at: Time.zone.now
         )

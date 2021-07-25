@@ -15,7 +15,7 @@ class UserIdTest < ActionDispatch::IntegrationTest
       email: "fakeuser@example.com",
       password: "password1234",
       password_confirmation: "password1234",
-      contact_no: "12341234",
+      contact_number: "12341234",
       address: "Chai Chee" }} 
     user = assigns(:user)
     assert_not user.activated?
@@ -31,7 +31,7 @@ class UserIdTest < ActionDispatch::IntegrationTest
   #     email: "fakeuser@example.com",
   #     password: "password1234",
   #     password_confirmation: "password1234",
-  #     contact_no: "12341234",
+  #     contact_number: "12341234",
   #     address: "Chai Chee" }
   #   get user_path(user)
   #   assert_redirected_to root_path

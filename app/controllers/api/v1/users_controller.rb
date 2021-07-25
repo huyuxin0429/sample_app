@@ -23,7 +23,7 @@ class Api::V1::UsersController < Api::V1::BaseController
                     :unit_number,
                     :name
                 ] } ]
-         #, only: [:id, :name, :email, :contact_no]
+         #, only: [:id, :name, :email, :contact_number]
     end
 
     # GET /api/v1/customers
@@ -60,11 +60,11 @@ class Api::V1::UsersController < Api::V1::BaseController
         class_variable = controller_name.classify.constantize
         instance_variable = class_variable.find_by(id: params[:id])
         # @user = User.find(params[:id])
-        # render json: @user #, only: [:id, :name, :email, :contact_no]
+        # render json: @user #, only: [:id, :name, :email, :contact_number]
         
         # if params.keys.fourth == :
         if instance_variable
-            render json: instance_variable #, only: [:id, :name, :email, :contact_no]
+            render json: instance_variable #, only: [:id, :name, :email, :contact_number]
         else
             render json: { error: "User does not exist." }, status: 400
         end
@@ -73,7 +73,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     # def showCustomer
     #     @user = User.where(role: "customer").find_by(id: params[:id])
-    #      #, only: [:id, :name, :email, :contact_no]
+    #      #, only: [:id, :name, :email, :contact_number]
     #     # render json: @user
     #     if @user
     #         render json: @user, include:
@@ -94,7 +94,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     # def showMerchant
     #     @user = User.where(role: "merchant").find_by(id: params[:id])
-    #      #, only: [:id, :name, :email, :contact_no]
+    #      #, only: [:id, :name, :email, :contact_number]
     #     # render json: @user
     #     if @user
     #         render json: @user, include:
@@ -123,7 +123,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     #         @user.send_activation_email
     #         token = encode_token({user_id: @user.id})
     #         render json: { status: "saved", user: @user, token: token }
-    #         # render json: @user, only: [:id, :name, :email, :contact_no], status: 201
+    #         # render json: @user, only: [:id, :name, :email, :contact_number], status: 201
     #     else
     #         render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
     #     end
@@ -139,7 +139,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     #         @user.send_activation_email
     #         token = encode_token({user_id: @user.id})
     #         render json: { status: "saved", user: @user, token: token }
-    #         # render json: @user, only: [:id, :name, :email, :contact_no], status: 201
+    #         # render json: @user, only: [:id, :name, :email, :contact_number], status: 201
     #     else
     #         render json: { status: "error", message: @user.errors.full_messages.join("/n")}, status: 400 
     #     end
@@ -201,7 +201,7 @@ class Api::V1::UsersController < Api::V1::BaseController
             params.permit(
                 :name, 
                 :email, 
-                :contact_no, 
+                :contact_number, 
                 :password, 
                 :password_confirmation)
         end

@@ -46,7 +46,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
       email: "user@example.com",
       password: "password",
       password_confirmation: "password",
-      contact_no: "12341234",
+      contact_number: "12341234",
       address: "Chai Chee" }} 
     user = assigns(:user)
     assert_not user.activated?

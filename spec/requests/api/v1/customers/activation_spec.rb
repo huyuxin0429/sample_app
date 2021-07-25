@@ -4,7 +4,7 @@ describe "POST api/v1/account_activation", type: :request do
     let!(:customer) { Customer.create(
         name: "didy", 
         email: "didy@test.com", 
-        contact_no: "12341234", 
+        contact_number: "12341234", 
         password: "12341234", 
         password_confirmation: "12341234")
         }
