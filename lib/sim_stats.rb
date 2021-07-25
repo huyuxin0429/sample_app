@@ -10,7 +10,9 @@ module SimStats
         # Setting.droneStartDeliveryTime = {}
 
         def droneStartDelivery(drone)
-            Setting.droneStartDeliveryTime[drone.id] = timeNow
+            temp = Setting.droneStartDeliveryTime
+            temp[drone.id] = timeNow
+            Setting.droneStartDeliveryTime = temp
         end
 
         def droneReachMerchant(drone)
