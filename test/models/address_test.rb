@@ -7,7 +7,7 @@ class AddressTest < ActiveSupport::TestCase
     city: "Singapore",
     country: "Singapore",
     postal_code: "123412",
-    building_no: "23",
+    building_number: "23",
     unit_number: "#23-323",
     name: "Home"
   )

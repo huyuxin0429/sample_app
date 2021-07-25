@@ -13,7 +13,7 @@ class Api::V1::MerchantsController < Api::V1::UsersController
             :city,
             :country,
             :postal_code,
-            :building_no,
+            :building_number,
             :unit_number,
             :name
         ]

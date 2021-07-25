@@ -9,7 +9,7 @@ address1:
   city: <%= Faker::Address.city() %>
   country: <%= Faker::Address.country() %>
   postal_code: <%= Faker::Address.postal_code() %>
-  building_no: <%= Faker::Number.between(from: 1, to: 10)  %>
+  building_number: <%= Faker::Number.between(from: 1, to: 10)  %>
   unit_number: "#23-233"
   name: <%= Faker::Address.community %>
   user: michael
@@ -21,7 +21,7 @@ address2:
   city: <%= Faker::Address.city() %>
   country: <%= Faker::Address.country() %>
   postal_code: <%= Faker::Address.postal_code() %>
-  building_no: <%= Faker::Number.between(from: 1, to: 10)  %>
+  building_number: <%= Faker::Number.between(from: 1, to: 10)  %>
   unit_number: "#23-233"
   name: <%= Faker::Address.community %>
   user: michael
@@ -31,7 +31,7 @@ address3:
   city: <%= Faker::Address.city() %>
   country: <%= Faker::Address.country() %>
   postal_code: <%= Faker::Address.postal_code() %>
-  building_no: <%= Faker::Number.between(from: 1, to: 10)  %>
+  building_number: <%= Faker::Number.between(from: 1, to: 10)  %>
   unit_number: "#23-233"
   name: <%= Faker::Address.community %>
   user: lana
@@ -43,7 +43,7 @@ address4:
   city: <%= Faker::Address.city() %>
   country: <%= Faker::Address.country() %>
   postal_code: <%= Faker::Address.postal_code() %>
-  building_no: <%= Faker::Number.between(from: 1, to: 10)  %>
+  building_number: <%= Faker::Number.between(from: 1, to: 10)  %>
   unit_number: "#23-233"
   name: <%= Faker::Address.community %>
   user: archer

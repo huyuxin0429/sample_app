@@ -28,7 +28,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
         city = address_params["city"]
         country = address_params["country"]
         postal_code = address_params["postal_code"]
-        building_no = address_params["building_no"]
+        building_number = address_params["building_number"]
         unit_number = address_params["unit_number"]
 
         search_data =  
@@ -36,7 +36,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
             city, 
             country, 
             postal_code, 
-            building_no,
+            building_number,
             unit_number
             ].compact.join(', ')
         
@@ -81,7 +81,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
             city = address_params["city"]
             country = address_params["country"]
             postal_code = address_params["postal_code"]
-            building_no = address_params["building_no"]
+            building_number = address_params["building_number"]
             unit_number = address_params["unit_number"]
 
             search_data =  
@@ -89,7 +89,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
                 city, 
                 country, 
                 postal_code, 
-                building_no,
+                building_number,
                 unit_number
                 ].compact.join(', ')
             result = Geocoder.search(search_data).first
@@ -141,7 +141,7 @@ class Api::V1::AddressesController < Api::V1::BaseController
                 :city,
                 :country,
                 :postal_code,
-                :building_no,
+                :building_number,
                 :unit_number,
                 :name
                 )

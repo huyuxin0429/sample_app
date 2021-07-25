@@ -93,7 +93,7 @@ class Api::V1::OrderEntriesController < Api::V1::BaseController
                  :city,
                  :country,
                  :postal_code,
-                 :building_no,
+                 :building_number,
                  :unit_number,
                  :name)
          end

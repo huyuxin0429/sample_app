@@ -5,7 +5,7 @@ class Address < ApplicationRecord
     with_options if: :need_be_specific do |specific|
         specific.validates :street_address, presence: true
         specific.validates :city, presence: true
-        specific.validates :building_no, presence: true, numericality: { only_integer: true }
+        specific.validates :building_number, presence: true, numericality: { only_integer: true }
         specific.validates :unit_number, presence: true
         specific.validates :name, presence: true
         specific.validates :country, presence: true
@@ -60,7 +60,7 @@ class Address < ApplicationRecord
         new_add = Address.new(
             street_address: self.street_address,
             city: self.city,
-            building_no: self.building_no,
+            building_number: self.building_number,
             unit_number: self.unit_number,
             name: self.name,
             country: self.country,

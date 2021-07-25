@@ -19,7 +19,7 @@ class Api::V1::UsersController < Api::V1::BaseController
                     :city,
                     :country,
                     :postal_code,
-                    :building_no,
+                    :building_number,
                     :unit_number,
                     :name
                 ] } ]
@@ -41,7 +41,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     #             :city,
     #             :country,
     #             :postal_code,
-    #             :building_no,
+    #             :building_number,
     #             :unit_number,
     #             :name
     #         ] } ]
@@ -83,7 +83,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     #             :city,
     #             :country,
     #             :postal_code,
-    #             :building_no,
+    #             :building_number,
     #             :unit_number,
     #             :name
     #         ] } ]
@@ -104,7 +104,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     #             :city,
     #             :country,
     #             :postal_code,
-    #             :building_no,
+    #             :building_number,
     #             :unit_number,
     #             :name
     #         ] } ]

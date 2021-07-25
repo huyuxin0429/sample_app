@@ -152,7 +152,7 @@ merchants = Merchant.all
     # city = Faker::Address.city() 
     # country =  customGenerated[0]
     # postal_code =  customGenerated[1]
-    # building_no =  Faker::Number.between(from: 1, to: 10)  
+    # building_number =  Faker::Number.between(from: 1, to: 10)  
     # unit_number = "#23-233"
     # name =  Faker::Address.community 
     # byebug
@@ -163,7 +163,7 @@ customers.each{|customer|
     city = Faker::Address.city() 
     country =  customGenerated[0]
     postal_code =  customGenerated[1]
-    building_no =  Faker::Number.between(from: 1, to: 10)  
+    building_number =  Faker::Number.between(from: 1, to: 10)  
     unit_number = "#23-233"
     name =  Faker::Address.community 
     search_data =  [country, postal_code].compact.join(', ')
@@ -186,7 +186,7 @@ customers.each{|customer|
         city: city,
         country: country,
         postal_code: postal_code,
-        building_no: building_no,
+        building_number: building_number,
         unit_number: unit_number,
         name: name
     )
@@ -197,7 +197,7 @@ customers.each{|customer|
         city = Faker::Address.city() 
         country =  customGenerated[0]
         postal_code =  customGenerated[1]
-        building_no =  Faker::Number.between(from: 1, to: 10)  
+        building_number =  Faker::Number.between(from: 1, to: 10)  
         unit_number = "#23-233"
         name =  Faker::Address.community 
         search_data =  [country, postal_code].compact.join(', ')
@@ -220,7 +220,7 @@ customers.each{|customer|
             city: city,
             country: country,
             postal_code: postal_code,
-            building_no: building_no,
+            building_number: building_number,
             unit_number: unit_number,
             name: name
         )
@@ -268,7 +268,7 @@ puts 'created drones'
     # city = Faker::Address.city() 
     # country =  customGenerated[0]
     # postal_code =  customGenerated[1]
-    # building_no =  Faker::Number.between(from: 1, to: 10)  
+    # building_number =  Faker::Number.between(from: 1, to: 10)  
     # unit_number = "#23-233"
     name =  Faker::Address.community 
 
@@ -279,7 +279,7 @@ puts 'created drones'
         city = Faker::Address.city() 
         country =  customGenerated[0]
         postal_code =  customGenerated[1]
-        building_no =  Faker::Number.between(from: 1, to: 10)  
+        building_number =  Faker::Number.between(from: 1, to: 10)  
         unit_number = "#23-233"
         name =  Faker::Address.community 
         search_data =  [country, postal_code].compact.join(', ')
@@ -302,7 +302,7 @@ puts 'created drones'
             city: city,
             country: country,
             postal_code: postal_code,
-            building_no: building_no,
+            building_number: building_number,
             unit_number: unit_number,
             name: name
         )
@@ -313,7 +313,7 @@ puts 'created drones'
             city = Faker::Address.city() 
             country =  customGenerated[0]
             postal_code =  customGenerated[1]
-            building_no =  Faker::Number.between(from: 1, to: 10)  
+            building_number =  Faker::Number.between(from: 1, to: 10)  
             unit_number = "#23-233"
             name =  Faker::Address.community 
             search_data =  [country, postal_code].compact.join(', ')
@@ -336,7 +336,7 @@ puts 'created drones'
                 city: city,
                 country: country,
                 postal_code: postal_code,
-                building_no: building_no,
+                building_number: building_number,
                 unit_number: unit_number,
                 name: name
             )

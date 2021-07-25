@@ -157,6 +157,7 @@ class Drone < ApplicationRecord
   private
 
     def approach(target_id, time_delta)
+      # byebug
       if target_id == current_address.id
         return 
       end
@@ -170,10 +171,11 @@ class Drone < ApplicationRecord
       
       # byebug
       if (curr_distance < new_distance)
+        byebug
         self.current_address = target_address.deep_copy
         self.current_address.save!
         self.address_id_route = self.address_id_route[1..]
-
+        byebug
         if (heading_to_pickup? || heading_to_drop_off?) and target_address.addressable_type != "Station"
           if heading_to_pickup?
             SimStats.droneReachMerchant(self)
@@ -203,6 +205,7 @@ class Drone < ApplicationRecord
         # end
         
       else
+        # byebug
         bearing = Geocoder::Calculations.bearing_between(self.current_address, target_address)
         new_lat_lng = Geocoder::Calculations.endpoint(self.current_address, bearing, new_distance)
         newAddress = Address.new()
