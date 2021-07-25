@@ -171,7 +171,7 @@ class Drone < ApplicationRecord
       
       # byebug
       if (curr_distance < new_distance)
-        byebug
+        # byebug
         self.current_address = target_address.deep_copy
         self.current_address.save!
         self.address_id_route = self.address_id_route[1..]
