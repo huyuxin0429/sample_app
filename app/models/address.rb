@@ -9,17 +9,34 @@ class Address < ApplicationRecord
         specific.validates :unit_number, presence: true
         specific.validates :name, presence: true
         specific.validates :country, presence: true
-        specific.validates :postal_code, presence: true, numericality: { only_integer: true }
+        specific.validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 6}
     end
-    before_destroy :deleteOrder
+    # before_destroy :deassociateOrder
 
-    def deleteOrder
-        orders = Order.where(pick_up_address_id: self.id).or(Order.where(drop_off_address_id: self.id))
-        orders.each { |order|
-            order.destroy
-        
-        }
-    end
+    # def deassociateOrder
+    #     if self.addressable_type == "User"
+    #         orders = Order.where(pick_up_address_id: self.id)
+    #         orders.each { |order|
+    #             copy = self.deep_copy
+    #             copy.addressable_type = "Order"
+    #             copy.addressable_id = order.id
+    #             copy.save!
+    #             order.pick_up_address_id = copy.id
+            
+    #         }
+    #         orders = Order.where(drop_off_address_id: self.id)
+    #         orders.each { |order|
+    #             copy = self.deep_copy
+    #             copy.addressable_type = "Order"
+    #             copy.addressable_id = order.id
+    #             copy.save!
+    #             order.drop_off_address_id = copy.id
+            
+    #         }
+    #     end
+       
+    #     # byebug
+    # end
     
     validates :latitude, presence: true
     validates :longitude, presence: true

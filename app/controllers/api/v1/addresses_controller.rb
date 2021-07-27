@@ -125,6 +125,33 @@ class Api::V1::AddressesController < Api::V1::BaseController
         # @user = User.find(params[:user_id])
         if current_user.addresses && 
             @address = stated_user.addresses.find_by(id: params[:id])
+            
+            if @address.addressable_type == "User"
+                orders = Order.where(pick_up_address_id: @address.id).reload
+                orders.each { |order|
+                    copy = @address.deep_copy
+                    copy.addressable_type = "Order"
+                    copy.addressable_id = order.id
+                    copy.addressable = order
+                    copy.save!
+                    order.pick_up_address_id = copy.id
+                    order.save!
+                
+                }
+                orders = Order.where(drop_off_address_id: @address.id).reload
+                orders.each { |order|
+                    copy = @address.deep_copy
+                    copy.addressable_type = "Order"
+                    copy.addressable_id = order.id
+                    copy.addressable = order
+                    copy.save!
+                    order.drop_off_address_id = copy.id
+                    order.save!
+                
+                }
+                # byebug
+            end
+            # byebug
             @address.destroy
             render json: { message: "Address destroyed"}, status: 204
         else

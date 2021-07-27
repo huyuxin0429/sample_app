@@ -192,6 +192,7 @@ customers.each{|customer|
     )
     # byebug
     while !add.save
+        # byebug
         customGenerated = GenerateNewAddress.new
         street_address = Faker::Address.street_address() 
         city = Faker::Address.city() 
@@ -308,6 +309,7 @@ puts 'created drones'
         )
         # byebug
         while !add.save
+            # byebug
             customGenerated = GenerateNewAddress.new
             street_address = Faker::Address.street_address() 
             city = Faker::Address.city() 

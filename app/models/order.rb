@@ -17,10 +17,14 @@ class Order < ApplicationRecord
     # validate :all_order_entries_prices_add_up_to_total_price
     validates :total_price, presence: true, numericality: {}
     validates :order_entries, :length => { :minimum => 1 }
-    # validates :pick_up_address_id, presence: true
+    with_options if: :isNotCompleted? do |specific|
+        specific.validate :customer_contains_drop_off_address
+        specific.validate :merchant_contains_pick_up_address
+    end
+    validates :pick_up_address_id, presence: true
     validates :drop_off_address_id, presence: true
-    validate :customer_contains_drop_off_address
-    validate :merchant_contains_pick_up_address
+    # validate :customer_contains_drop_off_address
+    # validate :merchant_contains_pick_up_address
     before_save :calculate_total_price
     before_save :broadcast
     
@@ -29,6 +33,10 @@ class Order < ApplicationRecord
     # def add_to_drone_order_queue
     #     DroneHandler.addOrderToDroneQueue(self)
     # end
+
+    def isNotCompleted?
+        !completed?
+    end
     
 
     scope :outstandingOrders, ->() {
@@ -143,7 +151,7 @@ class Order < ApplicationRecord
                 end
             }
             if !found
-                byebug
+                # byebug
                 errors.add( :drop_off_address_id ,"invalid")
             end
         end
